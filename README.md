@@ -1,11 +1,11 @@
+![SourceGen screenshot in the Slot 6 code](/images/IIc_rom3_slot6_code.png | width=600)
+
 ## Apple IIc Disassembly by Bald Engineer
 For the [Mega IIe project](https://github.com/baldengineer/Mega-IIe/), I want to add Smart Port (or Protocol Converter or CBUS) support. 
 
 My idea is to take the associated code out of the IIc ROM and shove it into the modified IIe ROM that I am using.
 
 The challenge is that the SmartPort code is in bank2 and the Mega IIe did not wire the appropraite address line to the EEPROM. So, I need to shove the code into the IIe's ROM.
-
-![SourceGen screenshot in the Slot 6 code](/images/IIc_rom3_slot6_code.png|width=600)
 ## ROM 3 (aka slinky)
 Currently I am focused on ROM 3 aka 342-0445-A. It is the listing available in the [Apple IIc Technical Reference](https://archive.org/details/Apple_IIc_Technical_Reference_Manual). This is an updated version of the reference which includes the Memory Expandable IIc, aka slinky.
 
