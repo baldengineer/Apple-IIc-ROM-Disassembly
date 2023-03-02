@@ -1148,6 +1148,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"IRQVECT":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"IRQVECT",
+"Value":65534,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "KBD":{
 "DataDescriptor":{
 "Length":2,
@@ -1469,23 +1486,6 @@
 "Value":1,
 "Source":"Project",
 "Type":"Constant",
-"LabelAnno":"None"},
-
-"m_oveirq":{
-"DataDescriptor":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"Comment":"bank2?",
-"HasWidth":false,
-"Direction":"ReadWrite",
-"MultiMask":null,
-"Label":"m_oveirq",
-"Value":53146,
-"Source":"Project",
-"Type":"ExternalAddr",
 "LabelAnno":"None"},
 
 "M_PASCAL":{
@@ -3498,9 +3498,16 @@
 {
 "Offset":1280,
 "Addr":50432,
-"Length":-1024,
-"PreLabel":"",
-"IsRelative":false},
+"Length":142,
+"PreLabel":"UniDisk_Routines",
+"IsRelative":true},
+
+{
+"Offset":1422,
+"Addr":50574,
+"Length":114,
+"PreLabel":"disc_misc",
+"IsRelative":true},
 
 {
 "Offset":1536,
@@ -3538,10 +3545,17 @@
 "IsRelative":true},
 
 {
+"Offset":4096,
+"Addr":53248,
+"Length":10240,
+"PreLabel":"Applesoft_Basic",
+"IsRelative":true},
+
+{
 "Offset":14336,
 "Addr":63488,
 "Length":-1024,
-"PreLabel":"F8_ROM",
+"PreLabel":"IIc_F8_Monitor",
 "IsRelative":true}],
 "TypeHints":[{
 "Low":256,
@@ -3819,13 +3833,43 @@
 "Hint":"Code"},
 
 {
+"Low":3325,
+"High":3336,
+"Hint":"InlineData"},
+
+{
 "Low":3974,
-"High":3974,
+"High":3976,
+"Hint":"InlineData"},
+
+{
+"Low":3994,
+"High":3994,
 "Hint":"Code"},
 
 {
 "Low":4095,
 "High":4095,
+"Hint":"InlineData"},
+
+{
+"Low":4096,
+"High":4096,
+"Hint":"Code"},
+
+{
+"Low":4127,
+"High":4128,
+"Hint":"InlineData"},
+
+{
+"Low":4153,
+"High":4153,
+"Hint":"Code"},
+
+{
+"Low":4232,
+"High":4232,
 "Hint":"Code"},
 
 {
@@ -4434,6 +4478,28 @@
 "2802":"Add len+2 to PC",
 "2815":"Normal return for xeq",
 "2819":"Go update PC",
+"4000":"Read ROM and Write to RAM",
+"4003":"Which language card?",
+"4006":"C=1 if alternate card",
+"4007":"Move two bytes",
+"4009":"Get byte from ROM",
+"4012":"Set alternate card",
+"4015":"Store it in the RAM card",
+"4018":"Set main card",
+"4025":"Go do the second byte",
+"4027":"Is the card set right?",
+"4029":"No, it wasn\u0027t",
+"4032":"Clean up \u0026 go ohme",
+"4035":"Now preserved Y",
+"4043":"Was char a hex digit?",
+"4045":"Is it a quote",
+"4047":"Done if not",
+"4049":"Get next char",
+"4052":"for shifting asci into A2L and A2H",
+"4054":"Was it a cr?",
+"4056":"Go handle cr",
+"4058":"Advance index into inbuf",
+"4059":"Go shift it in",
 "14816":"BRA",
 "14912":"+ Trash $45 for those who want it",
 "14914":"+",
@@ -4686,7 +4752,7 @@
 "BackgroundColor":0},
 
 "1041":{
-"Text":"the following two bytes must be $90 and $4B in locations $C411 and\r\nand $C412 respectively.  the bcc ($90) is never taken by the\r\nslinky code and the $4B is used to duplicate the mouse entry\r\npoint as found in slot 7.  this \u0027fix\u0027 enables some programs\r\nto still work correctly.  (time, you owe me a beer for this one!)",
+"Text":"the following two bytes must be $90 and $4B in locations $C411 and\r\nand $C412 respectively.  the bcc ($90) is never taken by the\r\nslinky code and the $4B is used to duplicate the mouse entry\r\npoint as found in slot 7.  this \u0027fix\u0027 enables some programs\r\nto still work correctly.  (tim, you owe me a beer for this one!)",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -4929,6 +4995,24 @@
 "Text":"\r\nStep and trace routines\r\n\r\n",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"3994":{
+"Text":"MOVEIRQ - This routine transfers the roms interrupt vector into\r\n          both language cards",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4035":{
+"Text":"CLKKBD2 - Moved here from scrolling routines",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4043":{
+"Text":"LOOKASC - addition to monitor input routine, if a quote (\u0027)\r\nin input, the ascii of the next is input like a hex number",
+"BoxMode":true,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -4998,8 +5082,14 @@
 "MaxWidth":80,
 "BackgroundColor":0},
 
+"4096":{
+"Text":"Applesoft BASIC",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
 "14946":{
-"Text":"pdf page 464",
+"Text":"pdf page 464\r\nThe IIc boot code is more different than the IIe code that I expected. -James",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-7278960}},
@@ -7593,6 +7683,69 @@
 "Value":50688,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3980":{
+"Label":"comtbl",
+"Value":53132,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3988":{
+"Label":"rtbl",
+"Value":53140,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3994":{
+"Label":"m_oveirq",
+"Value":53146,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4009":{
+"Label":"MIRQLP",
+"Value":53161,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4032":{
+"Label":"MIRQSTD",
+"Value":53184,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4035":{
+"Label":"clrkbd2",
+"Value":53187,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3320":{
+"Label":"ESCTAB",
+"Value":52472,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3328":{
+"Label":"YHI",
+"Value":52480,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4130":{
+"Label":"INCMD",
+"Value":53282,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -10091,6 +10244,190 @@
 "SymbolRef":{
 "Label":"WNDWDTH",
 "Part":"Low"}},
+
+"3328":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3329":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3330":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3331":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3332":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3333":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3334":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3335":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3336":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3974":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LCBANK2",
+"Part":"Low"}},
+
+"3975":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LCBANK1",
+"Part":"Low"}},
+
+"3976":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LCBANK1",
+"Part":"Low"}},
+
+"3977":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"WRCARDRAM",
+"Part":"Low"}},
+
+"3978":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDCARDRAM",
+"Part":"Low"}},
+
+"3979":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE2",
+"Part":"Low"}},
+
+"3980":{
+"Length":8,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4003":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDALTZP",
+"Part":"Low"}},
+
+"4007":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4009":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"IRQVECT",
+"Part":"Low"}},
+
+"4012":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETALTZP",
+"Part":"Low"}},
+
+"4015":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"IRQVECT",
+"Part":"Low"}},
+
+"4018":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETSTDZP",
+"Part":"Low"}},
+
+"4021":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"IRQVECT",
+"Part":"Low"}},
+
+"4029":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETALTZP",
+"Part":"Low"}},
+
+"4049":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"inbuf",
+"Part":"Low"}},
+
+"4052":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
 
 "14778":{
 "Length":1,

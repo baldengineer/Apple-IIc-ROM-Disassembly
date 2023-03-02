@@ -3634,6 +3634,12 @@
 "Text":"banger\r\n\r\nHere is the rest of the diagnostic stuff\r\nthe first part has been moved into the $D000 space\r\nto make desperately needed room\r\n\r\n",
 "BoxMode":true,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"4096":{
+"Text":"Command processor for serial \u0026 comm\r\npdf pg 486",
+"BoxMode":true,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
