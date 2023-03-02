@@ -1,4 +1,4 @@
-![SourceGen screenshot in the Slot 6 code](/images/IIc_rom3_slot6_code.png | width=600)
+![SourceGen screenshot in the Slot 6 code](/images/IIc_rom3_slot6_code.png)
 
 ## Apple IIc Disassembly by Bald Engineer
 For the [Mega IIe project](https://github.com/baldengineer/Mega-IIe/), I want to add Smart Port (or Protocol Converter or CBUS) support. 
