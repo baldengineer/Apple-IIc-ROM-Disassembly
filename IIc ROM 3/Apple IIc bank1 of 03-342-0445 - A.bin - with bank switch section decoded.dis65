@@ -4305,7 +4305,7 @@
 
 "LongComments":{
 "-2147483647":{
-"Text":"6502bench SourceGen v1.8.4",
+"Text":"Apple IIc ROM3  - Bank 1\r\nRe-created by James Lewis (@baldengineer)\r\n*****************************************************************\r\n** SPECIAL FILE!                                               **\r\n**                                                             **\r\n** I did not setup this project for bank switching correctly,  **\r\n** so in the main file, I turned off decode for the section    **\r\n** did bank switching. It\u0027s left in tact here so I can,        **\r\n** hopefully stitch it all back together eventually.           **\r\n*****************************************************************\r\n\r\nFor more information visit:\r\nhttps://github.com/baldengineer/Apple-IIc-ROM-Disassembly\r\n\r\n(Original attributions are in comments below, as shown in original ROM Listings.)\r\n\r\nRecreated work licensed as Attribution-NonCommercial-ShareAlike 4.0 International.\r\n\r\nGenerated with 6502bench SourceGen v1.8.4",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
