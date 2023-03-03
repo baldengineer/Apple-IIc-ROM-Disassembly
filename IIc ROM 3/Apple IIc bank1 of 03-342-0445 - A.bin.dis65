@@ -842,6 +842,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"ESCNUM":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"$CD0C-ESCTAB-1",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"ESCNUM",
+"Value":19,
+"Source":"Project",
+"Type":"Constant",
+"LabelAnno":"None"},
+
 "execute":{
 "DataDescriptor":{
 "Length":1,
@@ -3392,6 +3409,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"YHI":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"$CD00-$CCF8",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"YHI",
+"Value":8,
+"Source":"Project",
+"Type":"Constant",
+"LabelAnno":"None"},
+
 "YREG":{
 "DataDescriptor":{
 "Length":1,
@@ -3833,8 +3867,28 @@
 "Hint":"Code"},
 
 {
+"Low":2821,
+"High":2821,
+"Hint":"Code"},
+
+{
+"Low":2826,
+"High":2826,
+"Hint":"Code"},
+
+{
+"Low":2864,
+"High":2864,
+"Hint":"Code"},
+
+{
 "Low":3325,
 "High":3336,
+"Hint":"InlineData"},
+
+{
+"Low":3345,
+"High":3358,
 "Hint":"InlineData"},
 
 {
@@ -4478,6 +4532,234 @@
 "2802":"Add len+2 to PC",
 "2815":"Normal return for xeq",
 "2819":"Go update PC",
+"2832":"Save output hook",
+"2843":"Which display?",
+"2860":"align this for fools with illegal entry points",
+"2864":"save X",
+"2865":"direction = down",
+"2867":"do scroll",
+"2869":"save X",
+"2870":"direction = up",
+"2872":"get width of screen window",
+"2874":"in 40 or 80 columns?",
+"2877":"=\u003e40, determine starting line",
+"2879":"make sure this is enabled",
+"2882":"get WNDWDTH for test",
+"2883":"divide by 2 for 80 column index",
+"2884":"and save",
+"2885":"test oddity of right edge",
+"2887":"by rotating low bit into carry",
+"2888":"V=0 if left edge even",
+"2889":"=\u003echeck right edge",
+"2891":"V=1 if left edge odd",
+"2894":"restore WNDLFT",
+"2895":"get oddity of right edge",
+"2897":"C=1 if right edge even",
+"2898":"if odd left, don\u0027t DEY",
+"2900":"if even right, don\u0027t DEY",
+"2902":"if right edge odd, need one less",
+"2903":"save window width",
+"2906":"N=1 if 80 columns",
+"2909":"save N,Z,V",
+"2910":"assume scroll from top",
+"2912":"up or down?",
+"2914":"=\u003eup",
+"2916":"down, start scrolling at bottom",
+"2918":"really need one less",
+"2919":"save current line",
+"2922":"calcualte base with window width",
+"2925":"current line is destination",
+"2933":"get current line",
+"2936":"going up?",
+"2938":"=\u003eup, inc current line",
+"2940":"down. Reached top yet?",
+"2942":"yes! clear top line, exit",
+"2944":"no, go up a line",
+"2945":"set source for scroll",
+"2947":"up, inc current line",
+"2948":"at bottom yet?",
+"2950":"yes! clear bottom line, exit",
+"2952":"save new current line",
+"2955":"get base for new current line",
+"2958":"get width for scroll",
+"2961":"get status for scroll",
+"2962":"N=1 if 80 columns",
+"2963":"=\u003eonly do 40 columns",
+"2965":"scroll aux page first (even bytes)",
+"2968":"test Y",
+"2969":"if Y=0, only scroll one byte",
+"2976":"do all but last even byte",
+"2978":"odd left edge, skip this byte",
+"2984":"now do main page (odd bytes)",
+"2987":"restore width",
+"2990":"even right edge, skip this byte",
+"2999":"scroll next line",
+"3001":"clear current line",
+"3004":"restore original cursor line",
+"3007":"pull status off stack",
+"3008":"restore X",
+"3009":"done!!!",
+"3010":"40 or 80 column clear?",
+"3013":"=\u003eclear 80 columns",
+"3023":"clear right half of screen",
+"3024":"for SCRN48",
+"3032":"=\u003ejump into middle",
+"3034":"preserve X",
+"3035":"and blank",
+"3036":"get count for CH",
+"3037":"save for left edge check",
+"3038":"count=WNDWDTH-Y-1",
+"3041":"save CH counter",
+"3042":"div CH by 2 for half pages",
+"3045":"restore original CH",
+"3046":"get starting page",
+"3053":"iff WNDLFT odd, starting byte odd",
+"3054":"get blankity blank",
+"3055":"starting page 1 (default)",
+"3057":"else do page 2",
+"3062":"now do page 1",
+"3066":"all done",
+"3070":"forward 2 columns",
+"3071":"next CH",
+"3072":"not done yet",
+"3074":"restore X",
+"3075":"and exit",
+"3076":"disable typeahead",
+"3079":"and external interrupts",
+"3083":"Called by pascal to",
+"3086":"display cursor",
+"3088":"=\u003ecursor off, don\u0027t invert",
+"3090":"load y and get char",
+"3094":"FLIP INVERSE/NORMAL",
+"3096":"stuff onto screen",
+"3099":"for RDCHAR",
+"3101":"save Y",
+"3102":"get newest cursor into Y",
+"3105":"80 columns?",
+"3108":"=\u003eno",
+"3110":"force 80STORE if 80 columns",
+"3114":"C=1 if char in main RAM",
+"3116":"get low bit into carry",
+"3117":"=\u003estore in main memory",
+"3119":"else switch in page 2",
+"3122":"for odd left, aux bytes",
+"3123":"divide pos\u0027n by 2",
+"3125":"and use as offset into line",
+"3126":"pick character",
+"3128":"80 columns, switch in",
+"3131":"skip 40 column pick",
+"3133":"pick 40 column char",
+"3135":"only allow if alt set",
+"3146":"restore real Y",
+"3148":"get char on screen",
+"3151":"preserve it",
+"3153":"save for update",
+"3155":"get char on screen",
+"3158":"preserve it",
+"3159":"save for update",
+"3162":"test for checkerboard",
+"3164":"=\u003echeckerboard, display it",
+"3166":"test char",
+"3168":"don\u0027t need inverse",
+"3170":"mask = $7F if alternate",
+"3173":" character set,",
+"3175":"$3F if normal char set",
+"3176":"form char to display",
+"3179":"and display it",
+"3182":"restore real char",
+"3184":"save char",
+"3185":"update seed",
+"3187":"check for key",
+"3195":"need to update cursor?",
+"3197":"=\u003eno, check for key",
+"3199":"what cursor are we using?",
+"3202":"=\u003e//e cursor, leave alone",
+"3204":"+ Save Y",
+"3205":"get the character into A",
+"3208":"get next character",
+"3211":"save next next character",
+"3215":"and print it",
+"3218":"+",
+"3219":"get real char",
+"3220":"was a key pressed?",
+"3223":"=\u003eno key pressed",
+"3225":"+ restore old key look for key and exit",
+"3228":"+ Keep code alignedkey",
+"3229":"if CH=OLDCH, then",
+"3231":"OURCH is valid",
+"3234":"=\u003eelse CH must have been changed",
+"3236":"use OURCH",
+"3239":"is the value too big",
+"3241":"=\u003eno, fits just fine",
+"3243":"else force CH to 0",
+"3245":"update real cursor",
+"3248":"80 columns?",
+"3251":"=\u003eno, set all cursors",
+"3253":"yes, peg CH to 0",
+"3260":"get cursor",
+"3263":"and fly...",
+"3264":"GET CHAR TO \"PRINT\"",
+"3267":"save index",
+"3268":"execute character",
+"3271":"restore index",
+"3272":"If Y\u003cYHI, stay escape",
+"3274":"=\u003eexit escape mode",
+"3276":"get current character",
+"3279":"and save it",
+"3280":"save invert bit",
+"3282":"make it inverted \"+\"",
+"3284":"and pop it on the screen",
+"3287":"check for keystroke",
+"3292":"get old char",
+"3293":"restore char, get key",
+"3296":"upshift esc char",
+"3299":"COUNT/INDEx",
+"3301":"IS IT A VALID ESCAPE?",
+"3304":"=\u003eyes",
+"3307":"TRY \u0027EM ALL...",
+"3309":"enable escape sequences",
+"3314":"read char with escapes",
+"3317":"got the key, disable escapes",
+"3320":"left (stay esc)",
+"3321":"left arrow (stay esc)",
+"3322":"down (stay esc)",
+"3323":"up arrow (stay esc)",
+"3324":"right arrow (stay esc)",
+"3325":"down arrow (stay esc)",
+"3326":"up (stay esc)",
+"3327":"right (stay esc)",
+"3328":"left",
+"3329":"down",
+"3330":"up",
+"3331":"right",
+"3332":"formfeed",
+"3333":"clear EOL",
+"3334":"clear EOS",
+"3335":"40 column mode",
+"3336":"80 column mode",
+"3337":"CTL-Q = QUIT",
+"3338":"CTL-D ;ctl char disable",
+"3339":"CTL-E ;ctl char enable",
+"3340":"list of escape chars",
+"3341":"J: BS (stay esc)",
+"3342":"\u003c-:BS (stay esc)",
+"3343":"M: LF (stay esc)",
+"3344":"UP:US (stay esc)",
+"3345":"DN: LF (stay esc)",
+"3346":"I: LF (stay esc)",
+"3347":"K: RT (stay esc)",
+"3348":"ESC-B = BS",
+"3349":"ESC-C = DN",
+"3350":"ESC-D = UP",
+"3351":"ESC-A = RT",
+"3352":"@: Formfeed",
+"3353":"E: CLREOL",
+"3354":"F: CLREOP",
+"3355":"SET40",
+"3356":"SET80",
+"3357":"QUIT",
+"3358":"Disable controls (escape only)",
+"3359":"Enable controls (escape only)",
 "4000":"Read ROM and Write to RAM",
 "4003":"Which language card?",
 "4006":"C=1 if alternate card",
@@ -5013,6 +5295,156 @@
 "Text":"LOOKASC - addition to monitor input routine, if a quote (\u0027)\r\nin input, the ascii of the next is input like a hex number",
 "BoxMode":true,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"2821":{
+"Text":"\r\nThis is the table that is moved into zero page\r\nwhen stepping and tracing\r\n\r\n",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2829":{
+"Text":"\r\nGODSP - Saves hooks, calls display routine and fixes hooks\r\nC = 0 instruction display\r\nC = 1 register display\r\nysed by step and trace\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2860":{
+"Text":"More Video Stuff (Scrolling)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2864":{
+"Text":"\r\nSCROLLIT scrolls the screen either up or down, depending\r\non the value of X.  It scrolls within windows with even\r\nor odd edges for both 40 and 80 columns.  It can scroll\r\nwindows down to 1 characters wide.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2925":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2933":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2952":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3001":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"2919":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3010":{
+"Text":"\r\nDOCLR is called by CLREOL.  It decides whether\r\nto do a (quick) 40 or 80 column clear to end of line.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3023":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3076":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3083":{
+"Text":"\r\nPASINVERT is used by Pascal to display the cursor. Pascal\r\nnormally leaves the cursor on the screen at all times. It\r\nis fleetingly removed while a character is displayed, then\r\npromptly redisplayed.  CTL-F and CTL-E, respectively,\r\ndisable and enable display of the cursor when printed using\r\nthe Pascal 1.1 entry point (PWRITE).  Screen I/O is\r\nsignificantly fasster when the cursor is disabled.  This\r\nfeature is supported by Pascal 1.2 and later.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3101":{
+"Text":"\r\nPICK lifts a character from the screen in either\r\n40 or 80 columns from the current cursor position.\r\nIf the laternate character set is switched in,\r\ncharacter codes $0-$1F are returned as $40-$5F (which\r\nis what must have been originally printed to the location).\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3148":{
+"Text":"\r\nSHOWCUR displays either a checkerboard cursor, a solid\r\nrectange, or the current cursor character, depending\r\non the value of the CURSOR location.  0=inverse cursor,\r\n$FF=checkboard cursor, anything else is displayed\r\nafter being anded with inverse mask.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3229":{
+"Text":"\r\nON CURSORS.  Whenever the horizontal cursor position is\r\nneeded, a call to GETCUR is done. This is the equivalent\r\nof a LDY CH.  This returns the current cursor for II and \r\n//e mode, which may have been poked as either CH or OURCH.\r\n\r\nIt also forces CH and OLDCH to 0 if 80 column mode active.\r\nThis prevents LDY CH, STA (BASL),Y from trashing non screen\r\nmemory. It works just like the //e.\r\n\r\nAll routines that update the cursor\u0027s horizontal position\r\nare here.  This ensures that the newest value of the cursor\r\nis always used, and that 80 column CH is always 0.\r\n\r\nGETCUR only affects the Y register.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3155":{
+"Text":"\r\nExit with char in accumulator\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3184":{
+"Text":"\r\nThe UPDATE routine increments the random seed.\r\nIf a certain value is reached and we are in Apple II\r\nmode, the blinking check cursor is updated.  If a \r\nkey has been pressed, the old char is replaced on the\r\nscreen, and we returned with BMI.\r\n\r\nNOTE: this routine used by COMM firmware!!\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3309":{
+"Text":"\r\nEnd of escape sequence, read next character.\r\nThis is initially called by RDCHAR which is usually called\r\nby GETLN to read characters with escapes enabled.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3245":{
+"Text":"\r\nGETCUR2 is commonly used to set the current cursor\r\nposition when Y can be used.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3264":{
+"Text":"\r\nSTART AN ESCAPE SEQUENCE:\r\n WE HANDLE THE FOLLOWING ONES:\r\n   @ - HOME \u0026 CLEAR\r\n   A - Cursor right\r\n   B - Cursor left\r\n   C - Cursor down\r\n   D - Cursor up\r\n   E - CLR TO EOL\r\n   F - CLR TO EOS\r\n   I - Up Arrow - CURSOR UP (stay escape)\r\n   J - Lft Arrow - CURSOR LEFT (stay escape)\r\n   K - Rt Arrow - CURSOR RIGHT (stay escape)\r\n   M - Dn Arrow - CURSOR DOWN (stay escape)\r\n   4 - GOTO 40 COLUMN MODE\r\n   8 - GOTO 80 COLUMN MODE\r\n CTL-D- Disable the printing of control chars\r\n CTL-E- Enable the printing of control chars\r\n CTL-Q- QUIT (PR#0/IN#0)\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3276":{
+"Text":"\r\nThis is the entry point called by RDKEY iff escapes\r\nare enabled and an escape is encountered.  The next\r\nkeypress is read and processed.  If it is a key that\r\nterminates escape mode, a new key is read by ESCRDKEY.\r\nIf escape mode should not be terminated, NEWESC is\r\ncalled again.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3320":{
+"Text":"\r\nWhen in escape mode, the characters in ESCTAB (high)\r\nbits set), are mapped into the characters in ESCHAR.\r\nThese characters are then executed by a call to CTLCHAR.\r\n\r\nCTLCHAR looks up a character in the table starting at\r\nCTLTAB.  It uses the current index as an ijndex into the\r\ntable of routine addresses, CTLADR.  If the character is \r\nnot in the table, a call to VIDOUT1 is done in case the \r\ncharacter is BS, LF, CR, or BEL.\r\n\r\nNOTE: CTLON and CTLOFF are not accessible except through\r\nand escape sequence\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3349":{
+"Text":"list of control characters",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3360":{
+"Text":"escape chars end here",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -5070,11 +5502,11 @@
 "MaxWidth":80,
 "BackgroundColor":-18751},
 
-"2821":{
-"Text":"PICK UP",
+"3360":{
+"Text":"pick up here\r\npickup\r\npdf pg 455",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":0},
+"BackgroundColor":-23296},
 
 "3974":{
 "Text":"NOT SURE IF THIS IS THE RIGHT PLACE FOR IRQTBLE...",
@@ -5236,7 +5668,7 @@
 "LabelAnno":"None"},
 
 "15856":{
-"Label":"coutl",
+"Label":"cout1",
 "Value":65008,
 "Source":"User",
 "Type":"GlobalAddrExport",
@@ -7734,9 +8166,9 @@
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
-"3328":{
-"Label":"YHI",
-"Value":52480,
+"15628":{
+"Label":"RDKEY",
+"Value":64780,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
@@ -7744,6 +8176,370 @@
 "4130":{
 "Label":"INCMD",
 "Value":53282,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2821":{
+"Label":"initbl",
+"Value":51973,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2850":{
+"Label":"godreg",
+"Value":52002,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2853":{
+"Label":"goddone",
+"Value":52005,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15066":{
+"Label":"rgdsp1",
+"Value":64218,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2864":{
+"Label":"SCROLLDN",
+"Value":52016,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2869":{
+"Label":"SCROLLUP",
+"Value":52021,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2872":{
+"Label":"SCROLLIT",
+"Value":52024,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2894":{
+"Label":"CHKRT",
+"Value":52046,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2903":{
+"Label":"GETST",
+"Value":52055,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2925":{
+"Label":"SCRLIN",
+"Value":52077,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2919":{
+"Label":"SETDBAS",
+"Value":52071,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2947":{
+"Label":"SETUP2",
+"Value":52099,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2952":{
+"Label":"SETSRC",
+"Value":52104,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2971":{
+"Label":"SCRLEVEN",
+"Value":52123,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2978":{
+"Label":"SCRLFT",
+"Value":52130,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2984":{
+"Label":"SKPLFT",
+"Value":52136,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2992":{
+"Label":"SCRLODD",
+"Value":52144,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2996":{
+"Label":"SKPRT",
+"Value":52148,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3001":{
+"Label":"SCRL3",
+"Value":52153,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3009":{
+"Label":"SEV1",
+"Value":52161,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15520":{
+"Label":"CLRLIN",
+"Value":64672,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3023":{
+"Label":"CLRHALF",
+"Value":52175,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3054":{
+"Label":"CLR0",
+"Value":52206,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3057":{
+"Label":"CLR2",
+"Value":52209,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3068":{
+"Label":"CLR1",
+"Value":52220,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3074":{
+"Label":"CLR3",
+"Value":52226,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3083":{
+"Label":"PASINVERT",
+"Value":52235,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3090":{
+"Label":"INVERT",
+"Value":52242,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3100":{
+"Label":"INVX",
+"Value":52252,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3101":{
+"Label":"PICKY",
+"Value":52253,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3123":{
+"Label":"PICK2",
+"Value":52275,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3133":{
+"Label":"PICK1",
+"Value":52285,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3135":{
+"Label":"PICK3",
+"Value":52287,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3146":{
+"Label":"PICK4",
+"Value":52298,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3155":{
+"Label":"NOTINV",
+"Value":52307,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3176":{
+"Label":"NOTINV1",
+"Value":52328,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3179":{
+"Label":"NOTINV2",
+"Value":52331,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3219":{
+"Label":"UD2",
+"Value":52371,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3225":{
+"Label":"CLKKBD",
+"Value":52377,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3239":{
+"Label":"GETCUR1",
+"Value":52391,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3245":{
+"Label":"GETCUR2",
+"Value":52397,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3255":{
+"Label":"GETCUR3",
+"Value":52407,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3263":{
+"Label":"GETCURX",
+"Value":52415,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3264":{
+"Label":"ESC3",
+"Value":52416,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3276":{
+"Label":"NEWESC",
+"Value":52428,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3287":{
+"Label":"ESC0",
+"Value":52439,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3299":{
+"Label":"ESC1",
+"Value":52451,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3301":{
+"Label":"ESC2",
+"Value":52453,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3309":{
+"Label":"ESCRDKEY",
+"Value":52461,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3340":{
+"Label":"ESCCHAR",
+"Value":52492,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3416":{
+"Label":"CTLCHAR",
+"Value":52568,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3349":{
+"Label":"CTLTAB",
+"Value":52501,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
@@ -10213,6 +11009,92 @@
 "SubFormat":"Decimal",
 "SymbolRef":null},
 
+"2835":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cout1",
+"Part":"Low"}},
+
+"2839":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cout1",
+"Part":"Low"}},
+
+"2860":{
+"Length":4,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"2865":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"2870":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"2874":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RD80VID",
+"Part":"Low"}},
+
+"2879":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SET80COL",
+"Part":"Low"}},
+
+"2906":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RD80VID",
+"Part":"Low"}},
+
+"2912":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"2936":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"2965":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE2",
+"Part":"Low"}},
+
+"2984":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE1",
+"Part":"Low"}},
+
 "3010":{
 "Length":3,
 "Format":"NumericLE",
@@ -10244,6 +11126,200 @@
 "SymbolRef":{
 "Label":"WNDWDTH",
 "Part":"Low"}},
+
+"3026":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3057":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE2",
+"Part":"Low"}},
+
+"3062":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE1",
+"Part":"Low"}},
+
+"3086":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_CURSOR",
+"Part":"Low"}},
+
+"3105":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RD80VID",
+"Part":"Low"}},
+
+"3110":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SET80COL",
+"Part":"Low"}},
+
+"3119":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE2",
+"Part":"Low"}},
+
+"3128":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE1",
+"Part":"Low"}},
+
+"3135":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ALTCHARSET",
+"Part":"Low"}},
+
+"3151":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"NOTINV",
+"Part":"Low"}},
+
+"3170":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ALTCHARSET",
+"Part":"Low"}},
+
+"3189":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RNDH",
+"Part":"Low"}},
+
+"3191":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RNDH",
+"Part":"Low"}},
+
+"3193":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RNDH",
+"Part":"Low"}},
+
+"3223":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GETCURX",
+"Part":"Low"}},
+
+"3243":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3248":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RD80VID",
+"Part":"Low"}},
+
+"3253":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3264":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ESCCHAR",
+"Part":"Low"}},
+
+"3272":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"YHI",
+"Part":"Low"}},
+
+"3299":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ESCNUM",
+"Part":"Low"}},
+
+"3309":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_CTL",
+"Part":"Low"}},
+
+"3320":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3322":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3326":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
+
+"3327":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"HighAscii",
+"SymbolRef":null},
 
 "3328":{
 "Length":1,
