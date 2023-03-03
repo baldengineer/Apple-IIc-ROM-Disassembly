@@ -48,8 +48,14 @@
                    <span id="Symflags">flags</span>           EQU     $06B8  {const}    ;D7 = Video echo D6 = CRLF 779 &amp; 77A
                    <span id="SymLOC0">LOC0</span>            EQU     $00    {addr/1}   ;vector for autostart from disk
                    <span id="SymLOC1">LOC1</span>            EQU     $01    {addr/1}
+                   <span id="Symbadcmd">badcmd</span>          EQU     $01               ;bad command
+                   <span id="Symibslot">ibslot</span>          EQU     $01               ;slot * 16
                    <span id="Sympnull">pnull</span>           EQU     $02
                    <span id="SymInitCMD">InitCMD</span>         EQU     $05
+                   <span id="Symzused">zused</span>           EQU     $0A               ;tempptr-cmmand+2 ;zero page bytes used
+                   <span id="Symibstat">ibstat</span>          EQU     $0D               ;status
+                   <span id="Symbadunit">badunit</span>         EQU     $11               ;bad unit number
+                   <span id="Sympcrevnum">pcrevnum</span>        EQU     $11               ;smartport rev 1.1
                    <span id="SymWNDLFT">WNDLFT</span>          EQU     $20    {addr/1}   ;left edge of text window
                    <span id="SymWNDWDTH">WNDWDTH</span>         EQU     $21    {addr/1}   ;width of text window
                    <span id="SymWNDTOP">WNDTOP</span>          EQU     $22    {addr/1}   ;top of text window
@@ -59,6 +65,7 @@
                    <span id="SymGBASL">GBASL</span>           EQU     $26    {addr/1}   ;lo-res graphics base addr.
                    <span id="SymGBASH">GBASH</span>           EQU     $27    {addr/1}
                    <span id="SymBASL">BASL</span>            EQU     $28    {addr/1}   ;text base address
+                   <span id="Symnderr">nderr</span>           EQU     $28               ;no device error
                    <span id="SymBASH">BASH</span>            EQU     $29    {addr/1}
                    <span id="SymBAS2L">BAS2L</span>           EQU     $2A    {addr/1}   ;temp base for scrolling
                    <span id="SymSLOTZ">SLOTZ</span>           EQU     $2B               ;Disk II boot rom equate
@@ -87,19 +94,25 @@
                    <span id="SymA3L">A3L</span>             EQU     $40    {addr/1}   ;Monitor Temp
                    <span id="SymA3H">A3H</span>             EQU     $41    {addr/1}   ;Monitor Temp
                    <span id="SymA4L">A4L</span>             EQU     $42    {addr/1}   ;Monitor Temp
+                   <span id="Symcmmand">cmmand</span>          EQU     $42               ;command to be executed
                    <span id="SymA4H">A4H</span>             EQU     $43    {addr/1}   ;Monitor Temp
+                   <span id="Symunit">unit</span>            EQU     $43               ;D&lt;6-4&gt; = slot
                    <span id="SymA5L">A5L</span>             EQU     $44    {addr/1}   ;Monitor Temp
                    <span id="SymMACSTAT">MACSTAT</span>         EQU     $44    {addr/1}   ;Machine state after BRK
+                   <span id="Sympunit">punit</span>           EQU     $44               ;unit number
                    <span id="SymA5H">A5H</span>             EQU     $45    {addr/1}   ;Monitor Temp
                    <span id="SymXREG">XREG</span>            EQU     $46    {addr/1}   ;X reg after break
                    <span id="SymYREG">YREG</span>            EQU     $47    {addr/1}   ;Y reg after break
                    <span id="SymSTATUS">STATUS</span>          EQU     $48    {addr/1}   ;P reg after break
+                   <span id="Symiobpl">iobpl</span>           EQU     $48               ;pointer to IOB
                    <span id="SymSPNT">SPNT</span>            EQU     $49    {addr/1}   ;SP After Break
+                   <span id="Symiobph">iobph</span>           EQU     $49
                    <span id="Symtempptr">tempptr</span>         EQU     $4A               ;pointer to params must be last 2 zp byte
                    <span id="SymRNDL">RNDL</span>            EQU     $4E    {addr/1}   ;random counter low
                    <span id="SymRNDH">RNDH</span>            EQU     $4F    {addr/1}   ;random counter high
                    <span id="SymBOOTDEV">BOOTDEV</span>         EQU     $4F               ;Disk II boot rom equate
-                   <span id="Sympcrevnum">pcrevnum</span>        EQU     $0101             ;smartport rev 1.1
+                   <span id="Symdoserr">doserr</span>          EQU     $80               ;DOS I/O error
+                   <span id="Symrevnum">revnum</span>          EQU     $0101             ;revision 1.0.1
                    <span id="SymIN">IN</span>              EQU     $0200  {addr/2}   ;input buffer for GETLN
                    <span id="Syminbuf">inbuf</span>           EQU     $0200             ;Input buffer
                    <span id="SymNBUF1">NBUF1</span>           EQU     $0300             ;Disk II boot rom equate
@@ -114,12 +127,15 @@
                    <span id="Symmouxl">mouxl</span>           EQU     $047F             ;X position low byte
                    <span id="Sympwdth">pwdth</span>           EQU     $04B8             ;Printer width 579 &amp; 57A
                    <span id="SymTEMP1">TEMP1</span>           EQU     $04F8  {addr/2}   ;used by CTLCHAR
+                   <span id="Symerror">error</span>           EQU     $04F8             ;error flag
                    <span id="SymVMODE">VMODE</span>           EQU     $04FB  {addr/2}   ;($4F8+3) Operating Mode
                    <span id="Symaciabuf">aciabuf</span>         EQU     $04FC             ;Owner of serial buffer
                    <span id="SymTEMPA">TEMPA</span>           EQU     $0578  {addr/2}   ;used by scroll
+                   <span id="Symxval">xval</span>            EQU     $0578             ;value to be returned in X
                    <span id="SymOURCH">OURCH</span>           EQU     $057B  {addr/2}   ;($578+3) 80-COL Ch
                    <span id="Symmouxh">mouxh</span>           EQU     $057F             ;X position high byte
                    <span id="SymTEMPY">TEMPY</span>           EQU     $05F8  {addr/2}   ;used by scroll
+                   <span id="Symyval">yval</span>            EQU     $05F8             ;value to be returned in Y
                    <span id="Symextint2">extint2</span>         EQU     $05F9
                    <span id="Symtyphed">typhed</span>          EQU     $05FA
                    <span id="SymOURCV">OURCV</span>           EQU     $05FB  {addr/2}   ;($5F8+3) CURSOR VERTICAL
@@ -134,7 +150,9 @@
                    <span id="SymMSLOT">MSLOT</span>           EQU     $07F8  {addr/2}   ;owner of $C8 space
                    <span id="SymCURSOR">CURSOR</span>          EQU     $07FB  {addr/2}   ;($7F8+3) the current cursor char
                    <span id="Symmoumode">moumode</span>         EQU     $07FF             ;Mouse mode
+                   <span id="Symbootbuf">bootbuf</span>         EQU     $0800             ;into $800
                    <span id="Symthbuf">thbuf</span>           EQU     $0800             ;Buffer in alt ram space
+                   <span id="Symrwts">rwts</span>            EQU     $BD00             ;RWTS entry point
                    <span id="Symscomd">scomd</span>           EQU     $BFFA             ;ACIA command register
                    <span id="Symscntl">scntl</span>           EQU     $BFFB             ;ACIA control register
                    <span id="SymCLR80COL">CLR80COL</span>        EQU     $C000  {addr/2}   ;disable 80 column store
@@ -469,7 +487,7 @@ C1D8: 7A                           ply
 C1D9: 18                           clc
 C1DA: 60                           rts
 
-C1DB: D5 CE C1 C2+ <span id="SymLC1DB">LC1DB</span>           ASC     “UNABLE TO START FROM MEMORY CA”
+C1DB: D5 CE C1 C2+ <span id="Symutsmsg">utsmsg</span>          ASC     “UNABLE TO START FROM MEMORY CA”
                                     +      “RD”
 C1FB: 00 00 00 00+                 DS      5,$00
                                    ADREND  ↑ ~$C100
@@ -843,12 +861,14 @@ C3FC: 60                           rts                       ;and exit
 C3FD: 00 00 00                     HEX     $00,$00,$00
                                    ADREND  ↑ ~$C300
 
-                   ; Slinky Boot Code
+                   ********************************************************************************
+                   * Slinky Boot Code                                                             *
+                   ********************************************************************************
                                    ORG     $C400
 C400: C9 20        <span id="Symslinky_boot_code">slinky_boot_code</span> cmp    #$20              ;Boot entry point
 C402: C9 00                        cmp     #$00              ;Signature byte stuff
 C404: C9 03                        cmp     #$03
-C406: C9 00                        cmp     #$00
+C406: C9 00                        cmp     #0
 C408: B0 04                        bcs     <a href="#Symboot4">boot4</a>             ;Always taken
 C40A: A0 05                        ldy     #5                ;Diagnostics entry point
 C40C: D0 54                        bne     <a href="#Symdos24">dos24</a>
@@ -866,184 +886,158 @@ C40F: A5 39                        lda     <a href="#SymKSWH">KSWH</a>          
                    ********************************************************************************
 C411: 90 4B                        HEX     $90,$4B           ;bcc is never taken
 C413: 48                           pha
-C414: 20 89 FE                     jsr     $FE89             ;Reset the hooks
-C417: 20 93 FE                     jsr     $FE93
+C414: 20 89 FE                     jsr     <a href="#SymSETKBD">SETKBD</a>            ;Reset the hooks
+C417: 20 93 FE                     jsr     <a href="#SymSETVID">SETVID</a>
 C41A: 68                           pla
-C41B: 20 4C C7                     jsr     <a href="#Symslboot">slboot</a>
-C41E: AE 01 08                     ldx     $0801
-C421: F0 05                        beq     <a href="#SymLC428">LC428</a>
+C41B: 20 4C C7                     jsr     <a href="#Symslboot">slboot</a>            ;Go get boot block
+C41E: AE 01 08                     ldx     <a href="#Symbootbuf">bootbuf</a>+1
+C421: F0 05                        beq     <a href="#Symbtok4">btok4</a>             ;boot not okay
+                   ; ldx #4*$10
 C423: A2 40                        ldx     #$40
-C425: 4C 01 08                     jmp     $0801
+C425: 4C 01 08                     jmp     <a href="#Symbootbuf">bootbuf</a>+1
 
-C428: A5 00        <span id="SymLC428">LC428</span>           lda     <a href="#SymLOC0">LOC0</a>
-C42A: D0 0D                        bne     <a href="#SymLC439">LC439</a>
+                   ; discontinue boot sequence if not power on reset or forced cold start
+C428: A5 00        <span id="Symbtok4">btok4</span>           lda     <a href="#SymLOC0">LOC0</a>
+C42A: D0 0D                        bne     <a href="#Symbtok4_1">btok4_1</a>
 C42C: A5 01                        lda     <a href="#SymLOC1">LOC1</a>
+                   ; cmp #4+$C0
 C42E: C9 C4                        cmp     #$C4
-C430: D0 07                        bne     <a href="#SymLC439">LC439</a>
-C432: A9 C6                        lda     #$C6
+C430: D0 07                        bne     <a href="#Symbtok4_1">btok4_1</a>
+C432: A9 C6                        lda     #$C6              ;should be $C6 now
 C434: 85 01                        sta     <a href="#SymLOC1">LOC1</a>
-C436: 6C 00 00                     jmp     (<a href="#SymLOC0">LOC0</a>)
+C436: 6C 00 00                     jmp     (<a href="#SymLOC0">LOC0</a>)            ;try slot 6 instead
 
-C439: A9 17        <span id="SymLC439">LC439</span>           lda     #$17
+C439: A9 17        <span id="Symbtok4_1">btok4_1</span>         lda     #23               ;go to bottom of screen
 C43B: 85 25                        sta     <a href="#SymCV">CV</a>
-C43D: BD DB C1     <span id="SymLC43D">LC43D</span>           lda     <a href="#SymLC1DB">LC1DB</a>,X
-C440: F0 06                        beq     <a href="#SymLC448">LC448</a>
+                   ; 
+C43D: BD DB C1     <span id="Symbtok4_2">btok4_2</span>         lda     <a href="#Symutsmsg">utsmsg</a>,X          ;'unable to start from memory card.'
+C440: F0 06                        beq     <a href="#Symbtok4_3">btok4_3</a>           ;skip if done
 C442: 20 ED FD                     jsr     <a href="#Symcout">cout</a>
 C445: E8                           inx
-C446: D0 F5                        bne     <a href="#SymLC43D">LC43D</a>
-C448: 4C 00 E0     <span id="SymLC448">LC448</span>           jmp     <a href="#SymINCMD">INCMD</a>+$FDE
+C446: D0 F5                        bne     <a href="#Symbtok4_2">btok4_2</a>
+C448: 4C 00 E0     <span id="Symbtok4_3">btok4_3</span>         jmp     <a href="#SymBASIC">BASIC</a>             ;drop into basic
 
-C44B: 4C                           DFB     $4C
-C44C: 1C                           DFB     $1C
-C44D: C7                           DFB     $C7
-C44E: 4C                           DFB     $4C
-C44F: 54                           DFB     $54
-C450: C4                           DFB     $C4
-C451: 4C                           DFB     $4C
-C452: 94                           DFB     $94
-C453: C4                           DFB     $C4
-C454: A9                           DFB     $A9
-C455: 28                           DFB     $28
-C456: A6                           DFB     $A6
-C457: 43                           DFB     $43
-C458: 30                           DFB     $30
-C459: 2A                           DFB     $2A
-C45A: A9                           DFB     $A9
-C45B: 01                           DFB     $01
-C45C: A4                           DFB     $A4
-C45D: 42                           DFB     $42
-C45E: C0                           DFB     $C0
-C45F: 04                           DFB     $04
-C460: B0                           DFB     $B0
-C461: 22                           DFB     $22
+C44B: 4C 1C C7                     jmp     <a href="#Symxsetmou">xsetmou</a>           ;should be at $C44B
 
-C462: A2 0A        <span id="Symdos24">dos24</span>           ldx     #$0A
-C464: B5 41        <span id="SymLC464">LC464</span>           lda     <a href="#SymA3H">A3H</a>,X
+                   ********************************************************************************
+                   *                                                                              *
+                   * Entry point for prodos driver                                                *
+                   *                                                                              *
+                   ********************************************************************************
+C44E: 4C 54 C4     <span id="Symentry4">entry4</span>          jmp     <a href="#Syment4">ent4</a>              ;Jump to ProDOS
+
+                   <span style="background-color: #89acb7">NOTE: Entry point for prodos has a jump to the protocol converter (pconv4)</span>
+C451: 4C 94 C4                     jmp     <a href="#Sympconv4">pconv4</a>            ;Jump to PC
+
+C454: A9 28        <span id="Syment4">ent4</span>            lda     #<a href="#Symnderr">nderr</a>            ;Assume wrong drive
+C456: A6 43                        ldx     <a href="#Symunit">unit</a>
+C458: 30 2A                        bmi     <a href="#Symrats4">rats4</a>             ;Error!!!
+C45A: A9 01                        lda     #<a href="#Symbadcmd">badcmd</a>           ;Assume bad command
+C45C: A4 42                        ldy     <a href="#Symcmmand">cmmand</a>            ;Get command
+                   ; the 'cpy #4' below use to be a 'cmp #4'.  because of this
+                   ; change, revnum will be 1.0.1
+C45E: C0 04                        cpy     #4
+C460: B0 22                        bcs     <a href="#Symrats4">rats4</a>             ;Branch if bad command
+C462: A2 0A        <span id="Symdos24">dos24</span>           ldx     #<a href="#Symzused">zused</a>            ;Save zp DOS jumps in here
+C464: B5 41        <span id="Symzsave4">zsave4</span>          lda     <a href="#Symcmmand">cmmand</a>-1,X
 C466: 48                           pha
 C467: CA                           dex
-C468: D0 FA                        bne     <a href="#SymLC464">LC464</a>
-C46A: 98                           tya
+C468: D0 FA                        bne     <a href="#Symzsave4">zsave4</a>
+C46A: 98                           tya                       ;Add 20 to command for table look up
 C46B: 18                           clc
-C46C: 69 14                        adc     #$14
-C46E: 20 52 C7                     jsr     <a href="#Symslxeq">slxeq</a>
-C471: A2 00                        ldx     #$00
-C473: 68           <span id="SymLC473">LC473</span>           pla
-C474: 95 42                        sta     <a href="#SymA4L">A4L</a>,X
+C46C: 69 14                        adc     #20
+                   ********************************************************************************
+                   * This code is common to PC and ProDOS and DOS entry points                    *
+                   ********************************************************************************
+C46E: 20 52 C7     <span id="Symdoit4">doit4</span>           jsr     <a href="#Symslxeq">slxeq</a>             ;Go do command
+C471: A2 00        <span id="Symdone4">done4</span>           ldx     #0                ;Restore up
+C473: 68           <span id="Symrsloop4">rsloop4</span>         pla
+C474: 95 42                        sta     <a href="#Symcmmand">cmmand</a>,X
 C476: E8                           inx
-C477: E0 0A                        cpx     #$0A
-C479: 90 F8                        bcc     <a href="#SymLC473">LC473</a>
-C47B: AE 78 05                     ldx     <a href="#SymTEMPA">TEMPA</a>
-C47E: AC F8 05                     ldy     <a href="#SymTEMPY">TEMPY</a>
-C481: AD F8 04                     lda     <a href="#SymTEMP1">TEMP1</a>
-C484: C9 01                        cmp     #$01
-C486: 09 00                        ora     #$00
+C477: E0 0A                        cpx     #<a href="#Symzused">zused</a>
+C479: 90 F8                        bcc     <a href="#Symrsloop4">rsloop4</a>
+C47B: AE 78 05                     ldx     <a href="#Symxval">xval</a>              ;Set X and Y to whatever
+C47E: AC F8 05                     ldy     <a href="#Symyval">yval</a>
+C481: AD F8 04                     lda     <a href="#Symerror">error</a>             ;Was there an error?
+C484: C9 01        <span id="Symrats4">rats4</span>           cmp     #1                ;C = 1 if not 0
+C486: 09 00                        ora     #0                ;Set n,z flags
 C488: 60                           rts
 
-C489: A9                           DFB     $A9
-C48A: 01                           DFB     $01
-C48B: D0                           DFB     $D0
-C48C: 02                           DFB     $02
-C48D: A9                           DFB     $A9
-C48E: 11                           DFB     $11
-C48F: 8D                           DFB     $8D
-C490: F8                           DFB     $F8
-C491: 04                           DFB     $04
-C492: D0                           DFB     $D0
-C493: DD                           DFB     $DD
-C494: 68                           DFB     $68
-C495: A8                           DFB     $A8
-C496: C9                           DFB     $C9
-C497: FD                           DFB     $FD
-C498: 68                           DFB     $68
-C499: AA                           DFB     $AA
-C49A: 69                           DFB     $69
-C49B: 00                           DFB     $00
-C49C: 48                           DFB     $48
-C49D: 98                           DFB     $98
-C49E: 69                           DFB     $69
-C49F: 03                           DFB     $03
-C4A0: 48                           DFB     $48
-C4A1: A5                           DFB     $A5
-C4A2: 4B                           DFB     $4B
-C4A3: 48                           DFB     $48
-C4A4: 86                           DFB     $86
-C4A5: 4B                           DFB     $4B
-C4A6: A2                           DFB     $A2
-C4A7: 09                           DFB     $09
-C4A8: B5                           DFB     $B5
-C4A9: 41                           DFB     $41
-C4AA: 48                           DFB     $48
-C4AB: CA                           DFB     $CA
-C4AC: D0                           DFB     $D0
-C4AD: FA                           DFB     $FA
-C4AE: 84                           DFB     $84
-C4AF: 4A                           DFB     $4A
-C4B0: A0                           DFB     $A0
-C4B1: 03                           DFB     $03
-C4B2: 99                           DFB     $99
-C4B3: 41                           DFB     $41
-C4B4: 00                           DFB     $00
-C4B5: B1                           DFB     $B1
-C4B6: 4A                           DFB     $4A
-C4B7: 88                           DFB     $88
-C4B8: D0 F8 AA A0                  ASC     “Px* ”
-C4BC: 08                           DFB     $08
-C4BD: B1                           DFB     $B1
-C4BE: 42                           DFB     $42
-C4BF: 99                           DFB     $99
-C4C0: 43                           DFB     $43
-C4C1: 00                           DFB     $00
-C4C2: 88                           DFB     $88
-C4C3: 10                           DFB     $10
-C4C4: F8                           DFB     $F8
-C4C5: 46                           DFB     $46
-C4C6: 44                           DFB     $44
-C4C7: D0                           DFB     $D0
-C4C8: C4                           DFB     $C4
-C4C9: 8A                           DFB     $8A
-C4CA: 2A                           DFB     $2A
-C4CB: C9                           DFB     $C9
-C4CC: 14                           DFB     $14
-C4CD: B0                           DFB     $B0
-C4CE: BA                           DFB     $BA
-C4CF: 90                           DFB     $90
-C4D0: 9D                           DFB     $9D
-C4D1: 84                           DFB     $84
-C4D2: 48                           DFB     $48
-C4D3: 85                           DFB     $85
-C4D4: 49                           DFB     $49
-C4D5: A0                           DFB     $A0
-C4D6: 01                           DFB     $01
-C4D7: B1                           DFB     $B1
-C4D8: 48                           DFB     $48
-C4D9: C9                           DFB     $C9
-C4DA: 40                           DFB     $40
-C4DB: F0                           DFB     $F0
-C4DC: 03                           DFB     $03
-C4DD: 4C                           DFB     $4C
-C4DE: 04                           DFB     $04
-C4DF: BD                           DFB     $BD
-C4E0: A0                           DFB     $A0
-C4E1: 04                           DFB     $04
-C4E2: 20                           DFB     $20
-C4E3: 62                           DFB     $62
-C4E4: C4                           DFB     $C4
-C4E5: F0                           DFB     $F0
-C4E6: 02                           DFB     $02
-C4E7: A9                           DFB     $A9
-C4E8: 80                           DFB     $80
-C4E9: A0                           DFB     $A0
-C4EA: 0D                           DFB     $0D
-C4EB: 91                           DFB     $91
-C4EC: 48                           DFB     $48
-C4ED: 60                           DFB     $60
-C4EE: 00 00 00 00+                 DS      12,$00
-C4FA: 11                           DFB     $11
-C4FB: 01                           DFB     $01
-C4FC: 00                           DFB     $00
-C4FD: 00                           DFB     $00
+C489: A9 01        <span id="Sympccmd4">pccmd4</span>          lda     #<a href="#Symbadcmd">badcmd</a>           ;Bad command
+C48B: D0 02                        bne     <a href="#Sympcerr4">pcerr4</a>
+
+C48D: A9 11        <span id="Sympcbad4">pcbad4</span>          lda     #<a href="#Symbadunit">badunit</a>          ;Bad protocol unit
+C48F: 8D F8 04     <span id="Sympcerr4">pcerr4</span>          sta     <a href="#Symerror">error</a>             ;Save the error code
+C492: D0 DD                        bne     <a href="#Symdone4">done4</a>
+
+                   ********************************************************************************
+                   * Protocol converter entry point                                               *
+                   ********************************************************************************
+C494: 68           <span id="Sympconv4">pconv4</span>          pla                       ;Pull the return address
+C495: A8                           tay
+C496: C9 FD                        cmp     #$FD              ;C = 1 if carry in +3
+C498: 68                           pla                       ;High byte of return address
+C499: AA                           tax
+C49A: 69 00                        adc     #0
+C49C: 48                           pha
+C49D: 98                           tya
+C49E: 69 03                        adc     #3                ;C = 0 from previous add
+C4A0: 48                           pha                       ;Return address + 3 now pushed
+C4A1: A5 4B                        lda     <a href="#Symtempptr">tempptr</a>+1         ;Save zero page
+C4A3: 48                           pha
+C4A4: 86 4B                        stx     <a href="#Symtempptr">tempptr</a>+1
+C4A6: A2 09                        ldx     #<a href="#Symzused">zused</a>-1
+C4A8: B5 41        <span id="Sympcsvzp4">pcsvzp4</span>         lda     <a href="#Symcmmand">cmmand</a>-1,X        ;Save rest of zp
+C4AA: 48                           pha
+C4AB: CA                           dex
+C4AC: D0 FA                        bne     <a href="#Sympcsvzp4">pcsvzp4</a>
+C4AE: 84 4A                        sty     <a href="#Symtempptr">tempptr</a>
+C4B0: A0 03                        ldy     #3                ;Get (tempptr) +3, +2, +1
+C4B2: 99 41 00     <span id="Sympcgtp4">pcgtp4</span>          sta     <a href="#Symcmmand">cmmand</a>-1,Y        ;First store don't care
+C4B5: B1 4A        <span id="Sympcskp4">pcskp4</span>          lda     (<a href="#Symtempptr">tempptr</a>),Y
+C4B7: 88                           dey
+C4B8: D0 F8                        bne     <a href="#Sympcgtp4">pcgtp4</a>
+C4BA: AA                           tax                       ;x = user command
+                   ; Command = ptr to parm list. y = 0
+C4BB: A0 08                        ldy     #8                ;Max # of param bytes
+C4BD: B1 42        <span id="Sympcparms4">pcparms4</span>        lda     (<a href="#Symcmmand">cmmand</a>),Y        ;Get the parms
+C4BF: 99 43 00                     sta     <a href="#Symcmmand">cmmand</a>+1,Y        ;Note last store is on top of pointer
+C4C2: 88                           dey
+C4C3: 10 F8                        bpl     <a href="#Sympcparms4">pcparms4</a>
+C4C5: 46 44                        lsr     <a href="#Sympunit">punit</a>             ;Unit 0 or 1?
+C4C7: D0 C4                        bne     <a href="#Sympcbad4">pcbad4</a>
+C4C9: 8A                           txa                       ;A = Command
+C4CA: 2A                           rol     A                 ;Get unit into low bit
+C4CB: C9 14                        cmp     #20               ;C = 1 if invalid command
+C4CD: B0 BA                        bcs     <a href="#Sympccmd4">pccmd4</a>            ;Branch if bad command
+C4CF: 90 9D                        bcc     <a href="#Symdoit4">doit4</a>             ;Always taken
+
+                   ********************************************************************************
+                   * Dos entry point stuff                                                        *
+                   ********************************************************************************
+C4D1: 84 48        <span id="Symdosent4">dosent4</span>         sty     <a href="#Symiobpl">iobpl</a>             ;Store pointer in IOB
+C4D3: 85 49                        sta     <a href="#Symiobph">iobph</a>
+C4D5: A0 01                        ldy     #<a href="#Symibslot">ibslot</a>           ;Get slot
+C4D7: B1 48                        lda     (<a href="#Symiobpl">iobpl</a>),Y
+                   ; cmp #4*$10
+C4D9: C9 40                        cmp     #$40              ;Is it us?
+C4DB: F0 03                        beq     <a href="#Symdosslt4">dosslt4</a>
+C4DD: 4C 04 BD                     jmp     <a href="#Symrwts">rwts</a>+4            ;Back to rwts
+
+C4E0: A0 04        <span id="Symdosslt4">dosslt4</span>         ldy     #4                ;Command for DOS
+C4E2: 20 62 C4                     jsr     <a href="#Symdos24">dos24</a>             ;Go do it and come back
+C4E5: F0 02                        beq     <a href="#Symdosok4">dosok4</a>            ;A = Error code
+C4E7: A9 80                        lda     #<a href="#Symdoserr">doserr</a>           ;DOS io error code
+C4E9: A0 0D        <span id="Symdosok4">dosok4</span>          ldy     #<a href="#Symibstat">ibstat</a>
+C4EB: 91 48                        sta     (<a href="#Symiobpl">iobpl</a>),Y         ;Put error code in status
+C4ED: 60                           rts
+
+C4EE: 00 00 00 00+                 DS      12,$00            ;pad with 0's
+C4FA: 11                           DFB     <a href="#Sympcrevnum">pcrevnum</a>          ;Smartport revision number
+C4FB: 01                           DFB     $01               ;Mark ram card
+C4FC: 00 00                        DW      0                 ;Number of blocks = 0 for status call
 C4FE: 4F                           DFB     $4F
-C4FF: 4E                           DFB     $4E
+C4FF: 4E                           DFB     &lt;<a href="#Symentry4">entry4</a>
                                    ADREND  ↑ ~$C400
 
                    ; 
@@ -1135,7 +1129,7 @@ C58D: 00                           DFB     $00
 C58E:              disc_misc
                                    ORG     *+$0000
 C58E: A2 03        <span id="SymMAKTBL">MAKTBL</span>          ldx     #$03
-C590: A0 00                        ldy     #$00
+C590: A0 00                        ldy     #0
 C592: 86 3C        <span id="SymTBLLOOP">TBLLOOP</span>         stx     <a href="#SymBOOTTMP">BOOTTMP</a>
 C594: 8A                           txa
 C595: 0A                           asl     A
@@ -1153,7 +1147,7 @@ C5A9: C8                           iny
 C5AA: E8           <span id="SymNOPATRN">NOPATRN</span>         inx
 C5AB: 10 E5                        bpl     <a href="#SymTBLLOOP">TBLLOOP</a>
 C5AD: A9 08                        lda     #$08
-C5AF: 85 27                        sta     <a href="#SymGBASH">GBASH</a>
+C5AF: 85 27                        sta     $27
 C5B1: A0 7F                        ldy     #$7F
 C5B3: 60                           rts
 
@@ -1179,8 +1173,8 @@ C5CE: 60                           rts
                    * xmbasic - basic call to the mouse                                            *
                    ********************************************************************************
 C5CF: 5A           <span id="Symxmbasic">xmbasic</span>         phy
-C5D0: B0 1C                        bcs     <a href="#Symgobasicin">gobasicin</a>
-C5D2: A0 C7                        ldy     #&lt;<a href="#Symmbasic">mbasic</a>-57       ;&lt;mbasic ;input from $C400?
+C5D0: B0 1C                        bcs     <a href="#Symgobasicin">gobasicin</a>         ;input?
+C5D2: A0 C7                        ldy     #&gt;<a href="#Symmbasic">mbasic</a>          ;input from $C400?
 C5D4: C4 39                        cpy     <a href="#SymKSWH">KSWH</a>
 C5D6: D0 04                        bne     <a href="#Symxmbout">xmbout</a>
 C5D8: A4 38                        ldy     <a href="#SymKSWL">KSWL</a>
@@ -1212,10 +1206,12 @@ C5FE: BF                           DFB     $BF
 C5FF: 0A                           DFB     $0A
                                    ADREND  ↑ $C58E
 
-                   ; 
-                   ; Disk II boot stuff
-                   ; jumps to slot 5 if boot fails
-                   ; 
+                   ********************************************************************************
+                   *                                                                              *
+                   * Disk II boot stuff                                                           *
+                   * jumps to slot 5 if boot fails                                                *
+                   *                                                                              *
+                   ********************************************************************************
                                    ORG     $C600
 C600: A2 20        <span id="Syms6_disk2_boot">s6_disk2_boot</span>   ldx     #$20
 C602: A0 00                        ldy     #$00
@@ -1260,9 +1256,8 @@ C64D: C9 C6                        cmp     #$C6
 C64F: D0 A4                        bne     <a href="#Symbootfail">bootfail</a>
 C651: 4C 00 C5                     jmp     $C500             ;maybe slot 5 will talk to us
 
-C654: 00 00                        HEX     $00,$00
+C654: 00 00                        HEX     $00,$00           ;Keep alignment
 
-                   ; Keep alignment
 C656: 08           <span id="SymRDHD0">RDHD0</span>           php
 C657: 88           <span id="SymRETRY">RETRY</span>           dey
 C658: D0 04                        bne     <a href="#SymRDHD1">RDHD1</a>
@@ -1325,7 +1320,7 @@ C6B8: D0 EE                        bne     <a href="#SymRDAT0">RDAT0</a>
 C6BA: 84 3C        <span id="SymRDAT2">RDAT2</span>           sty     <a href="#SymBOOTTMP">BOOTTMP</a>
 C6BC: BC 8C C0     <span id="SymRDAT3">RDAT3</span>           ldy     $C08C,X
 C6BF: 10 FB                        bpl     <a href="#SymRDAT3">RDAT3</a>
-                   <span style="background-color: #cbcb00">NOTE: C6C1 should be 59 D6 02, which is EOR DNIBL-$80,Y</span>
+                   <span style="background-color: #cbcb00">NOTE: Watch this line when decoding bank vector code</span>
 C6C1: 59 D6 02                     eor     <a href="#SymDNIBL">DNIBL</a>-128,Y
 C6C4: A4 3C                        ldy     <a href="#SymBOOTTMP">BOOTTMP</a>
 C6C6: 91 26                        sta     ($26),Y
@@ -1356,7 +1351,7 @@ C6EF: A5 3D                        lda     $3D
 C6F1: CD 00 08                     cmp     $0800
 C6F4: A6 4F                        ldx     <a href="#SymBOOTDEV">BOOTDEV</a>
 C6F6: 90 DB                        bcc     <a href="#SymBADREAD">BADREAD</a>
-                   <span style="background-color: #cbcb00">NOTE: C6F8 4C 01 08, JMP $0801</span>
+                   <span style="background-color: #cbcb00">NOTE: Watch this line when decoding bank vector code</span>
 C6F8: 4C 01 08                     jmp     $0801
 
 C6FB: 00 00 00 00+                 HEX     $00,$00,$00,$00,$00 ;Last byte must be 0
@@ -1605,8 +1600,8 @@ C85B: 8D 81 C0     <span id="SymIRQ6">IRQ6</span>            sta     <a href="#S
 C85E: 2C 16 C0     <span id="SymIRQ7">IRQ7</span>            bit     <a href="#SymRDALTZP">RDALTZP</a>           ;LAST...AND VERY IMPORTANT!
 C861: 10 0D                        bpl     <a href="#SymIRQ8">IRQ8</a>              ; UNLESS IT IS NOT ENABLED
 C863: BA                           tsx                       ;SAVE CURRENT STACK POINTER
-C864: 8E 01 01                     stx     <a href="#Sympcrevnum">pcrevnum</a>          ;AT BOTTOM OF STACK
-C867: AE 00 01                     ldx     <a href="#Sympcrevnum">pcrevnum</a>-1        ;GET MAIN STACK POINTER
+C864: 8E 01 01                     stx     <a href="#Symrevnum">revnum</a>            ;AT BOTTOM OF STACK
+C867: AE 00 01                     ldx     <a href="#Symrevnum">revnum</a>-1          ;GET MAIN STACK POINTER
 C86A: 9A                           txs
 C86B: 8D 08 C0                     sta     <a href="#SymSETSTDZP">SETSTDZP</a>
 C86E: 09 80                        ora     #$80
@@ -1964,7 +1959,6 @@ CA5D: 85 2C                        sta     <a href="#SymRTNL">RTNL</a>          
 CA5F: 68                           pla
 CA60: 85 2D                        sta     <a href="#Symrtnh">rtnh</a>              ;Save return address
 CA62: A2 08                        ldx     #$08
-                   <span style="background-color: #cb9099">NOTE: TODO: where am I missing initbl (or is it initb1)</span>
 CA64: BD 04 CB     <span id="Symxqinit">xqinit</span>          lda     <a href="#Syminitbl">initbl</a>-1,X
 CA67: 95 3C                        sta     $3C,X
 CA69: CA                           dex
@@ -3013,7 +3007,7 @@ CFE4: 60           <span id="Symladone">ladone</span>          rts
 
 CFE5: 00 00 00 00+                 DS      26,$00
 CFFF: D0           <span id="SymClearIOROMs">ClearIOROMs</span>     DFB     $D0
-                   <span style="background-color: #89acb7">NOTE: Applesoft BASIC</span>
+                   <span style="background-color: #89acb7">NOTE: Applesoft BASIC *skip*</span>
 D000:              Applesoft_Basic
                                    ORG     *+$0000
 D000: 6F D8 65 D7+                 DS      34
@@ -4488,7 +4482,7 @@ FFFF: C8                           DFB     $C8
 <div id="footer">
     <hr/>
     <p>HTML generated by <a href="https://6502bench.com/">6502bench SourceGen</a> v1.8.4
-    on 2023/03/03 <!--10:00:07 -06:00--></p>
+    on 2023/03/03 <!--16:01:19 -06:00--></p>
     <p>Expression style: Merlin</p>
     <!-- parameters: cols=16,8,18,100;extraCols=Address,Bytes;byteSpc=True;commaBulk=True;nonuPfx=':';varPfx=']';labelBrk=False;notes=True;gfx=True;opWrap=32 -->
 </div>
