@@ -638,6 +638,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"CLREOP":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"clear to end of page",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"CLREOP",
+"Value":64578,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "CLRROM":{
 "DataDescriptor":{
 "Length":2,
@@ -736,6 +753,23 @@
 "MultiMask":null,
 "Label":"CSWL",
 "Value":54,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"CTLNUM":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":";$CD2A-CTLTAB-1",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"CTLNUM",
+"Value":52500,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -3579,6 +3613,13 @@
 "IsRelative":true},
 
 {
+"Offset":3761,
+"Addr":52913,
+"Length":213,
+"PreLabel":"",
+"IsRelative":false},
+
+{
 "Offset":4096,
 "Addr":53248,
 "Length":10240,
@@ -3892,6 +3933,96 @@
 "Hint":"InlineData"},
 
 {
+"Low":3381,
+"High":3385,
+"Hint":"InlineData"},
+
+{
+"Low":3393,
+"High":3399,
+"Hint":"InlineData"},
+
+{
+"Low":3405,
+"High":3409,
+"Hint":"InlineData"},
+
+{
+"Low":3415,
+"High":3415,
+"Hint":"InlineData"},
+
+{
+"Low":3416,
+"High":3416,
+"Hint":"Code"},
+
+{
+"Low":3465,
+"High":3465,
+"Hint":"Code"},
+
+{
+"Low":3469,
+"High":3469,
+"Hint":"Code"},
+
+{
+"Low":3473,
+"High":3473,
+"Hint":"Code"},
+
+{
+"Low":3477,
+"High":3477,
+"Hint":"Code"},
+
+{
+"Low":3481,
+"High":3481,
+"Hint":"Code"},
+
+{
+"Low":3487,
+"High":3487,
+"Hint":"Code"},
+
+{
+"Low":3504,
+"High":3504,
+"Hint":"Code"},
+
+{
+"Low":3511,
+"High":3511,
+"Hint":"Code"},
+
+{
+"Low":3519,
+"High":3519,
+"Hint":"InlineData"},
+
+{
+"Low":3520,
+"High":3520,
+"Hint":"Code"},
+
+{
+"Low":3539,
+"High":3539,
+"Hint":"InlineData"},
+
+{
+"Low":3540,
+"High":3540,
+"Hint":"Code"},
+
+{
+"Low":3653,
+"High":3653,
+"Hint":"Code"},
+
+{
 "Low":3974,
 "High":3976,
 "Hint":"InlineData"},
@@ -3903,28 +4034,8 @@
 
 {
 "Low":4095,
-"High":4095,
+"High":14335,
 "Hint":"InlineData"},
-
-{
-"Low":4096,
-"High":4096,
-"Hint":"Code"},
-
-{
-"Low":4127,
-"High":4128,
-"Hint":"InlineData"},
-
-{
-"Low":4153,
-"High":4153,
-"Hint":"Code"},
-
-{
-"Low":4232,
-"High":4232,
-"Hint":"Code"},
 
 {
 "Low":14336,
@@ -4760,6 +4871,223 @@
 "3357":"QUIT",
 "3358":"Disable controls (escape only)",
 "3359":"Enable controls (escape only)",
+"3360":"X.CUR.ON",
+"3361":"X.CUR.OFF",
+"3362":"Normal",
+"3363":"Inverse",
+"3364":"Scroll down",
+"3365":"Scroll up",
+"3366":"mouse chars off",
+"3367":"home cursor",
+"3368":"clear line",
+"3369":"mouse chars on",
+"3370":"move cursor down",
+"3372":"move cursor up",
+"3374":"forward a space",
+"3376":"home cursor, clear screen",
+"3378":"clear to end of line",
+"3380":"clear to end of page",
+"3382":"set 40 column mode",
+"3384":"set 80 column mode",
+"3386":"Quit video firmware",
+"3388":"disable //e control chars",
+"3390":"enable //e control chars",
+"3392":"turn on cursor (pascal)",
+"3394":"turn off cursor (pascal)",
+"3396":"normal video",
+"3398":"inverse video",
+"3400":"scroll down a line",
+"3402":"scroll up a line",
+"3404":"disable mouse characters",
+"3406":"move cursor home",
+"3408":"clear current line",
+"3410":"enable mouse characters",
+"3412":"set V (use M_CTL)",
+"3415":"BVC opcode (never taken)",
+"3416":"Always do the control character",
+"3417":"save X",
+"3418":"temp save of A",
+"3421":"try to execute CR, LF, BS, or BEL",
+"3424":"if acc has changed",
+"3427":"then function done",
+"3429":"number of CTL chars",
+"3431":"is it in table",
+"3434":"=\u003eyes, should we execute?",
+"3436":"else check next",
+"3437":"=\u003etry next one",
+"3439":"restore X",
+"3440":"and return",
+"3441":"save A",
+"3442":"V clear, always do (pascal,escape)",
+"3444":"controls are enabled iff",
+"3447":" M_CTL = 1 and",
+"3449":" M_CTL2 = 0",
+"3451":"=\u003ethey\u0027re enabled!!",
+"3453":"restore A",
+"3454":"restore X",
+"3455":"and return",
+"3456":"double X as index",
+"3457":"into address table",
+"3459":"restore A",
+"3460":"execute the char",
+"3463":"restore X",
+"3464":"and return",
+"3465":"clear cursor bit",
+"3469":"set cursor bit",
+"3473":"disable control characters",
+"3475":"by setting M_CTL2",
+"3477":"enable control characters",
+"3479":"by clearning M_CTL2",
+"3493":"move cursors to far left",
+"3496":" (probably not needed)",
+"3497":"and to top of window",
+"3501":"then set base address, OURCV",
+"3504":"set INVFLG to $FF",
+"3507":"then clear inverse mode bit",
+"3511":"set INVFLG to $3F",
+"3514":"then set inverse mode bit",
+"3518":"flag an 80 column window",
+"3519":"BCC opcode (never taken)",
+"3520":"flag a 40 column window",
+"3521":"but...it is pascal?",
+"3524":"=\u003eyes, don\u0027t execute",
+"3526":"save window size",
+"3527":"COPYROM if needed, set I/O hooks",
+"3530":"and get 40/80",
+"3531":"=\u003eset window",
+"3533":"don\u0027t set 40 if",
+"3536":"already 40",
+"3538":"flag 40 column window",
+"3539":"BCS opcode (never taken)",
+"3540":"flag 80 column window",
+"3541":"set window top now",
+"3543":"for text or mixed",
+"3546":"=\u003etext",
+"3550":"used by 80\u003c-\u003e49 conversion",
+"3552":"80 columns now?",
+"3555":"save 80 or 40",
+"3556":"=\u003e80: convert if 40",
+"3558":"=\u003e40: no convert",
+"3560":"80: convert to 40",
+"3563":"done converting",
+"3565":"=\u003e80: no convert",
+"3567":"40: convert to 80",
+"3570":"determine absolute CH",
+"3573":"in case the window setting",
+"3574":"was different",
+"3577":"pin to right edge if",
+"3578":"80 to 40 leaves cursor",
+"3580":"off the screen",
+"3586":"set new cursor",
+"3589":"set new base address",
+"3591":"for left = 0 (always)",
+"3594":"Called by INIT and Pascal",
+"3596":"and bottom",
+"3600":"set left,width,bottom",
+"3602":"set width to 80 if 80 columns",
+"3608":"set width",
+"3610":"exit used by SET40/80",
+"3633":"set a solid inverse cursor",
+"3636":"preserve M_CTL bit",
+"3641":"no pascal,mouse",
+"3643":"set mode bits",
+"3646":"say video firmware active",
+"3649":"and set alternate char set",
+"3653":"no quitting from pascal",
+"3658":"first, do an escape 4",
+"3661":"do a IN#0 (used by COMM)",
+"3664":"and a PR#0",
+"3712":"start at bottom of screen",
+"3714":"set base for current line",
+"3718":"start at left of screen",
+"3720":"enable page2 store",
+"3723":"get 40 column char",
+"3725":"save 40 column index",
+"3726":"save char",
+"3727":"div 2 for 80 column index",
+"3729":"save on page1",
+"3734":"get 80 column index",
+"3735":"now save character",
+"3738":"flip page1",
+"3741":"restore 40 column index",
+"3742":"move to the right",
+"3743":"at right yet?",
+"3745":"=\u003eno, do next column",
+"3747":"clear half of screen",
+"3750":"else do next line of screen",
+"3751":"=\u003edone with top line",
+"3753":"at top yet?",
+"3757":"convert to 80 columns",
+"3761":"is request code=0?",
+"3762":"=\u003eyes, ready for output",
+"3764":"check for any input",
+"3765":"=\u003ebad request, return error",
+"3767":"test keyboard",
+"3770":"=\u003eno keystroked",
+"3772":"good return",
+"3774":"else flag error",
+"3778":"turn on high bit",
+"3780":"save character",
+"3781":"SETUP ZP STUFF, don\u0027t set ROM",
+"3784":"ARE WE DOING GOTOXY?",
+"3789":"=\u003eDoing X or Y?",
+"3791":"now check for control char",
+"3792":"is it control?",
+"3794":"=\u003eyes, do control",
+"3796":"get horizontal position",
+"3799":"check for inverse",
+"3801":"normal, go store it",
+"3805":"now store it (erasing cursor)",
+"3808":"INC CH",
+"3819":"set cursor position to 0",
+"3828":"display new cursor",
+"3831":"return with no error",
+"3834":"turn off cursor",
+"3837":"get character",
+"3839":"MAKE BINARY",
+"3841":"doing X?",
+"3844":"=\u003eyes, set it",
+"3849":"calc base addr",
+"3855":"set proper cursors",
+"3858":"turn off gotoxy",
+"3863":"=\u003eDONE (ALWAYS TAKEN)",
+"3865":"turn off cursor",
+"3868":"get char",
+"3869":"is it gotoXY?",
+"3871":"=\u003eyes, start it up",
+"3873":"must switch in ROM for controls",
+"3876":"EXECUTE IT IF POSSIBLE",
+"3879":"=\u003edisplay new cursor, exit",
+"3883":"turn on gotoxy",
+"3886":"set XCOORD to -1",
+"3888":"set X",
+"3891":"=\u003edisplay cursor and exit",
+"3893":"SETUP ZP STUFF",
+"3896":"key pressed?",
+"3899":"=\u003enot yet",
+"3901":"DROP HI BIT",
+"3903":"good exit",
+"3905":"Set mode to pascal",
+"3907":"without mouse characters",
+"3910":"setup zero page for pascal",
+"3913":"do 40-\u003e80 convert",
+"3916":"home and clear screen",
+"3919":"display cursor, set OURCH,OURCV...",
+"3921":"save LC state, set ROM read",
+"3924":"set top to 0",
+"3926":"init either 40 or 80 window",
+"3929":"assume normal text",
+"3933":"is it",
+"3938":"=\u003eyes",
+"3940":"no, make flag inverse",
+"3945":"set all cursors",
+"3954":"calc base addr in BASL,H",
+"3955":"for given line no.",
+"3957":" 0\u003c=line no.\u003c=$17",
+"3959":" arg=000ABCDE, generate",
+"3961":" BASH=000001CD",
+"3963":"and",
+"3964":" BASL=EABAB000",
 "4000":"Read ROM and Write to RAM",
 "4003":"Which language card?",
 "4006":"C=1 if alternate card",
@@ -4786,6 +5114,15 @@
 "14912":"+ Trash $45 for those who want it",
 "14914":"+",
 "14916":"+",
+"14919":"save state of machine",
+"14921":"restore registers for save",
+"14924":"Note: same as old BREAK routine!!",
+"14925":"save reg\u0027s on BRK",
+"14928":"including PC",
+"14934":"call BRK HANDLER",
+"14937":"PRINT USER PC",
+"14940":"  AND REGS",
+"14943":"GO TO MONITOR (NO PASS GO, NO $200!)",
 "14946":"DO THIS FIRST THIS TIME",
 "14953":"+ Setvid \u0026 Setkbd",
 "14956":"initialize the mouse",
@@ -4808,7 +5145,17 @@
 "15003":" NO SO POINT AT WARM START",
 "15005":" FOR NEXT RESET",
 "15008":" AND DO THE COLD START",
-"15014":" SET PAGE 3 VECTORS",
+"15014":"Trash memory, init ports",
+"15017":" SET PAGE 3 VECTORS",
+"15019":" WITH CNTRL B ADRS",
+"15022":" OF CURRENT BASIC",
+"15028":" LOAD HI SLOT +1",
+"15030":"branch around mnemonics",
+"15032":"PHY",
+"15033":"PLY",
+"15034":"STZ",
+"15035":"TRB",
+"15036":"???",
 "15129":"JUMP $C600",
 "15134":"read mouse paddle",
 "15151":"CLR STATUS FOR DEBUG SOFTWARE",
@@ -5075,8 +5422,8 @@
 "MaxWidth":80,
 "BackgroundColor":0},
 
-"15014":{
-"Text":"Trash memory, init ports",
+"15032":{
+"Text":"\r\nExtension to MNEML (left mnemonics)\r\n\r\n",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -5445,6 +5792,204 @@
 "Text":"escape chars end here",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"3412":{
+"Text":"CTLCHAR executes the control character in the\r\naccumulator.  If it is called by Pascal, the character\r\nis always executed.  If it is called by the video\r\nfirmware, the character is executed if M_CTL is set\r\nand M_CTL2 is clear.\r\n\r\nNote: This routine is only called if the video firmware\r\nis active. The Monitor ROM calls VIDOUT1 if the video\r\nfirmware is inactive.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3441":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3456":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3465":{
+"Text":"\r\nX_CUR_ON = Allow Pascal cursor display\r\nX_CUR_OFF = Disable Pascal cursor display\r\nCursor is not displayed during call, so it will\r\nbe right when \"redisplayed\".\r\nNote: Though these commands are executed from BASIC,\r\nthey ahve no effect on firmware operation.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3473":{
+"Text":"\r\nThe control characters other than CR,LF,BEL,BS\r\nare normally enabled when video firmware is active.\r\nThey can be disabled and enabled using the ESC-D\r\nand ESC-E escape sequences.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3481":{
+"Text":"\r\nEnable mouse text by clearing M_MOUSE\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3487":{
+"Text":"\r\nDisable mouse text by setting M_MOUSE\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3493":{
+"Text":"\r\nEXECUTE HOME:\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3504":{
+"Text":"\r\nEXECUTE \"NORMAL VIDEO\"\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3511":{
+"Text":"\r\nEXECUTE \"INVERSE VIDEO\"\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3518":{
+"Text":"\r\nEXECUTE \u002740COL MODE\u0027 or \u002780COL MODE\u0027:\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3533":{
+"Text":"\r\nCHK80 is called by PR#0 to convert to 40 if it was\r\n80. Otherwise the window is left ajar.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3594":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3611":{
+"Text":"\r\nTurn on video firmware:\r\n\r\nThis routine is used by BASIC init, ESC-4, ESC-8\r\nIt copies the Monitor ROM to the language card\r\nif necessary; it sets the input and output hooks to\r\n$C30x; it sets all switches for video firmware operation\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3633":{
+"Text":"\r\nNow set the video firmware active\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3641":{
+"Text":"M_PASCAL+M_MOUSE",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3643":{
+"Text":"\r\nPascal calls here to set its mode\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3667":{
+"Text":"\r\nSCRN84 and SCRN48 convert screens between 40 \u0026 80 cols.\r\nWNDTOP must be set up to indicate the last line to\r\nbe done.  All registers are trashed.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3712":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3761":{
+"Text":"Pascal Support Stuff",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3778":{
+"Text":"\r\nPASCAL OUTPUT:\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3834":{
+"Text":"\r\nHANDLE GOTOXY STUFF\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3846":{
+"Text":"\r\nSet Y and do the GOTOXY\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3881":{
+"Text":"\r\nSTART THE GOTOXY SEQUENCE:\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3893":{
+"Text":"\r\nPASCAL INPUT:\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3905":{
+"Text":"\r\nPASCAL INITIALIZATION:\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3921":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3953":{
+"Text":"\r\nPut BASCAL here so we don\u0027t have to swtich\r\nin the ROMs for each character output.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"3974":{
+"Text":"More random junk (moremisc)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"14919":{
+"Text":"\r\nNEWBRK is called by the interrupt handler which has\r\nset the hardware to its default state and encoded\r\nthe state in the accumulator.  Software that wants\r\nto do break processing using full system resources\r\ncan restore the machine state from this value.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"14924":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"14937":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"14946":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -5502,14 +6047,14 @@
 "MaxWidth":80,
 "BackgroundColor":-18751},
 
-"3360":{
-"Text":"pick up here\r\npickup\r\npdf pg 455",
+"3370":{
+"Text":"TODO: Makes sure these resolved. (from pg 455)",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":-23296},
+"BackgroundColor":-256},
 
-"3974":{
-"Text":"NOT SURE IF THIS IS THE RIGHT PLACE FOR IRQTBLE...",
+"3447":{
+"Text":"M_CTL+M_CTL2",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -5518,13 +6063,25 @@
 "Text":"Applesoft BASIC",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":0},
+"BackgroundColor":-5383962},
+
+"14336":{
+"Text":"TODO: F8 ROM",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-5383962},
 
 "14946":{
 "Text":"pdf page 464\r\nThe IIc boot code is more different than the IIe code that I expected. -James",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":-7278960}},
+"BackgroundColor":-7278960},
+
+"15037":{
+"Text":"PICK UP HERE\r\nPICKUP\r\npick-up\r\npdf page 465",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-5383962}},
 
 "UserLabels":{
 "256":{
@@ -8542,6 +9099,496 @@
 "Value":52501,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3370":{
+"Label":"CTLADR",
+"Value":52522,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3431":{
+"Label":"FNDCTL",
+"Value":52583,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3439":{
+"Label":"CTLDONE",
+"Value":52591,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3441":{
+"Label":"CTLGO",
+"Value":52593,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3453":{
+"Label":"CGO",
+"Value":52605,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3456":{
+"Label":"CTLGO1",
+"Value":52608,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15364":{
+"Label":"VIDOUT1",
+"Value":64516,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15524":{
+"Label":"CTLDO",
+"Value":64676,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3465":{
+"Label":"X_CUR_ON",
+"Value":52617,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3469":{
+"Label":"X_CUR_OFF",
+"Value":52621,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3489":{
+"Label":"SETIT",
+"Value":52641,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3483":{
+"Label":"CLRIT",
+"Value":52635,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3473":{
+"Label":"CTLOFF",
+"Value":52625,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3477":{
+"Label":"CTLON",
+"Value":52629,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3481":{
+"Label":"MOUSON",
+"Value":52633,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3487":{
+"Label":"MOUSOFF",
+"Value":52639,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3493":{
+"Label":"HOMECUR",
+"Value":52645,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16105":{
+"Label":"CLRCH",
+"Value":65257,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15496":{
+"Label":"NEWVTABZ",
+"Value":64648,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3504":{
+"Label":"X_SO",
+"Value":52656,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3511":{
+"Label":"X_SI",
+"Value":52663,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16000":{
+"Label":"SETINV",
+"Value":65152,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3520":{
+"Label":"SET40",
+"Value":52672,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3610":{
+"Label":"SETX",
+"Value":52762,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3611":{
+"Label":"HOOKITUP",
+"Value":52763,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3541":{
+"Label":"WIN0",
+"Value":52693,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3533":{
+"Label":"CHK80",
+"Value":52685,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3538":{
+"Label":"WIN40",
+"Value":52690,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3540":{
+"Label":"WIN80",
+"Value":52692,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3552":{
+"Label":"WIN1",
+"Value":52704,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3565":{
+"Label":"WIN2",
+"Value":52717,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3570":{
+"Label":"WIN3",
+"Value":52722,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3667":{
+"Label":"SCRN84",
+"Value":52819,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3712":{
+"Label":"SCRN48",
+"Value":52864,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3586":{
+"Label":"WIN4",
+"Value":52738,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3608":{
+"Label":"WIN5",
+"Value":52760,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16108":{
+"Label":"SETCUR",
+"Value":65260,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3633":{
+"Label":"VIDMODE",
+"Value":52785,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3643":{
+"Label":"PVMODE",
+"Value":52795,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3652":{
+"Label":"QX",
+"Value":52804,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3653":{
+"Label":"QUIT",
+"Value":52805,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3672":{
+"Label":"SCR1",
+"Value":52824,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3678":{
+"Label":"SCR2",
+"Value":52830,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3686":{
+"Label":"SCR3",
+"Value":52838,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3705":{
+"Label":"SCR4",
+"Value":52857,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3714":{
+"Label":"SCR5",
+"Value":52866,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3723":{
+"Label":"SCR6",
+"Value":52875,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3725":{
+"Label":"SCR8",
+"Value":52877,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3734":{
+"Label":"SCR7",
+"Value":52886,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3757":{
+"Label":"SCR9",
+"Value":52909,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3772":{
+"Label":"PIORDY",
+"Value":52924,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3774":{
+"Label":"PSTERR",
+"Value":52926,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3776":{
+"Label":"PNOTRDY",
+"Value":52928,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3805":{
+"Label":"PWR1",
+"Value":52957,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3825":{
+"Label":"PWRITERET",
+"Value":52977,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3828":{
+"Label":"PWRET",
+"Value":52980,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3831":{
+"Label":"PRET",
+"Value":52983,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3834":{
+"Label":"GETX",
+"Value":52986,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3865":{
+"Label":"PCTL",
+"Value":53017,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3846":{
+"Label":"GETY",
+"Value":52998,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3924":{
+"Label":"PSETUP2",
+"Value":53076,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15462":{
+"Label":"LF",
+"Value":64614,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3888":{
+"Label":"PSETX",
+"Value":53040,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3953":{
+"Label":"PASCALC",
+"Value":53105,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3881":{
+"Label":"STARTXY",
+"Value":53033,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3896":{
+"Label":"GKEY",
+"Value":53048,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3921":{
+"Label":"PSETUP",
+"Value":53073,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3942":{
+"Label":"PS1",
+"Value":53094,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3967":{
+"Label":"PASCLC2",
+"Value":53119,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"14466":{
+"Label":"INSDS1",
+"Value":63618,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -11375,6 +12422,502 @@
 "SubFormat":"HighAscii",
 "SymbolRef":null},
 
+"3370":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LF",
+"Part":"Low"}},
+
+"3372":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"UP",
+"Part":"Low"}},
+
+"3374":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"NEWADV",
+"Part":"Low"}},
+
+"3376":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"HOME",
+"Part":"Low"}},
+
+"3378":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CLREOL",
+"Part":"Low"}},
+
+"3380":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CLREOP",
+"Part":"Low"}},
+
+"3382":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SET40",
+"Part":"Low"}},
+
+"3384":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SET80",
+"Part":"Low"}},
+
+"3386":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"QUIT",
+"Part":"Low"}},
+
+"3388":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CTLOFF",
+"Part":"Low"}},
+
+"3390":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CTLON",
+"Part":"Low"}},
+
+"3392":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"X_CUR_ON",
+"Part":"Low"}},
+
+"3394":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"X_CUR_OFF",
+"Part":"Low"}},
+
+"3396":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"X_SO",
+"Part":"Low"}},
+
+"3398":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"X_SI",
+"Part":"Low"}},
+
+"3400":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SCROLLDN",
+"Part":"Low"}},
+
+"3402":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SCROLLUP",
+"Part":"Low"}},
+
+"3404":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"MOUSOFF",
+"Part":"Low"}},
+
+"3406":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"HOMECUR",
+"Part":"Low"}},
+
+"3408":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CLRLIN",
+"Part":"Low"}},
+
+"3410":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"MOUSON",
+"Part":"Low"}},
+
+"3427":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CTLDONE",
+"Part":"Low"}},
+
+"3429":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CTLNUM",
+"Part":"Low"}},
+
+"3449":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_CTL",
+"Part":"Low"}},
+
+"3473":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_CTL2",
+"Part":"Low"}},
+
+"3477":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_CTL2",
+"Part":"Low"}},
+
+"3481":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_Mouse",
+"Part":"Low"}},
+
+"3487":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_Mouse",
+"Part":"Low"}},
+
+"3507":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_VMODE",
+"Part":"Low"}},
+
+"3514":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_VMODE",
+"Part":"Low"}},
+
+"3533":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RD80VID",
+"Part":"Low"}},
+
+"3543":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDTEXT",
+"Part":"Low"}},
+
+"3548":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3552":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RD80VID",
+"Part":"Low"}},
+
+"3580":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3584":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3602":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RD80VID",
+"Part":"Low"}},
+
+"3619":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"C3KEYIN",
+"Part":"Low"}},
+
+"3623":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"C3COUT1",
+"Part":"Low"}},
+
+"3627":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"C3COUT1",
+"Part":"High"}},
+
+"3636":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_CTL",
+"Part":"Low"}},
+
+"3649":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETALTCHAR",
+"Part":"Low"}},
+
+"3667":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3669":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SET80COL",
+"Part":"Low"}},
+
+"3676":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3683":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE2",
+"Part":"Low"}},
+
+"3689":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE1",
+"Part":"Low"}},
+
+"3705":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CLR80COL",
+"Part":"Low"}},
+
+"3708":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CLR80VID",
+"Part":"Low"}},
+
+"3712":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3718":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3720":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SET80COL",
+"Part":"Low"}},
+
+"3731":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE2",
+"Part":"Low"}},
+
+"3738":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE1",
+"Part":"Low"}},
+
+"3743":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3757":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SET80VID",
+"Part":"Low"}},
+
+"3774":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3784":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_GOXY",
+"Part":"Low"}},
+
+"3831":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3839":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"3858":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_GOXY",
+"Part":"Low"}},
+
+"3881":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_GOXY",
+"Part":"Low"}},
+
+"3905":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_Mouse",
+"Part":"Low"}},
+
+"3933":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"M_VMODE",
+"Part":"Low"}},
+
+"3959":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
 "3974":{
 "Length":1,
 "Format":"NumericLE",
@@ -11503,6 +13046,18 @@
 "Length":2,
 "Format":"NumericLE",
 "SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4096":{
+"Length":34,
+"Format":"Uninit",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4130":{
+"Length":10206,
+"Format":"Uninit",
+"SubFormat":"None",
 "SymbolRef":null},
 
 "14778":{
