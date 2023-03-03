@@ -3803,6 +3803,31 @@
 "Hint":"InlineData"},
 
 {
+"Low":1099,
+"High":1099,
+"Hint":"Code"},
+
+{
+"Low":1102,
+"High":1102,
+"Hint":"Code"},
+
+{
+"Low":1105,
+"High":1105,
+"Hint":"Code"},
+
+{
+"Low":1161,
+"High":1161,
+"Hint":"Code"},
+
+{
+"Low":1233,
+"High":1233,
+"Hint":"Code"},
+
+{
 "Low":1411,
 "High":1411,
 "Hint":"Code"},
@@ -4354,9 +4379,69 @@
 "1039":"Save IN#",
 "1041":"bcc is never taken",
 "1044":"Reset the hooks",
+"1051":"Go get boot block",
+"1057":"boot not okay",
+"1074":"should be $C6 now",
+"1078":"try slot 6 instead",
+"1081":"go to bottom of screen",
+"1085":"\u0027unable to start from memory card.\u0027",
+"1088":"skip if done",
+"1096":"drop into basic",
+"1099":"should be at $C44B",
+"1102":"Jump to ProDOS",
+"1105":"Jump to PC",
+"1108":"Assume wrong drive",
+"1112":"Error!!!",
+"1114":"Assume bad command",
+"1116":"Get command",
+"1120":"Branch if bad command",
+"1122":"Save zp DOS jumps in here",
+"1130":"Add 20 to command for table look up",
+"1134":"Go do command",
+"1137":"Restore up",
+"1147":"Set X and Y to whatever",
+"1153":"Was there an error?",
+"1156":"C = 1 if not 0",
+"1158":"Set n,z flags",
+"1161":"Bad command",
+"1165":"Bad protocol unit",
+"1167":"Save the error code",
+"1172":"Pull the return address",
+"1174":"C = 1 if carry in +3",
+"1176":"High byte of return address",
+"1182":"C = 0 from previous add",
+"1184":"Return address + 3 now pushed",
+"1185":"Save zero page",
+"1192":"Save rest of zp",
+"1200":"Get (tempptr) +3, +2, +1",
+"1202":"First store don\u0027t care",
+"1210":"x = user command",
+"1211":"Max # of param bytes",
+"1213":"Get the parms",
+"1215":"Note last store is on top of pointer",
+"1221":"Unit 0 or 1?",
+"1225":"A = Command",
+"1226":"Get unit into low bit",
+"1227":"C = 1 if invalid command",
+"1229":"Branch if bad command",
+"1231":"Always taken",
+"1233":"Store pointer in IOB",
+"1237":"Get slot",
+"1241":"Is it us?",
+"1245":"Back to rwts",
+"1248":"Command for DOS",
+"1250":"Go do it and come back",
+"1253":"A = Error code",
+"1255":"DOS io error code",
+"1259":"Put error code in status",
+"1262":"pad with 0\u0027s",
+"1274":"Smartport revision number",
+"1275":"Mark ram card",
+"1276":"Number of blocks = 0 for status call",
 "1286":"Flag that this is a boot",
 "1418":"One parm - the unit $00",
-"1490":"\u003cmbasic ;input from $C400?",
+"1488":"input?",
+"1490":"input from $C400?",
 "1500":"save X too",
 "1502":"we don\u0027t care about high bit",
 "1506":"only 0,1 valid",
@@ -4369,6 +4454,7 @@
 "1608":"SHUT OFF DISK AND QUIT!",
 "1611":"auto boot form slot 6?",
 "1617":"maybe slot 5 will talk to us",
+"1620":"Keep alignment",
 "1628":"Blows up if this is moved",
 "1787":"Last byte must be 0",
 "1796":"Null for pascal entry",
@@ -5370,7 +5456,7 @@
 
 "1024":{
 "Text":"Slinky Boot Code\r\n",
-"BoxMode":false,
+"BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
 
@@ -5484,13 +5570,7 @@
 
 "1536":{
 "Text":"\r\nDisk II boot stuff\r\njumps to slot 5 if boot fails\r\n\r\n",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":0},
-
-"1622":{
-"Text":"Keep alignment",
-"BoxMode":false,
+"BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
 
@@ -5990,17 +6070,89 @@
 "Text":"\r\n",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"1059":{
+"Text":"ldx #4*$10",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1070":{
+"Text":"cmp #4+$C0",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1064":{
+"Text":"discontinue boot sequence if not power on reset or forced cold start",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1085":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1102":{
+"Text":"\r\nEntry point for prodos driver\r\n\r\n",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1118":{
+"Text":"the \u0027cpy #4\u0027 below use to be a \u0027cmp #4\u0027.  because of this\r\nchange, revnum will be 1.0.1",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1134":{
+"Text":"This code is common to PC and ProDOS and DOS entry points",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1172":{
+"Text":"Protocol converter entry point",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1211":{
+"Text":"Command = ptr to parm list. y = 0",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1233":{
+"Text":"Dos entry point stuff",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1241":{
+"Text":"cmp #4*$10",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
+"1105":{
+"Text":"Entry point for prodos has a jump to the protocol converter (pconv4)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-5383962},
+
 "1729":{
-"Text":"C6C1 should be 59 D6 02, which is EOR DNIBL-$80,Y",
+"Text":"Watch this line when decoding bank vector code",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
 
 "1784":{
-"Text":"C6F8 4C 01 08, JMP $0801",
+"Text":"Watch this line when decoding bank vector code",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
@@ -6041,12 +6193,6 @@
 "MaxWidth":80,
 "BackgroundColor":0},
 
-"2660":{
-"Text":"TODO: where am I missing initbl (or is it initb1)",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":-18751},
-
 "3370":{
 "Text":"TODO: Makes sure these resolved. (from pg 455)",
 "BoxMode":false,
@@ -6060,7 +6206,7 @@
 "BackgroundColor":0},
 
 "4096":{
-"Text":"Applesoft BASIC",
+"Text":"Applesoft BASIC *skip*",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-5383962},
@@ -9589,6 +9735,167 @@
 "Value":63618,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1064":{
+"Label":"btok4",
+"Value":50216,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1081":{
+"Label":"btok4_1",
+"Value":50233,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1085":{
+"Label":"btok4_2",
+"Value":50237,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1096":{
+"Label":"btok4_3",
+"Value":50248,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"475":{
+"Label":"utsmsg",
+"Value":49627,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1102":{
+"Label":"entry4",
+"Value":50254,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1108":{
+"Label":"ent4",
+"Value":50260,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1124":{
+"Label":"zsave4",
+"Value":50276,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1156":{
+"Label":"rats4",
+"Value":50308,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1161":{
+"Label":"pccmd4",
+"Value":50313,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1165":{
+"Label":"pcbad4",
+"Value":50317,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1167":{
+"Label":"pcerr4",
+"Value":50319,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1137":{
+"Label":"done4",
+"Value":50289,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1139":{
+"Label":"rsloop4",
+"Value":50291,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1134":{
+"Label":"doit4",
+"Value":50286,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1172":{
+"Label":"pconv4",
+"Value":50324,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1192":{
+"Label":"pcsvzp4",
+"Value":50344,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1202":{
+"Label":"pcgtp4",
+"Value":50354,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1205":{
+"Label":"pcskp4",
+"Value":50357,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1213":{
+"Label":"pcparms4",
+"Value":50365,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1233":{
+"Label":"dosent4",
+"Value":50385,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1248":{
+"Label":"dosslt4",
+"Value":50400,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1257":{
+"Label":"dosok4",
+"Value":50409,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -10432,6 +10739,12 @@
 "SubFormat":"None",
 "SymbolRef":null},
 
+"1030":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
 "1034":{
 "Length":2,
 "Format":"NumericLE",
@@ -10452,20 +10765,370 @@
 "SubFormat":"None",
 "SymbolRef":null},
 
-"1044":{
+"1054":{
 "Length":3,
 "Format":"NumericLE",
 "SubFormat":"Symbol",
 "SymbolRef":{
-"Label":"setkbd",
+"Label":"bootbuf",
 "Part":"Low"}},
 
-"1047":{
+"1061":{
 "Length":3,
 "Format":"NumericLE",
 "SubFormat":"Symbol",
 "SymbolRef":{
-"Label":"setvid",
+"Label":"bootbuf",
+"Part":"Low"}},
+
+"1081":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1085":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"utsmsg",
+"Part":"Low"}},
+
+"1096":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"BASIC",
+"Part":"Low"}},
+
+"1108":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"nderr",
+"Part":"Low"}},
+
+"1110":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"unit",
+"Part":"Low"}},
+
+"1114":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"badcmd",
+"Part":"Low"}},
+
+"1116":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmmand",
+"Part":"Low"}},
+
+"1118":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1122":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"zused",
+"Part":"Low"}},
+
+"1124":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmmand",
+"Part":"Low"}},
+
+"1132":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1137":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1140":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmmand",
+"Part":"Low"}},
+
+"1143":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"zused",
+"Part":"Low"}},
+
+"1147":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"xval",
+"Part":"Low"}},
+
+"1150":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"yval",
+"Part":"Low"}},
+
+"1153":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"error",
+"Part":"Low"}},
+
+"1156":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1158":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1161":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"badcmd",
+"Part":"Low"}},
+
+"1165":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"badunit",
+"Part":"Low"}},
+
+"1167":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"error",
+"Part":"Low"}},
+
+"1178":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1182":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1185":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"tempptr",
+"Part":"Low"}},
+
+"1188":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"tempptr",
+"Part":"Low"}},
+
+"1190":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"zused",
+"Part":"Low"}},
+
+"1192":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmmand",
+"Part":"Low"}},
+
+"1200":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1202":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmmand",
+"Part":"Low"}},
+
+"1211":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1213":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmmand",
+"Part":"Low"}},
+
+"1215":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmmand",
+"Part":"Low"}},
+
+"1221":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"punit",
+"Part":"Low"}},
+
+"1227":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1233":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"iobpl",
+"Part":"Low"}},
+
+"1235":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"iobph",
+"Part":"Low"}},
+
+"1237":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ibslot",
+"Part":"Low"}},
+
+"1239":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"iobpl",
+"Part":"Low"}},
+
+"1245":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"rwts",
+"Part":"Low"}},
+
+"1248":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1255":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"doserr",
+"Part":"Low"}},
+
+"1257":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ibstat",
+"Part":"Low"}},
+
+"1259":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"iobpl",
+"Part":"Low"}},
+
+"1274":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pcrevnum",
+"Part":"Low"}},
+
+"1276":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1279":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"entry4",
 "Part":"Low"}},
 
 "1286":{
@@ -10522,6 +11185,18 @@
 "SubFormat":"None",
 "SymbolRef":null},
 
+"1424":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1455":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
 "1476":{
 "Length":3,
 "Format":"NumericLE",
@@ -10552,7 +11227,7 @@
 "SubFormat":"Symbol",
 "SymbolRef":{
 "Label":"mbasic",
-"Part":"Low"}},
+"Part":"High"}},
 
 "1492":{
 "Length":2,

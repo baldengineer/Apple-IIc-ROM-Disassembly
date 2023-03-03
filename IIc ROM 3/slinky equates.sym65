@@ -8,8 +8,8 @@
 *SYNOPSIS Apple IIc slink equates for $C400 space
 
 ; slinky equates
-revnum	@ $101	;revision 1.0.1
-pcrevnum	@ $101	;smartport rev 1.1
+revnum		@ $101	;revision 1.0.1
+pcrevnum	@ $11	;smartport rev 1.1
 
 ; prodos equates
 cmmand	@ $42	;command to be executed
@@ -42,8 +42,8 @@ ibdrvn	@ 2		;drive 1 or 2
 ibtrk	@ 4		;track number
 ibsect	@ 5		;sector number
 ibbufp	@ 8		;buffer pointer
-ibcmd	@ 12	;command
-ibstat	@ 13	;status
+ibcmd	@ $0C	;command
+ibstat	@ $0D	;status
 doserr	@ $80	;DOS I/O error
 dosinit	@ $9D1E	;DOS init vector use addr-1
 dossync	@ $A6C3	;$A6C4-1 ;DOS syntax error
