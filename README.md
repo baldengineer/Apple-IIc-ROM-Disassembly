@@ -24,8 +24,6 @@ The tool I'm using for diassembly is [SourceGen](https://6502bench.com/). It is 
 
 A really nice feature of 6502bench is that it outputs the disassembly as a hotlinked HTML. (Which is my primary reason for doing this exercise.) 
 
-See the note in the `RuntimeData` directory about the symbol files.
-
 ## Where to get the ROM?
 You can download the binary files from various archive sites. However, to open them with the SourceGen files, you'll need to split the file `03-342-0445-A.bin` at the bank boundry $3FFF.
 

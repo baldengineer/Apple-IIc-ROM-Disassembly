@@ -21,9 +21,9 @@
 "PlatformSymbolFileIdentifiers":["RT:Apple/Cxxx-IO.sym65",
 "RT:Apple/C08x-DiskII.sym65",
 "RT:Apple/F8-ROM.sym65",
-"RT:Apple/Apple IIc/slinky equates.sym65",
 "RT:Apple/Applesoft.sym65",
-"RT:Apple/Apple IIc/mouse equates.sym65"],
+"PROJ:mouse equates.sym65",
+"PROJ:slinky equates.sym65"],
 "ExtensionScriptFileIdentifiers":[],
 "ProjectSyms":{
 "A1H":{
