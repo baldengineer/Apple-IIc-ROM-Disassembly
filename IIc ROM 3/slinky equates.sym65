@@ -5,7 +5,7 @@
 ; Sources:
 ;   Apple IIc Technical Reference Manual (Firmware listing)
 
-*SYNOPSIS Apple IIc slink equates for $C400 space
+*SYNOPSIS Apple IIc slinky equates for $C400 space
 
 ; slinky equates
 revnum		@ $101	;revision 1.0.1
