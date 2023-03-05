@@ -43,7 +43,7 @@
                    <span id="SymYHI">YHI</span>             EQU     $08    {const}    ;$CD00-$CCF8
                    <span id="SymM_CURSOR">M_CURSOR</span>        EQU     $10    {const}    ;Don't print cursor
                    <span id="SymESCNUM">ESCNUM</span>          EQU     $13    {const}    ;$CD0C-ESCTAB-1
-                   <span id="SymNUMOPS">NUMOPS</span>          EQU     $16    {const}
+                   <span id="SymNUMOPS">NUMOPS</span>          EQU     $16    {const}    ;*-OPTBL-1 ; number of bytes to check
                    <span id="SymM_CTL2">M_CTL2</span>          EQU     $20    {const}    ;Don't print controls
                    <span id="Symxon">xon</span>             EQU     $91    {const}    ;XON character
                    <span id="SymPICK">PICK</span>            EQU     $95    {const}    ;CONTROL-U character
@@ -129,6 +129,8 @@
                    <span id="SymBRKV">BRKV</span>            EQU     $03F0  {addr/2}   ;vectors here after break
                    <span id="SymSOFTEV">SOFTEV</span>          EQU     $03F2  {addr/2}   ;vector for warm start
                    <span id="SymPWREDUP">PWREDUP</span>         EQU     $03F4  {addr/2}   ;THIS MUST = EOR #$A5 OF SOFTEV+1
+                   <span id="SymUSRADR">USRADR</span>          EQU     $03F8  {addr/2}   ;APPLESOFT USR function vector
+                   <span id="SymNMI">NMI</span>             EQU     $03FB  {addr/2}   ;NMI vector
                    <span id="SymLINE1">LINE1</span>           EQU     $0400  {addr/2}   ;first line of text screen
                    <span id="SymROMSTATE">ROMSTATE</span>        EQU     $0478  {addr/2}   ;temp store of ROM state
                    <span id="SymOLDCH">OLDCH</span>           EQU     $047B  {addr/2}   ;($478+3) last value of CH
@@ -164,6 +166,7 @@
                    <span id="Symscomd">scomd</span>           EQU     $BFFA             ;ACIA command register
                    <span id="Symscntl">scntl</span>           EQU     $BFFB             ;ACIA control register
                    <span id="SymCLR80COL">CLR80COL</span>        EQU     $C000  {addr/2}   ;disable 80 column store
+                   <span id="SymIOADR">IOADR</span>           EQU     $C000  {addr/2}   ;for IN#, PR# vector
                    <span id="SymKBD">KBD</span>             EQU     $C000  {addr/2}   ;&gt;127 if keystroke
                    <span id="SymSET80COL">SET80COL</span>        EQU     $C001  {addr/2}   ;enable 80 column store
                    <span id="SymRDMAINRAM">RDMAINRAM</span>       EQU     $C002  {addr/2}   ;read from main 48K RAM
@@ -174,6 +177,7 @@
                    <span id="SymSETALTZP">SETALTZP</span>        EQU     $C009  {addr/2}   ;use alt. zero page/stack
                    <span id="SymCLR80VID">CLR80VID</span>        EQU     $C00C  {addr/2}   ;disable 80 column hardware
                    <span id="SymSET80VID">SET80VID</span>        EQU     $C00D  {addr/2}   ;enable 80 column hardware
+                   <span id="SymCLRALTCHAR">CLRALTCHAR</span>      EQU     $C00E  {addr/2}   ;normal LC, flashing UC
                    <span id="SymSETALTCHAR">SETALTCHAR</span>      EQU     $C00F  {addr/2}   ;normal inverse, LC; no flash
                    <span id="SymKBDSTRB">KBDSTRB</span>         EQU     $C010  {addr/2}   ;turn off key pressed flag
                    <span id="SymRDLCBNK2">RDLCBNK2</span>        EQU     $C011  {addr/2}   ;&gt;127 if LC bnak 2 is in
@@ -226,6 +230,7 @@
                    <span id="Symzznm">zznm</span>            EQU     $D4C5
                    <span id="Symexecute">execute</span>         EQU     $D800             ;bank2
                    <span id="SymBASIC">BASIC</span>           EQU     $E000  {addr/2}   ;BASIC Entry Point
+                   <span id="SymBASIC2">BASIC2</span>          EQU     $E003  {addr/2}   ;BASIC warm entry point
                    <span id="SymIRQVECT">IRQVECT</span>         EQU     $FFFE
 
                    ********************************************************************************
@@ -308,7 +313,7 @@
                    *                                                                              *
                    ********************************************************************************
                                    ORG     $C000
-C000: 50 65 74 65+ <span id="SymLC000">LC000</span>           ASC     ‘Peter Quinn, Rick Rice, Joe En’
+C000: 50 65 74 65+                 ASC     ‘Peter Quinn, Rick Rice, Joe En’
                                     +      ‘nis, J MacDougall, Ken Victor,’
                                     +      ‘ E Beernink, JR Huston, RC Wil’
                                     +      ‘liams, S DesJardin, Randy Bles’
@@ -3115,7 +3120,7 @@ F881: 60                           rts
 
 F882: A6 3A        <span id="SymINSDS1">INSDS1</span>          ldx     <a href="#SymPCL">PCL</a>               ;PRINT PCL,H
 F884: A4 3B                        ldy     <a href="#SymPCH">PCH</a>
-F886: 20 96 FD                     jsr     <a href="#SymLFD96">LFD96</a>
+F886: 20 96 FD                     jsr     <a href="#SymPRYX2">PRYX2</a>
 F889: 20 48 F9                     jsr     <a href="#SymPRBLNK">PRBLNK</a>            ;FOLLOWED BY A BLANK
 F88C: A1 3A                        lda     (<a href="#SymPCL">PCL</a>,X)           ;GET OPCODE
 F88E: A8           <span id="SymINDS2">INDS2</span>           tay                       ;LABLE moved down 1
@@ -3570,7 +3575,7 @@ FAD2: 4C C1 C7                     jmp     <a href="#Symbanger">banger</a>      
 
 FAD5: EA                           nop                       ; + align code
 FAD6: EA                           nop                       ; +
-FAD7: 20 8E FD                     jsr     <a href="#SymCROUT">CROUT</a>             ;DISPLAY USER REG CONTENTS
+FAD7: 20 8E FD     <span id="SymREGDSP">REGDSP</span>          jsr     <a href="#SymCROUT">CROUT</a>             ;DISPLAY USER REG CONTENTS
 FADA: A9 44        <span id="Symrgdsp1">rgdsp1</span>          lda     #$44              ;WITH LABELS
 FADC: 85 40                        sta     <a href="#SymA3L">A3L</a>               ;Memory state now printed
 FADE: A9 00                        lda     #$00
@@ -3982,321 +3987,277 @@ FD8B: 20 9C FC     <span id="SymCROUT1">CROUT1</span>          jsr     <a href="
 FD8E: A9 8D        <span id="SymCROUT">CROUT</span>           lda     #$8D
 FD90: D0 5B                        bne     <a href="#Symcout">cout</a>              ;(ALWAYS)
 
-                   <span style="background-color: #89acb7">NOTE: pick-up</span>
-                   <span style="background-color: #89acb7">pickup</span>
-                   <span style="background-color: #89acb7">pdf pg 469</span>
-FD92: A4                           DFB     $A4
-FD93: 3D                           DFB     $3D
-FD94: A6                           DFB     $A6
-FD95: 3C                           DFB     $3C
-
-FD96: 20 8E FD     <span id="SymLFD96">LFD96</span>           jsr     <a href="#SymCROUT">CROUT</a>
+                   ; 
+FD92: A4 3D        <span id="SymPRA1">PRA1</span>            ldy     <a href="#SymA1H">A1H</a>               ;PRINT CR,A1 IN HEX
+FD94: A6 3C                        ldx     <a href="#SymA1L">A1L</a>
+FD96: 20 8E FD     <span id="SymPRYX2">PRYX2</span>           jsr     <a href="#SymCROUT">CROUT</a>
 FD99: 20 40 F9                     jsr     <a href="#SymPRNTYX">PRNTYX</a>
 FD9C: A0 00                        ldy     #$00
-FD9E: A9 AD                        lda     #$AD
+FD9E: A9 AD                        lda     #$AD              ;PRINT "-"
 FDA0: 4C ED FD                     jmp     <a href="#Symcout">cout</a>
 
-FDA3: A5                           DFB     $A5
-FDA4: 3C                           DFB     $3C
-FDA5: 09                           DFB     $09
-FDA6: 07                           DFB     $07
-FDA7: 85                           DFB     $85
-FDA8: 3E                           DFB     $3E
-FDA9: A5                           DFB     $A5
-FDAA: 3D                           DFB     $3D
-FDAB: 85                           DFB     $85
-FDAC: 3F                           DFB     $3F
-FDAD: A5                           DFB     $A5
-FDAE: 3C                           DFB     $3C
-FDAF: 29                           DFB     $29
-FDB0: 07                           DFB     $07
-FDB1: D0                           DFB     $D0
-FDB2: 03                           DFB     $03
-FDB3: 20                           DFB     $20
-FDB4: 92                           DFB     $92
-FDB5: FD                           DFB     $FD
-FDB6: A9                           DFB     $A9
-FDB7: A0                           DFB     $A0
-FDB8: 20                           DFB     $20
-FDB9: ED                           DFB     $ED
-FDBA: FD                           DFB     $FD
-FDBB: B1                           DFB     $B1
-FDBC: 3C                           DFB     $3C
-FDBD: 20                           DFB     $20
-FDBE: DA                           DFB     $DA
-FDBF: FD                           DFB     $FD
-FDC0: 20                           DFB     $20
-FDC1: BA                           DFB     $BA
-FDC2: FC                           DFB     $FC
-FDC3: 90                           DFB     $90
-FDC4: E8                           DFB     $E8
-FDC5: 60                           DFB     $60
-FDC6: 4A                           DFB     $4A
-FDC7: 90                           DFB     $90
-FDC8: EA                           DFB     $EA
-FDC9: 4A                           DFB     $4A
-FDCA: 4A                           DFB     $4A
-FDCB: A5                           DFB     $A5
-FDCC: 3E                           DFB     $3E
-FDCD: 90                           DFB     $90
-FDCE: 02                           DFB     $02
-FDCF: 49                           DFB     $49
-FDD0: FF                           DFB     $FF
-FDD1: 65                           DFB     $65
-FDD2: 3C                           DFB     $3C
-FDD3: 48                           DFB     $48
-FDD4: A9                           DFB     $A9
-FDD5: BD                           DFB     $BD
-FDD6: 20                           DFB     $20
-FDD7: ED                           DFB     $ED
-FDD8: FD                           DFB     $FD
-FDD9: 68                           DFB     $68
+FDA3: A5 3C        <span id="SymXAM8">XAM8</span>            lda     <a href="#SymA1L">A1L</a>
+FDA5: 09 07                        ora     #$07              ;SET TO FINISH AT
+FDA7: 85 3E                        sta     <a href="#SymA2L">A2L</a>               ; MOD 8=7
+FDA9: A5 3D                        lda     <a href="#SymA1H">A1H</a>
+FDAB: 85 3F                        sta     <a href="#SymA2H">A2H</a>
+FDAD: A5 3C        <span id="SymMOD8CHK">MOD8CHK</span>         lda     <a href="#SymA1L">A1L</a>
+FDAF: 29 07                        and     #$07
+FDB1: D0 03                        bne     <a href="#SymDATAOUT">DATAOUT</a>
+FDB3: 20 92 FD     <span id="SymXAM">XAM</span>             jsr     <a href="#SymPRA1">PRA1</a>
+FDB6: A9 A0        <span id="SymDATAOUT">DATAOUT</span>         lda     #$A0
+FDB8: 20 ED FD                     jsr     <a href="#Symcout">cout</a>              ;OUTPUT BLANK
+FDBB: B1 3C                        lda     (<a href="#SymA1L">A1L</a>),Y
+FDBD: 20 DA FD                     jsr     <a href="#SymPRBYTE">PRBYTE</a>            ;OUTPUT BYTE IN HEX
+FDC0: 20 BA FC                     jsr     <a href="#SymNXTA1">NXTA1</a>
+FDC3: 90 E8                        bcc     <a href="#SymMOD8CHK">MOD8CHK</a>           ;NOT DONE YET. GO CHECK MOD 8
+FDC5: 60           <span id="SymRTS4C">RTS4C</span>           rts                       ;DONE.
 
-FDDA: 48           <span id="SymPRBYTE">PRBYTE</span>          pha
-FDDB: 4A                           lsr     A
+FDC6: 4A           <span id="SymXAMPM">XAMPM</span>           lsr     A                 ;DETERMINE IF MONITOR MOD IS
+FDC7: 90 EA                        bcc     <a href="#SymXAM">XAM</a>               ; EXAMINE, ADD OR SUBTRACT
+FDC9: 4A                           lsr     A
+FDCA: 4A                           lsr     A
+FDCB: A5 3E                        lda     <a href="#SymA2L">A2L</a>
+FDCD: 90 02                        bcc     <a href="#SymADD">ADD</a>
+FDCF: 49 FF                        eor     #$FF              ;FORM 2'S COMPLEMENT FOR SUBTRACT.
+FDD1: 65 3C        <span id="SymADD">ADD</span>             adc     <a href="#SymA1L">A1L</a>
+FDD3: 48                           pha
+FDD4: A9 BD                        lda     #$BD              ;PRINT '=', THEN RESULT
+FDD6: 20 ED FD                     jsr     <a href="#Symcout">cout</a>
+FDD9: 68                           pla
+                   ; 
+FDDA: 48           <span id="SymPRBYTE">PRBYTE</span>          pha                       ;PRINT BYTE AS 2 HEX DIGITA
+FDDB: 4A                           lsr     A                 ; (DESTROYS A-REG)
 FDDC: 4A                           lsr     A
 FDDD: 4A                           lsr     A
 FDDE: 4A                           lsr     A
-FDDF: 20 E5 FD                     jsr     <a href="#SymLFDE5">LFDE5</a>
+FDDF: 20 E5 FD                     jsr     <a href="#SymPRHEXZ">PRHEXZ</a>
 FDE2: 68                           pla
-FDE3: 29 0F                        and     #$0F
-FDE5: 09 B0        <span id="SymLFDE5">LFDE5</span>           ora     #$B0
+                   ; 
+FDE3: 29 0F        <span id="SymPRHEX">PRHEX</span>           and     #$0F              ;PRINT HEX DIGIT IN A-REG
+FDE5: 09 B0        <span id="SymPRHEXZ">PRHEXZ</span>          ora     #$B0              ;LSBITS ONLY.
 FDE7: C9 BA                        cmp     #$BA
 FDE9: 90 02                        bcc     <a href="#Symcout">cout</a>
 FDEB: 69 06                        adc     #$06
-FDED: 6C 36 00     <span id="Symcout">cout</span>            jmp     (<a href="#SymCSWL">CSWL</a>)
+                   ; 
+FDED: 6C 36 00     <span id="Symcout">cout</span>            jmp     (<a href="#SymCSWL">CSWL</a>)            ;VECTOR TO USER OUTPUT ROUTINE
 
-FDF0: 2C 7B 06     <span id="Symcout1">cout1</span>           bit     <a href="#SymVFACTV">VFACTV</a>
-FDF3: 4C B4 FB                     jmp     <a href="#SymDOCOUT1">DOCOUT1</a>
+FDF0: 2C 7B 06     <span id="Symcout1">cout1</span>           bit     <a href="#SymVFACTV">VFACTV</a>            ;video firmware active?
+FDF3: 4C B4 FB                     jmp     <a href="#SymDOCOUT1">DOCOUT1</a>           ;mask II mode characters
 
-FDF6: 84 35        <span id="SymCOUTZ">COUTZ</span>           sty     <a href="#SymYSAV1">YSAV1</a>
-FDF8: 48                           pha
-FDF9: 20 78 FB                     jsr     <a href="#SymVIDWAIT">VIDWAIT</a>
-FDFC: 68                           pla
-FDFD: A4 35                        ldy     <a href="#SymYSAV1">YSAV1</a>
-FDFF: 60                           rts
+FDF6: 84 35        <span id="SymCOUTZ">COUTZ</span>           sty     <a href="#SymYSAV1">YSAV1</a>             ;SAVE Y-REG
+FDF8: 48                           pha                       ;SAVE A -REG
+FDF9: 20 78 FB                     jsr     <a href="#SymVIDWAIT">VIDWAIT</a>           ;OUTPUT CHR AND CHECK FOR CTRL-S
+FDFC: 68                           pla                       ;RESTORE A-REG
+FDFD: A4 35                        ldy     <a href="#SymYSAV1">YSAV1</a>             ;AND Y-REG
+FDFF: 60                           rts                       ;RETURN TO SENDER...
 
-FE00: C6                           DFB     $C6
-FE01: 34                           DFB     $34
-FE02: F0                           DFB     $F0
-FE03: 9F                           DFB     $9F
-FE04: CA                           DFB     $CA
-FE05: D0                           DFB     $D0
-FE06: 16                           DFB     $16
-FE07: C9 BA D0 BB                  ASC     “I:P;”
-FE0B: 85                           DFB     $85
-FE0C: 31                           DFB     $31
-FE0D: A5                           DFB     $A5
-FE0E: 3E                           DFB     $3E
-FE0F: 91                           DFB     $91
-FE10: 40                           DFB     $40
-FE11: E6                           DFB     $E6
-FE12: 40                           DFB     $40
-FE13: D0                           DFB     $D0
-FE14: 02                           DFB     $02
-FE15: E6                           DFB     $E6
-FE16: 41                           DFB     $41
-FE17: 60                           DFB     $60
-FE18: A4                           DFB     $A4
-FE19: 34                           DFB     $34
-FE1A: B9                           DFB     $B9
-FE1B: FF                           DFB     $FF
-FE1C: 01                           DFB     $01
-FE1D: 85                           DFB     $85
-FE1E: 31                           DFB     $31
-FE1F: 60                           DFB     $60
-FE20: A2                           DFB     $A2
-FE21: 01                           DFB     $01
-FE22: B5                           DFB     $B5
-FE23: 3E                           DFB     $3E
-FE24: 95                           DFB     $95
-FE25: 42                           DFB     $42
-FE26: 95                           DFB     $95
-FE27: 44                           DFB     $44
-FE28: CA                           DFB     $CA
-FE29: 10                           DFB     $10
-FE2A: F7                           DFB     $F7
-FE2B: 60                           DFB     $60
-FE2C: B1                           DFB     $B1
-FE2D: 3C                           DFB     $3C
-FE2E: 91                           DFB     $91
-FE2F: 42                           DFB     $42
-FE30: 20                           DFB     $20
-FE31: B4                           DFB     $B4
-FE32: FC                           DFB     $FC
-FE33: 90                           DFB     $90
-FE34: F7                           DFB     $F7
-FE35: 60                           DFB     $60
-FE36: B1                           DFB     $B1
-FE37: 3C                           DFB     $3C
-FE38: D1                           DFB     $D1
-FE39: 42                           DFB     $42
-FE3A: F0                           DFB     $F0
-FE3B: 1C                           DFB     $1C
-FE3C: 20                           DFB     $20
-FE3D: 92                           DFB     $92
-FE3E: FD                           DFB     $FD
-FE3F: B1                           DFB     $B1
-FE40: 3C                           DFB     $3C
-FE41: 20                           DFB     $20
-FE42: DA FD A9 A0                  ASC     “Z}) ”
-FE46: 20                           DFB     $20
-FE47: ED FD A9 A8                  ASC     “m})(”
-FE4B: 20                           DFB     $20
-FE4C: ED                           DFB     $ED
-FE4D: FD                           DFB     $FD
-FE4E: B1                           DFB     $B1
-FE4F: 42                           DFB     $42
-FE50: 20                           DFB     $20
-FE51: DA FD A9 A9                  ASC     “Z}))”
-FE55: 20                           DFB     $20
-FE56: ED                           DFB     $ED
-FE57: FD                           DFB     $FD
-FE58: 20                           DFB     $20
-FE59: B4                           DFB     $B4
-FE5A: FC                           DFB     $FC
-FE5B: 90                           DFB     $90
-FE5C: D9                           DFB     $D9
-FE5D: 60                           DFB     $60
-FE5E: 20                           DFB     $20
-FE5F: 75                           DFB     $75
-FE60: FE                           DFB     $FE
-FE61: A9                           DFB     $A9
-FE62: 14                           DFB     $14
-FE63: 48                           DFB     $48
-FE64: 20                           DFB     $20
-FE65: C4                           DFB     $C4
-FE66: C5                           DFB     $C5
-FE67: 68                           DFB     $68
-FE68: 3A                           DFB     $3A
-FE69: D0                           DFB     $D0
-FE6A: F8                           DFB     $F8
-FE6B: 60                           DFB     $60
-FE6C: 4C                           DFB     $4C
-FE6D: 86                           DFB     $86
-FE6E: C9                           DFB     $C9
-FE6F: C6                           DFB     $C6
-FE70: 34                           DFB     $34
-FE71: 4C                           DFB     $4C
-FE72: 43                           DFB     $43
-FE73: CA                           DFB     $CA
-FE74: 00                           DFB     $00
+FE00: C6 34        <span id="SymBL1">BL1</span>             dec     <a href="#SymYSAV">YSAV</a>
+FE02: F0 9F                        beq     <a href="#SymXAM8">XAM8</a>
+                   ; 
+FE04: CA           <span id="SymBLANK">BLANK</span>           dex                       ;BLANK TO MON
+FE05: D0 16                        bne     <a href="#SymSETMDZ">SETMDZ</a>            ;AFTER BLANK
+FE07: C9 BA                        cmp     #$BA              ;DATA STORE MODE?
+FE09: D0 BB                        bne     <a href="#SymXAMPM">XAMPM</a>             ; NO; XAM, ADD, OR SUBTRACT.
+                   ; 
+FE0B: 85 31        <span id="SymSTOR">STOR</span>            sta     <a href="#SymMODE">MODE</a>              ;KEEP IN STORE MODE
+FE0D: A5 3E                        lda     <a href="#SymA2L">A2L</a>
+FE0F: 91 40                        sta     (<a href="#SymA3L">A3L</a>),Y           ;STORE AS LOW BYTE AT (A3)
+FE11: E6 40                        inc     <a href="#SymA3L">A3L</a>
+FE13: D0 02                        bne     <a href="#SymRTS5">RTS5</a>              ;INCR A3, RETURN.
+FE15: E6 41                        inc     <a href="#SymA3H">A3H</a>
+FE17: 60           <span id="SymRTS5">RTS5</span>            rts
 
-FE75: 8A           <span id="Syma1pc">a1pc</span>            txa
-FE76: F0 07                        beq     <a href="#SymLFE7F">LFE7F</a>
-FE78: B5 3C        <span id="SymA1PCLP">A1PCLP</span>          lda     <a href="#SymBOOTTMP">BOOTTMP</a>,X
+FE18: A4 34        <span id="SymSETMODE">SETMODE</span>         ldy     <a href="#SymYSAV">YSAV</a>              ;SAVE CONVERTED ':', '+',
+FE1A: B9 FF 01                     lda     <a href="#SymIN">IN</a>-1,Y            ; '-', '.' AS MODE
+FE1D: 85 31        <span id="SymSETMDZ">SETMDZ</span>          sta     <a href="#SymMODE">MODE</a>
+FE1F: 60                           rts
+
+FE20: A2 01        <span id="SymLT">LT</span>              ldx     #$01
+FE22: B5 3E        <span id="SymLT2">LT2</span>             lda     <a href="#SymA2L">A2L</a>,X             ;COPY A2 (2 BYTES) TO
+FE24: 95 42                        sta     <a href="#SymA4L">A4L</a>,X             ; A4 AND A5
+FE26: 95 44                        sta     <a href="#SymA5L">A5L</a>,X
+FE28: CA                           dex
+FE29: 10 F7                        bpl     <a href="#SymLT2">LT2</a>
+FE2B: 60                           rts
+
+FE2C: B1 3C        <span id="SymMOVE">MOVE</span>            lda     (<a href="#SymA1L">A1L</a>),Y           ;MOVE (A) THRU (A2) TO (A4)
+FE2E: 91 42                        sta     (<a href="#SymA4L">A4L</a>),Y
+FE30: 20 B4 FC                     jsr     <a href="#SymNXTA4">NXTA4</a>
+FE33: 90 F7                        bcc     <a href="#SymMOVE">MOVE</a>
+FE35: 60                           rts
+
+FE36: B1 3C        <span id="SymVERIFY">VERIFY</span>          lda     (<a href="#SymA1L">A1L</a>),Y           ;VERIFY (A1) THRU (A2)
+FE38: D1 42                        cmp     (<a href="#SymA4L">A4L</a>),Y           ; WITH (A4)
+FE3A: F0 1C                        beq     <a href="#SymVFYOK">VFYOK</a>
+FE3C: 20 92 FD                     jsr     <a href="#SymPRA1">PRA1</a>
+FE3F: B1 3C                        lda     (<a href="#SymA1L">A1L</a>),Y
+FE41: 20 DA FD                     jsr     <a href="#SymPRBYTE">PRBYTE</a>
+FE44: A9 A0                        lda     #$A0
+FE46: 20 ED FD                     jsr     <a href="#Symcout">cout</a>
+FE49: A9 A8                        lda     #$A8
+FE4B: 20 ED FD                     jsr     <a href="#Symcout">cout</a>
+FE4E: B1 42                        lda     (<a href="#SymA4L">A4L</a>),Y
+FE50: 20 DA FD                     jsr     <a href="#SymPRBYTE">PRBYTE</a>
+FE53: A9 A9                        lda     #$A9
+FE55: 20 ED FD                     jsr     <a href="#Symcout">cout</a>
+FE58: 20 B4 FC     <span id="SymVFYOK">VFYOK</span>           jsr     <a href="#SymNXTA4">NXTA4</a>
+FE5B: 90 D9                        bcc     <a href="#SymVERIFY">VERIFY</a>
+FE5D: 60                           rts
+
+FE5E: 20 75 FE     <span id="SymLIST">LIST</span>            jsr     <a href="#Syma1pc">a1pc</a>              ;MOVE A1 (2 BYTES) TO
+FE61: A9 14                        lda     #$14              ; PC IF SPEC'D AND
+FE63: 48           <span id="SymLIST2">LIST2</span>           pha                       ;+DISASSEMBLE 20 INSTRUCTIONS.
+FE64: 20 C4 C5                     jsr     <a href="#Symshowinst">showinst</a>          ;+Display a line
+FE67: 68                           pla
+FE68: 3A                           dec     A                 ;+Count down
+FE69: D0 F8                        bne     <a href="#SymLIST2">LIST2</a>
+FE6B: 60                           rts
+
+FE6C: 4C 86 C9     <span id="SymMINI">MINI</span>            jmp     <a href="#SymGETINST1">GETINST1</a>          ;+Go to the mini assembler
+
+FE6F: C6 34        <span id="SymTRACE">TRACE</span>           dec     <a href="#SymYSAV">YSAV</a>              ;+Stay on T for trace
+FE71: 4C 43 CA     <span id="SymSTEPZ">STEPZ</span>           jmp     <a href="#Symstep">step</a>              ;+Off to the step routine
+
+FE74: 00                           DFB     $00               ;+Extra bytes
+
+FE75: 8A           <span id="Syma1pc">a1pc</span>            txa                       ;IF USER SPECIFIED AN ADDRESS,
+FE76: F0 07                        beq     <a href="#SymA1PCRTS">A1PCRTS</a>           ; COPY IT FROM A1 TO PC.
+FE78: B5 3C        <span id="SymA1PCLP">A1PCLP</span>          lda     <a href="#SymA1L">A1L</a>,X             ;YEP, SO COPY IT.
 FE7A: 95 3A                        sta     <a href="#SymPCL">PCL</a>,X
 FE7C: CA                           dex
 FE7D: 10 F9                        bpl     <a href="#SymA1PCLP">A1PCLP</a>
-FE7F: 60           <span id="SymLFE7F">LFE7F</span>           rts
+FE7F: 60           <span id="SymA1PCRTS">A1PCRTS</span>         rts
 
-FE80: A0 3F        <span id="SymSETINV">SETINV</span>          ldy     #$3F
-FE82: D0 02                        bne     <a href="#SymLFE86">LFE86</a>
+FE80: A0 3F        <span id="SymSETINV">SETINV</span>          ldy     #$3F              ;SET FOR INVERSE VID
+FE82: D0 02                        bne     <a href="#SymSETIFLG">SETIFLG</a>           ; VIA COUT1
 
-FE84: A0 FF        <span id="SymSETNORM">SETNORM</span>         ldy     #$FF
-FE86: 84 32        <span id="SymLFE86">LFE86</span>           sty     <a href="#SymINVFLG">INVFLG</a>
+FE84: A0 FF        <span id="SymSETNORM">SETNORM</span>         ldy     #$FF              ;SET FOR NORMAL VID
+FE86: 84 32        <span id="SymSETIFLG">SETIFLG</span>         sty     <a href="#SymINVFLG">INVFLG</a>
 FE88: 60                           rts
 
-FE89: A9 00        <span id="SymSETKBD">SETKBD</span>          lda     #$00
-FE8B: 85 3E                        sta     <a href="#SymA2L">A2L</a>
-FE8D: A2 38                        ldx     #$38
-FE8F: A0 1B                        ldy     #$1B
-FE91: D0 08                        bne     <a href="#SymLFE9B">LFE9B</a>
+FE89: A9 00        <span id="SymSETKBD">SETKBD</span>          lda     #$00              ;DO 'IN#0'
+FE8B: 85 3E        <span id="SymINPORT">INPORT</span>          sta     <a href="#SymA2L">A2L</a>               ;DO 'IN#AGREG'
+FE8D: A2 38        <span id="SymINPRT">INPRT</span>           ldx     #<a href="#SymKSWL">KSWL</a>
+FE8F: A0 1B                        ldy     #&lt;<a href="#SymKEYIN">KEYIN</a>
+FE91: D0 08                        bne     <a href="#SymIOPRT">IOPRT</a>
 
-FE93: A9 00        <span id="SymSETVID">SETVID</span>          lda     #$00
-FE95: 85 3E                        sta     <a href="#SymA2L">A2L</a>
-FE97: A2 36                        ldx     #$36
-FE99: A0 F0                        ldy     #$F0
-FE9B: A5 3E        <span id="SymLFE9B">LFE9B</span>           lda     <a href="#SymA2L">A2L</a>
+FE93: A9 00        <span id="SymSETVID">SETVID</span>          lda     #$00              ;DO 'PR#0'
+FE95: 85 3E        <span id="SymOUTPORT">OUTPORT</span>         sta     <a href="#SymA2L">A2L</a>               ;DO 'PR#AREG'
+FE97: A2 36        <span id="SymOUTPRT">OUTPRT</span>          ldx     #<a href="#SymCSWL">CSWL</a>
+FE99: A0 F0                        ldy     #&lt;<a href="#Symcout1">cout1</a>
+FE9B: A5 3E        <span id="SymIOPRT">IOPRT</span>           lda     <a href="#SymA2L">A2L</a>
 FE9D: 29 0F                        and     #$0F
-FE9F: D0 06                        bne     <a href="#SymLFEA7">LFEA7</a>
-FEA1: C0 1B                        cpy     #$1B
-FEA3: F0 39                        beq     <a href="#SymLFEDE">LFEDE</a>
-FEA5: 80 1B                        bra     <a href="#SymLFEC2">LFEC2</a>
+FE9F: D0 06                        bne     <a href="#SymNOTPRT0">NOTPRT0</a>           ;not slot 0
+FEA1: C0 1B                        cpy     #&lt;<a href="#SymKEYIN">KEYIN</a>           ;Conintue if KEYIN
+FEA3: F0 39                        beq     <a href="#SymIOPRT1">IOPRT1</a>
+FEA5: 80 1B                        bra     <a href="#SymOPRT0">OPRT0</a>             ;=&gt;do PR#0
 
-FEA7: 09 C0        <span id="SymLFEA7">LFEA7</span>           ora     #$C0
+FEA7: 09 C0        <span id="SymNOTPRT0">NOTPRT0</span>         ora     #&lt;<a href="#SymIOADR">IOADR</a>-64
 FEA9: A0 00                        ldy     #$00
-FEAB: 94 00        <span id="SymLFEAB">LFEAB</span>           sty     <a href="#SymLOC0">LOC0</a>,X
+FEAB: 94 00        <span id="SymIOPRT2">IOPRT2</span>          sty     <a href="#SymLOC0">LOC0</a>,X
 FEAD: 95 01                        sta     <a href="#SymLOC1">LOC1</a>,X
 FEAF: 60                           rts
 
-FEB0: 4C                           DFB     $4C
-FEB1: 00                           DFB     $00
-FEB2: E0                           DFB     $E0
-FEB3: 4C                           DFB     $4C
-FEB4: 03                           DFB     $03
-FEB5: E0                           DFB     $E0
-FEB6: 20                           DFB     $20
-FEB7: 75                           DFB     $75
-FEB8: FE                           DFB     $FE
-FEB9: 20                           DFB     $20
-FEBA: 3F                           DFB     $3F
-FEBB: FF                           DFB     $FF
-FEBC: 6C                           DFB     $6C
-FEBD: 3A                           DFB     $3A
-FEBE: 00                           DFB     $00
-FEBF: 4C                           DFB     $4C
-FEC0: D7                           DFB     $D7
-FEC1: FA                           DFB     $FA
+FEB0: 4C 00 E0     <span id="SymXBASIC">XBASIC</span>          jmp     <a href="#SymBASIC">BASIC</a>             ;TO BASIC, COLD START
 
-FEC2: 3A           <span id="SymLFEC2">LFEC2</span>           dec     A
-FEC3: 8D FB 07                     sta     <a href="#SymCURSOR">CURSOR</a>
-FEC6: A9 F7                        lda     #$F7
-FEC8: 80 04                        bra     <a href="#SymLFECE">LFECE</a>
+FEB3: 4C 03 E0     <span id="SymBASCONT">BASCONT</span>         jmp     <a href="#SymBASIC2">BASIC2</a>            ;TO BASIC, WARM START
 
-FECA: 4C                           DFB     $4C
-FECB: F8                           DFB     $F8
-FECC: 03                           DFB     $03
-FECD: 60                           DFB     $60
+FEB6: 20 75 FE     <span id="SymGO">GO</span>              jsr     <a href="#Syma1pc">a1pc</a>              ;ADDR TO PC IF SPECIFIED
+FEB9: 20 3F FF                     jsr     <a href="#SymRESTORE">RESTORE</a>           ;RESTORE FAKE REGISTERS
+FEBC: 6C 3A 00                     jmp     (<a href="#SymPCL">PCL</a>)             ; AND GO!
 
-FECE: 8D 7B 06     <span id="SymLFECE">LFECE</span>           sta     <a href="#SymVFACTV">VFACTV</a>
-FED1: 8D 0E C0                     sta     <a href="#SymLC000">LC000</a>+14
-FED4: 0C FB 04                     tsb     <a href="#SymVMODE">VMODE</a>
-FED7: DA                           phx
-FED8: 5A                           phy
-FED9: 20 CD CD                     jsr     <a href="#SymCHK80">CHK80</a>
+FEBF: 4C D7 FA     <span id="SymREGZ">REGZ</span>            jmp     <a href="#SymREGDSP">REGDSP</a>            ;GO DISPLAY REGISTERS
+
+FEC2: 3A           <span id="SymOPRT0">OPRT0</span>           dec     A                 ;Need $FF
+FEC3: 8D FB 07                     sta     <a href="#SymCURSOR">CURSOR</a>            ;set checkerboard cursor
+                   NOTE: $FF-M_CTL
+FEC6: A9 F7                        lda     #$F7              ;reset mode
+FEC8: 80 04                        bra     <a href="#SymDOPR0">DOPR0</a>
+
+FECA: 4C F8 03     <span id="SymUSR">USR</span>             jmp     <a href="#SymUSRADR">USRADR</a>            ;JUMP TO CONTROL-Y VECTOR IN RAM
+
+FECD: 60           <span id="SymWRITE">WRITE</span>           rts                       ;Tape write not needed
+
+FECE: 8D 7B 06     <span id="SymDOPR0">DOPR0</span>           sta     <a href="#SymVFACTV">VFACTV</a>            ;say video firmware inactive
+FED1: 8D 0E C0                     sta     <a href="#SymCLRALTCHAR">CLRALTCHAR</a>        ;switch in normal char set
+FED4: 0C FB 04                     tsb     <a href="#SymVMODE">VMODE</a>             ;don't change M_CTL
+FED7: DA                           phx                       ;save X and Y
+FED8: 5A                           phy                       ;for rest of PR#0
+FED9: 20 CD CD                     jsr     <a href="#SymCHK80">CHK80</a>             ;convert to 40 if needed
 FEDC: 7A                           ply
 FEDD: FA                           plx
-FEDE: A9 FD        <span id="SymLFEDE">LFEDE</span>           lda     #$FD
-FEE0: 80 C9                        bra     <a href="#SymLFEAB">LFEAB</a>
+FEDE: A9 FD        <span id="SymIOPRT1">IOPRT1</span>          lda     #&gt;<a href="#Symcout1">cout1</a>           ;set I/O page
+FEE0: 80 C9                        bra     <a href="#SymIOPRT2">IOPRT2</a>            ;=&gt;go set output hook
 
-FEE2: 5A           <span id="SymDECCH">DECCH</span>           phy
-FEE3: 20 9D CC                     jsr     <a href="#SymGETCUR">GETCUR</a>
-FEE6: 88                           dey
-FEE7: 80 05                        bra     <a href="#SymLFEEE">LFEEE</a>
+                   ; 
+                   ; DECCH decrements the current cursor
+                   ; CLRCH sets all cursors to 0
+                   ; SETCUR sets cursors to value in Acc.
+                   ; See explanatory note with GETCUR
+                   ; 
+FEE2: 5A           <span id="SymDECCH">DECCH</span>           phy                       ;(from $FC10)
+FEE3: 20 9D CC                     jsr     <a href="#SymGETCUR">GETCUR</a>            ;get current CH
+FEE6: 88                           dey                       ;decrement it
+FEE7: 80 05                        bra     <a href="#SymSETCUR1">SETCUR1</a>           ;go update cursors
 
-FEE9: A9 01        <span id="SymCLRCH">CLRCH</span>           lda     #$01
-FEEB: 3A           <span id="SymWDTHCH">WDTHCH</span>          dec     A
-FEEC: 5A           <span id="SymSETCUR">SETCUR</span>          phy
-FEED: A8                           tay
-FEEE: 20 AD CC     <span id="SymLFEEE">LFEEE</span>           jsr     <a href="#SymGETCUR2">GETCUR2</a>
-FEF1: 7A                           ply
-FEF2: AD 7B 05                     lda     <a href="#SymOURCH">OURCH</a>
-FEF5: 60                           rts
+FEE9: A9 01        <span id="SymCLRCH">CLRCH</span>           lda     #1                ;set all cursors to 0
+FEEB: 3A           <span id="SymWDTHCH">WDTHCH</span>          dec     A                 ;dec window width (from $FC17)
+FEEC: 5A           <span id="SymSETCUR">SETCUR</span>          phy                       ;save Y
+FEED: A8                           tay                       ;need value in Y
+FEEE: 20 AD CC     <span id="SymSETCUR1">SETCUR1</span>         jsr     <a href="#SymGETCUR2">GETCUR2</a>           ;save new CH
+FEF1: 7A                           ply                       ;restore Y
+FEF2: AD 7B 05                     lda     <a href="#SymOURCH">OURCH</a>             ;and get new CH into acc
+FEF5: 60                           rts                       ;(Need LDA to set flags)
 
-FEF6: 20                           DFB     $20
-FEF7: 00                           DFB     $00
-FEF8: FE                           DFB     $FE
-FEF9: 68                           DFB     $68
-FEFA: 68                           DFB     $68
-FEFB: D0                           DFB     $D0
-FEFC: 6C                           DFB     $6C
-FEFD: 60                           DFB     $60
-FEFE: 12           <span id="SymOPTBL">OPTBL</span>           DFB     $12
-FEFF: 14                           DFB     $14
-FF00: 1A                           DFB     $1A
-FF01: 1C                           DFB     $1C
-FF02: 32 34 3A 3C+                 ASC     ‘24:&lt;RZdrtz|’
-FF0D: 89                           DFB     $89
-FF0E: 92                           DFB     $92
-FF0F: 9C                           DFB     $9C
-FF10: 9E                           DFB     $9E
-FF11: B2 D2 F2 FC                  ASC     “2Rr|”
+FEF6: 20 00 FE     <span id="SymCRMON">CRMON</span>           jsr     <a href="#SymBL1">BL1</a>               ;HANDLE CR AS BLANK
+FEF9: 68                           pla                       ; THEN POP STACK
+FEFA: 68                           pla                       ;AND RETURN TO MON
+FEFB: D0 6C                        bne     <a href="#SymMONZ">MONZ</a>              ;(ALWAYS)
+                   ; 
+FEFD: 60           <span id="SymREAD">READ</span>            rts                       ;Tape read not needed
+
+                   ; 
+                   ; OPTBL is a table containing the new opcodes that
+                   ; wouldn't fit into the existing lookup table.
+                   ; 
+FEFE: 12           <span id="SymOPTBL">OPTBL</span>           DFB     $12               ;ORA (ZPAG)
+FEFF: 14                           DFB     $14               ;TRB ZPAG
+FF00: 1A                           DFB     $1A               ;INC A
+FF01: 1C                           DFB     $1C               ;TRB ABS
+FF02: 32                           DFB     $32               ;AND (ZPAG)
+FF03: 34                           DFB     $34               ;BIT ZPAG,X
+FF04: 3A                           DFB     $3A               ;DEC A
+FF05: 3C                           DFB     $3C               ;BIT ABS,X
+FF06: 52                           DFB     $52               ;EOR (ZPAG)
+FF07: 5A                           DFB     $5A               ;PHY
+FF08: 64                           DFB     $64               ;STZ ZPAG
+FF09: 72                           DFB     $72               ;ADC (ZPAG)
+FF0A: 74                           DFB     $74               ;STZ ZPAG,X
+FF0B: 7A                           DFB     $7A               ;PLY
+FF0C: 7C                           DFB     $7C               ;JMP (ABS,X)
+FF0D: 89                           DFB     $89               ;BIT IMM
+FF0E: 92                           DFB     $92               ;STA (ZPAG)
+FF0F: 9C                           DFB     $9C               ;STZ ABS
+FF10: 9E                           DFB     $9E               ;STZ ABS,X
+FF11: B2                           DFB     $B2               ;LDA (ZPAG)
+FF12: D2                           DFB     $D2               ;CMP (ZPAG)
+FF13: F2                           DFB     $F2               ;SBC (ZPAG)
+FF14: FC                           DFB     $FC               ;??? (the unknown opcode)
+                   ; 
+                   ; INDX contains pointers to the mnemonics for each of
+                   ; the opcodes in OPTBL.  Pointers with BIT 7
+                   ; set indicate extensions to MNEML or MNEMR.
+                   ; 
 FF15: 38           <span id="SymINDX">INDX</span>            DFB     $38
 FF16: FB                           DFB     $FB
 FF17: 37                           DFB     $37
 FF18: FB                           DFB     $FB
-FF19: 39 21 36 21+                 ASC     ‘9!6!:’
+FF19: 39                           DFB     $39
+FF1A: 21                           DFB     $21
+FF1B: 36                           DFB     $36
+FF1C: 21                           DFB     $21
+FF1D: 3A                           DFB     $3A
 FF1E: F8                           DFB     $F8
 FF1F: FA                           DFB     $FA
 FF20: 3B                           DFB     $3B
@@ -4310,10 +4271,10 @@ FF27: FA                           DFB     $FA
 FF28: 3D                           DFB     $3D
 FF29: 3E                           DFB     $3E
 FF2A: 3F                           DFB     $3F
-FF2B: FC                           DFB     $FC
+FF2B: FC                           DFB     $FC               ;???
 FF2C: 00                           DFB     $00
 
-FF2D: A9 C5                        lda     #$C5              ;PRINT 'ERR', THEN FALL INTO
+FF2D: A9 C5        <span id="SymPRERR">PRERR</span>           lda     #$C5              ;PRINT 'ERR', THEN FALL INTO
 FF2F: 20 ED FD                     jsr     <a href="#Symcout">cout</a>              ; FWEEPER.
 FF32: A9 D2                        lda     #$D2
 FF34: 20 ED FD                     jsr     <a href="#Symcout">cout</a>
@@ -4348,13 +4309,14 @@ FF62: 20 89 FE                     jsr     <a href="#SymSETKBD">SETKBD</a>
                    ; 
 FF65: D8           <span id="SymMON">MON</span>             cld                       ;MUST SET HEX MODE!
 FF66: 20 3A FF                     jsr     <a href="#SymBELL">BELL</a>              ;FWEEPER.
-FF69: A9 AA                        lda     #$AA              ;'*' PROMPT FOR MONITOR
+FF69: A9 AA        <span id="SymMONZ">MONZ</span>            lda     #$AA              ;'*' PROMPT FOR MONITOR
 FF6B: 85 33                        sta     <a href="#SymPROMPT">PROMPT</a>
 FF6D: 20 67 FD                     jsr     <a href="#SymGETLNZ">GETLNZ</a>            ;READ A LINE OF INPUT
 FF70: 20 C7 FF                     jsr     <a href="#SymZMODE">ZMODE</a>             ;CLEAR MONITOR MODE, SCAN IDX
 FF73: 20 A7 FF     <span id="SymNXTITM">NXTITM</span>          jsr     <a href="#SymGETNUM">GETNUM</a>            ;GET ITEM, NON-HEX
 FF76: 84 34                        sty     <a href="#SymYSAV">YSAV</a>              ; CHAR IN A-REG
-FF78: A0 17                        ldy     #$17              ;;SUBTBL-CHRTBL ;X-REG=0 IF NO HEX INPUT
+                   NOTE: ;SUBTBL-CHRTBL
+FF78: A0 17                        ldy     #$17              ;X-REG=0 IF NO HEX INPUT
 FF7A: 88           <span id="SymCHRSRCH">CHRSRCH</span>         dey
 FF7B: 30 E8                        bmi     <a href="#SymMON">MON</a>               ;COMMAND NOT FOUND, BEEP &amp; TRY AGAIN.
 FF7D: D9 CC FF                     cmp     <a href="#SymCHRTBL">CHRTBL</a>,Y          ;FIND COMMAND CHAR IN TABLE
@@ -4395,66 +4357,68 @@ FFBA: 4C CB CF                     jmp     <a href="#SymLOOKASC">LOOKASC</a>    
 
 FFBD: 00                           DFB     $00               ;BRK
 
-FFBE: A9 FE        <span id="SymTOSUB">TOSUB</span>           lda     #$FE
-FFC0: 48                           pha
-FFC1: B9 E3 FF                     lda     <a href="#SymLFFE3">LFFE3</a>,Y
-FFC4: 48                           pha
-FFC5: A5 31                        lda     <a href="#SymMODE">MODE</a>
-FFC7: A0 00        <span id="SymZMODE">ZMODE</span>           ldy     #$00
+FFBE: A9 FE        <span id="SymTOSUB">TOSUB</span>           lda     #&gt;<a href="#SymGO">GO</a>              ;DISPATCH TO SUBROUTINE, BY
+FFC0: 48                           pha                       ; PUSHING THE HI-ORDER SUBR ADDR,
+FFC1: B9 E3 FF                     lda     <a href="#SymSUBTBL">SUBTBL</a>,Y          ; THEN THE LO-ORDER SUBR ADDR
+FFC4: 48                           pha                       ; ONTO THE STACK,
+FFC5: A5 31                        lda     <a href="#SymMODE">MODE</a>              ; (CLEARING THE MODE, SAVE THE OLD
+FFC7: A0 00        <span id="SymZMODE">ZMODE</span>           ldy     #$00              ; MODE IN A-REG),
 FFC9: 84 31                        sty     <a href="#SymMODE">MODE</a>
-FFCB: 60                           rts
+FFCB: 60                           rts                       ; AND 'RTS' TO THE SUBROUTINE!
 
-FFCC: BC           <span id="SymCHRTBL">CHRTBL</span>          DFB     $BC
-FFCD: B2                           DFB     $B2
-FFCE: BE                           DFB     $BE
-FFCF: 9A                           DFB     $9A
-FFD0: EF                           DFB     $EF
-FFD1: C4                           DFB     $C4
-FFD2: A9                           DFB     $A9
-FFD3: BB                           DFB     $BB
-FFD4: A6                           DFB     $A6
-FFD5: A4                           DFB     $A4
-FFD6: 06                           DFB     $06
-FFD7: 95                           DFB     $95
-FFD8: 07                           DFB     $07
-FFD9: 02                           DFB     $02
-FFDA: 05                           DFB     $05
-FFDB: 00                           DFB     $00
-FFDC: 93                           DFB     $93
-FFDD: A7                           DFB     $A7
-FFDE: C6                           DFB     $C6
-FFDF: 99                           DFB     $99
-FFE0: EC                           DFB     $EC
-FFE1: ED                           DFB     $ED
-FFE2: EA                           DFB     $EA
-FFE3: B2           <span id="SymLFFE3">LFFE3</span>           DFB     $B2
-FFE4: C9                           DFB     $C9
-FFE5: BE                           DFB     $BE
-FFE6: 6B                           DFB     $6B
-FFE7: 35                           DFB     $35
-FFE8: 8C                           DFB     $8C
-FFE9: 96                           DFB     $96
-FFEA: AF                           DFB     $AF
-FFEB: 17                           DFB     $17
-FFEC: 17                           DFB     $17
-FFED: 2B                           DFB     $2B
-FFEE: 1F                           DFB     $1F
-FFEF: 83                           DFB     $83
-FFF0: 7F                           DFB     $7F
-FFF1: 5D                           DFB     $5D
-FFF2: B5                           DFB     $B5
-FFF3: 17                           DFB     $17
-FFF4: 17                           DFB     $17
-FFF5: F5                           DFB     $F5
-FFF6: 03                           DFB     $03
-FFF7: 70                           DFB     $70
-FFF8: 6E                           DFB     $6E
+FFCC: BC           <span id="SymCHRTBL">CHRTBL</span>          DFB     $BC               ;^C  (BASIC WARM START)
+FFCD: B2                           DFB     $B2               ;^Y  (USER VECTOR)
+FFCE: BE                           DFB     $BE               ;^E  (OPEN AND DISPLAY REGISTERS)
+FFCF: 9A                           DFB     $9A               ;+!  (Mini assembler)
+FFD0: EF                           DFB     $EF               ;V   (MEMORY VERIFY)
+FFD1: C4                           DFB     $C4               ;^K  (IN#SLOT)
+FFD2: A9                           DFB     $A9               ;^P  (PR#SLOT)
+FFD3: BB                           DFB     $BB               ;^B  (BASIC COLD START)
+FFD4: A6                           DFB     $A6               ;'-' (SUBSTRACTION)
+FFD5: A4                           DFB     $A4               ;'+' (ADDITION)
+FFD6: 06                           DFB     $06               ;M   (MEMORY MOVE)
+FFD7: 95                           DFB     $95               ;'&lt;' (DELIMITER FOR MOVE, VFY)
+FFD8: 07                           DFB     $07               ;N   (SET NORMAL VIDEO)
+FFD9: 02                           DFB     $02               ;I   (SET INVERSE VIDEO)
+FFDA: 05                           DFB     $05               ;L   (DISASSEMBLE 20 INSTRS)
+FFDB: 00                           DFB     $00               ;G   (EXECUTE PROGRAM)
+FFDC: 93                           DFB     $93               ;':' (MEMORY FILL)
+FFDD: A7                           DFB     $A7               ;'.' (ADDRESS DELIMITER)
+FFDE: C6                           DFB     $C6               ;'CR' (END OF INPUT)
+FFDF: 99                           DFB     $99               ;BLANK
+FFE0: EC                           DFB     $EC               ;+S  (Step)
+FFE1: ED                           DFB     $ED               ;+T  (Trace)
+FFE2: EA                           DFB     $EA               ;+
+                   ; 
+                   ; Table of low order monitor routine
+                   ; dispatch addresses.
+                   ; 
+FFE3: B2           <span id="SymSUBTBL">SUBTBL</span>          DFB     &lt;<a href="#SymBASCONT">BASCONT</a>-1
+FFE4: C9                           DFB     &lt;<a href="#SymUSR">USR</a>-1
+FFE5: BE                           DFB     &lt;<a href="#SymREGZ">REGZ</a>-1
+FFE6: 6B                           DFB     &lt;<a href="#SymMINI">MINI</a>-1
+FFE7: 35                           DFB     &lt;<a href="#SymVERIFY">VERIFY</a>-1
+FFE8: 8C                           DFB     &lt;<a href="#SymINPRT">INPRT</a>-1
+FFE9: 96                           DFB     &lt;<a href="#SymOUTPRT">OUTPRT</a>-1
+FFEA: AF                           DFB     &lt;<a href="#SymXBASIC">XBASIC</a>-1
+FFEB: 17                           DFB     &lt;<a href="#SymSETMODE">SETMODE</a>-1
+FFEC: 17                           DFB     &lt;<a href="#SymSETMODE">SETMODE</a>-1
+FFED: 2B                           DFB     &lt;<a href="#SymMOVE">MOVE</a>-1
+FFEE: 1F                           DFB     &lt;<a href="#SymLT">LT</a>-1
+FFEF: 83                           DFB     &lt;<a href="#SymSETNORM">SETNORM</a>-1
+FFF0: 7F                           DFB     &lt;<a href="#SymSETINV">SETINV</a>-1
+FFF1: 5D                           DFB     &lt;<a href="#SymLIST">LIST</a>-1
+FFF2: B5                           DFB     &lt;<a href="#SymGO">GO</a>-1
+FFF3: 17                           DFB     &lt;<a href="#SymSETMODE">SETMODE</a>-1
+FFF4: 17                           DFB     &lt;<a href="#SymSETMODE">SETMODE</a>-1
+FFF5: F5                           DFB     &lt;<a href="#SymCRMON">CRMON</a>-1
+FFF6: 03                           DFB     &lt;<a href="#SymBLANK">BLANK</a>-1
+FFF7: 70                           DFB     &lt;<a href="#SymSTEPZ">STEPZ</a>-1
+FFF8: 6E                           DFB     &lt;<a href="#SymTRACE">TRACE</a>-1
 FFF9: 00                           DFB     $00
-FFFA: FB                           DFB     $FB
-FFFB: 03                           DFB     $03
-FFFC: 62 FA                        DW      $FA62             ;I recognize you!
-FFFE: 03                           DFB     $03
-FFFF: C8                           DFB     $C8
+FFFA: FB 03                        DW      <a href="#SymNMI">NMI</a>               ;NON-MASKABLE INTERRUPT VECTOR
+FFFC: 62 FA                        DW      <a href="#SymRESET">RESET</a>             ;RESET VECTOR
+FFFE: 03 C8                        DW      <a href="#SymNEWIRQ">NEWIRQ</a>            ;INTERRUPT REQUEST VECTOR
                                    ADREND  ↑ ~$F800
                                    ADREND  ↑ $C000
 </pre>
@@ -4496,7 +4460,7 @@ FFFF: C8                           DFB     $C8
 <div id="footer">
     <hr/>
     <p>HTML generated by <a href="https://6502bench.com/">6502bench SourceGen</a> v1.8.4
-    on 2023/03/05 <!--00:25:30 -06:00--></p>
+    on 2023/03/05 <!--14:29:03 -06:00--></p>
     <p>Expression style: Merlin</p>
     <!-- parameters: cols=16,8,18,100;extraCols=Address,Bytes;byteSpc=True;commaBulk=True;nonuPfx=':';varPfx=']';labelBrk=False;notes=True;gfx=True;opWrap=32 -->
 </div>

@@ -1750,7 +1750,7 @@
 "SubFormat":"Hex",
 "SymbolRef":null},
 
-"Comment":"",
+"Comment":"*-OPTBL-1 ; number of bytes to check",
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
@@ -4203,6 +4203,106 @@
 "Hint":"Code"},
 
 {
+"Low":15762,
+"High":15762,
+"Hint":"Code"},
+
+{
+"Low":15779,
+"High":15779,
+"Hint":"Code"},
+
+{
+"Low":15814,
+"High":15814,
+"Hint":"Code"},
+
+{
+"Low":15872,
+"High":15872,
+"Hint":"Code"},
+
+{
+"Low":15896,
+"High":15896,
+"Hint":"Code"},
+
+{
+"Low":15904,
+"High":15904,
+"Hint":"Code"},
+
+{
+"Low":15916,
+"High":15916,
+"Hint":"Code"},
+
+{
+"Low":15926,
+"High":15926,
+"Hint":"Code"},
+
+{
+"Low":15966,
+"High":15966,
+"Hint":"Code"},
+
+{
+"Low":15980,
+"High":15980,
+"Hint":"Code"},
+
+{
+"Low":15983,
+"High":15983,
+"Hint":"Code"},
+
+{
+"Low":16048,
+"High":16048,
+"Hint":"Code"},
+
+{
+"Low":16051,
+"High":16051,
+"Hint":"Code"},
+
+{
+"Low":16054,
+"High":16054,
+"Hint":"Code"},
+
+{
+"Low":16063,
+"High":16063,
+"Hint":"Code"},
+
+{
+"Low":16074,
+"High":16074,
+"Hint":"Code"},
+
+{
+"Low":16077,
+"High":16077,
+"Hint":"Code"},
+
+{
+"Low":16118,
+"High":16118,
+"Hint":"Code"},
+
+{
+"Low":16130,
+"High":16140,
+"Hint":"InlineData"},
+
+{
+"Low":16145,
+"High":16148,
+"Hint":"InlineData"},
+
+{
 "Low":16173,
 "High":16173,
 "Hint":"Code"},
@@ -4220,7 +4320,12 @@
 {
 "Low":16336,
 "High":16341,
-"Hint":"InlineData"}],
+"Hint":"InlineData"},
+
+{
+"Low":16355,
+"High":16355,
+"Hint":"Data"}],
 "StatusFlagOverrides":{
 },
 
@@ -5701,6 +5806,127 @@
 "15748":"ADD TO INPUT BUFFER",
 "15755":"CLR TO EOL IF CR",
 "15760":"(ALWAYS)",
+"15762":"PRINT CR,A1 IN HEX",
+"15774":"PRINT \"-\"",
+"15781":"SET TO FINISH AT",
+"15783":" MOD 8=7",
+"15800":"OUTPUT BLANK",
+"15805":"OUTPUT BYTE IN HEX",
+"15811":"NOT DONE YET. GO CHECK MOD 8",
+"15813":"DONE.",
+"15814":"DETERMINE IF MONITOR MOD IS",
+"15815":" EXAMINE, ADD OR SUBTRACT",
+"15823":"FORM 2\u0027S COMPLEMENT FOR SUBTRACT.",
+"15828":"PRINT \u0027=\u0027, THEN RESULT",
+"15834":"PRINT BYTE AS 2 HEX DIGITA",
+"15835":" (DESTROYS A-REG)",
+"15843":"PRINT HEX DIGIT IN A-REG",
+"15845":"LSBITS ONLY.",
+"15853":"VECTOR TO USER OUTPUT ROUTINE",
+"15856":"video firmware active?",
+"15859":"mask II mode characters",
+"15862":"SAVE Y-REG",
+"15864":"SAVE A -REG",
+"15865":"OUTPUT CHR AND CHECK FOR CTRL-S",
+"15868":"RESTORE A-REG",
+"15869":"AND Y-REG",
+"15871":"RETURN TO SENDER...",
+"15876":"BLANK TO MON",
+"15877":"AFTER BLANK",
+"15879":"DATA STORE MODE?",
+"15881":" NO; XAM, ADD, OR SUBTRACT.",
+"15883":"KEEP IN STORE MODE",
+"15887":"STORE AS LOW BYTE AT (A3)",
+"15891":"INCR A3, RETURN.",
+"15896":"SAVE CONVERTED \u0027:\u0027, \u0027+\u0027,",
+"15898":" \u0027-\u0027, \u0027.\u0027 AS MODE",
+"15906":"COPY A2 (2 BYTES) TO",
+"15908":" A4 AND A5",
+"15916":"MOVE (A) THRU (A2) TO (A4)",
+"15926":"VERIFY (A1) THRU (A2)",
+"15928":" WITH (A4)",
+"15966":"MOVE A1 (2 BYTES) TO",
+"15969":" PC IF SPEC\u0027D AND",
+"15971":"+DISASSEMBLE 20 INSTRUCTIONS.",
+"15972":"+Display a line",
+"15976":"+Count down",
+"15980":"+Go to the mini assembler",
+"15983":"+Stay on T for trace",
+"15985":"+Off to the step routine",
+"15988":"+Extra bytes",
+"15989":"IF USER SPECIFIED AN ADDRESS,",
+"15990":" COPY IT FROM A1 TO PC.",
+"15992":"YEP, SO COPY IT.",
+"16000":"SET FOR INVERSE VID",
+"16002":" VIA COUT1",
+"16004":"SET FOR NORMAL VID",
+"16009":"DO \u0027IN#0\u0027",
+"16011":"DO \u0027IN#AGREG\u0027",
+"16019":"DO \u0027PR#0\u0027",
+"16021":"DO \u0027PR#AREG\u0027",
+"16031":"not slot 0",
+"16033":"Conintue if KEYIN",
+"16037":"=\u003edo PR#0",
+"16048":"TO BASIC, COLD START",
+"16051":"TO BASIC, WARM START",
+"16054":"ADDR TO PC IF SPECIFIED",
+"16057":"RESTORE FAKE REGISTERS",
+"16060":" AND GO!",
+"16063":"GO DISPLAY REGISTERS",
+"16066":"Need $FF",
+"16067":"set checkerboard cursor",
+"16070":"reset mode",
+"16074":"JUMP TO CONTROL-Y VECTOR IN RAM",
+"16077":"Tape write not needed",
+"16078":"say video firmware inactive",
+"16081":"switch in normal char set",
+"16084":"don\u0027t change M_CTL",
+"16087":"save X and Y",
+"16088":"for rest of PR#0",
+"16089":"convert to 40 if needed",
+"16094":"set I/O page",
+"16096":"=\u003ego set output hook",
+"16098":"(from $FC10)",
+"16099":"get current CH",
+"16102":"decrement it",
+"16103":"go update cursors",
+"16105":"set all cursors to 0",
+"16107":"dec window width (from $FC17)",
+"16108":"save Y",
+"16109":"need value in Y",
+"16110":"save new CH",
+"16113":"restore Y",
+"16114":"and get new CH into acc",
+"16117":"(Need LDA to set flags)",
+"16118":"HANDLE CR AS BLANK",
+"16121":" THEN POP STACK",
+"16122":"AND RETURN TO MON",
+"16123":"(ALWAYS)",
+"16125":"Tape read not needed",
+"16126":"ORA (ZPAG)",
+"16127":"TRB ZPAG",
+"16128":"INC A",
+"16129":"TRB ABS",
+"16130":"AND (ZPAG)",
+"16131":"BIT ZPAG,X",
+"16132":"DEC A",
+"16133":"BIT ABS,X",
+"16134":"EOR (ZPAG)",
+"16135":"PHY",
+"16136":"STZ ZPAG",
+"16137":"ADC (ZPAG)",
+"16138":"STZ ZPAG,X",
+"16139":"PLY",
+"16140":"JMP (ABS,X)",
+"16141":"BIT IMM",
+"16142":"STA (ZPAG)",
+"16143":"STZ ABS",
+"16144":"STZ ABS,X",
+"16145":"LDA (ZPAG)",
+"16146":"CMP (ZPAG)",
+"16147":"SBC (ZPAG)",
+"16148":"??? (the unknown opcode)",
+"16171":"???",
 "16173":"PRINT \u0027ERR\u0027, THEN FALL INTO",
 "16175":" FWEEPER.",
 "16186":"MAKE A JOYFUL NOISE, THEN RETURN.",
@@ -5718,7 +5944,7 @@
 "16240":"CLEAR MONITOR MODE, SCAN IDX",
 "16243":"GET ITEM, NON-HEX",
 "16246":" CHAR IN A-REG",
-"16248":";SUBTBL-CHRTBL ;X-REG=0 IF NO HEX INPUT",
+"16248":"X-REG=0 IF NO HEX INPUT",
 "16251":"COMMAND NOT FOUND, BEEP \u0026 TRY AGAIN.",
 "16253":"FIND COMMAND CHAR IN TABLE",
 "16256":"NOT THIS TIME",
@@ -5734,7 +5960,39 @@
 "16308":"it\u0027s a digit",
 "16314":"+ Check for quote",
 "16317":"BRK",
-"16380":"I recognize you!"},
+"16318":"DISPATCH TO SUBROUTINE, BY",
+"16320":" PUSHING THE HI-ORDER SUBR ADDR,",
+"16321":" THEN THE LO-ORDER SUBR ADDR",
+"16324":" ONTO THE STACK,",
+"16325":" (CLEARING THE MODE, SAVE THE OLD",
+"16327":" MODE IN A-REG),",
+"16331":" AND \u0027RTS\u0027 TO THE SUBROUTINE!",
+"16332":"^C  (BASIC WARM START)",
+"16333":"^Y  (USER VECTOR)",
+"16334":"^E  (OPEN AND DISPLAY REGISTERS)",
+"16335":"+!  (Mini assembler)",
+"16336":"V   (MEMORY VERIFY)",
+"16337":"^K  (IN#SLOT)",
+"16338":"^P  (PR#SLOT)",
+"16339":"^B  (BASIC COLD START)",
+"16340":"\u0027-\u0027 (SUBSTRACTION)",
+"16341":"\u0027+\u0027 (ADDITION)",
+"16342":"M   (MEMORY MOVE)",
+"16343":"\u0027\u003c\u0027 (DELIMITER FOR MOVE, VFY)",
+"16344":"N   (SET NORMAL VIDEO)",
+"16345":"I   (SET INVERSE VIDEO)",
+"16346":"L   (DISASSEMBLE 20 INSTRS)",
+"16347":"G   (EXECUTE PROGRAM)",
+"16348":"\u0027:\u0027 (MEMORY FILL)",
+"16349":"\u0027.\u0027 (ADDRESS DELIMITER)",
+"16350":"\u0027CR\u0027 (END OF INPUT)",
+"16351":"BLANK",
+"16352":"+S  (Step)",
+"16353":"+T  (Trace)",
+"16354":"+",
+"16378":"NON-MASKABLE INTERRUPT VECTOR",
+"16380":"RESET VECTOR",
+"16382":"INTERRUPT REQUEST VECTOR"},
 
 "LongComments":{
 "-2147483647":{
@@ -6647,6 +6905,72 @@
 "Text":"\r\nNOESCAPE is used by GETCOUT too.\r\n\r\n",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"15762":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"15834":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"15843":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"15853":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"15876":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"15883":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"16098":{
+"Text":"\r\nDECCH decrements the current cursor\r\nCLRCH sets all cursors to 0\r\nSETCUR sets cursors to value in Acc.\r\nSee explanatory note with GETCUR\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"16125":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"16126":{
+"Text":"\r\nOPTBL is a table containing the new opcodes that\r\nwouldn\u0027t fit into the existing lookup table.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"16149":{
+"Text":"\r\nINDX contains pointers to the mnemonics for each of\r\nthe opcodes in OPTBL.  Pointers with BIT 7\r\nset indicate extensions to MNEML or MNEMR.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"16355":{
+"Text":"\r\nTable of low order monitor routine\r\ndispatch addresses.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -6740,11 +7064,17 @@
 "MaxWidth":80,
 "BackgroundColor":-5383962},
 
-"15762":{
-"Text":"pick-up\r\npickup\r\npdf pg 469",
+"16070":{
+"Text":"$FF-M_CTL",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":-5383962}},
+"BackgroundColor":0},
+
+"16248":{
+"Text":";SUBTBL-CHRTBL",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0}},
 
 "UserLabels":{
 "256":{
@@ -11104,6 +11434,370 @@
 "15755":{
 "Label":"CROUT1",
 "Value":64907,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15762":{
+"Label":"PRA1",
+"Value":64914,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15766":{
+"Label":"PRYX2",
+"Value":64918,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15779":{
+"Label":"XAM8",
+"Value":64931,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15789":{
+"Label":"MOD8CHK",
+"Value":64941,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15795":{
+"Label":"XAM",
+"Value":64947,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15798":{
+"Label":"DATAOUT",
+"Value":64950,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15813":{
+"Label":"RTS4C",
+"Value":64965,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15814":{
+"Label":"XAMPM",
+"Value":64966,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15825":{
+"Label":"ADD",
+"Value":64977,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15845":{
+"Label":"PRHEXZ",
+"Value":64997,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15843":{
+"Label":"PRHEX",
+"Value":64995,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15872":{
+"Label":"BL1",
+"Value":65024,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15876":{
+"Label":"BLANK",
+"Value":65028,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15883":{
+"Label":"STOR",
+"Value":65035,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15895":{
+"Label":"RTS5",
+"Value":65047,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15901":{
+"Label":"SETMDZ",
+"Value":65053,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15896":{
+"Label":"SETMODE",
+"Value":65048,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15904":{
+"Label":"LT",
+"Value":65056,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15906":{
+"Label":"LT2",
+"Value":65058,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15916":{
+"Label":"MOVE",
+"Value":65068,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15926":{
+"Label":"VERIFY",
+"Value":65078,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15960":{
+"Label":"VFYOK",
+"Value":65112,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15966":{
+"Label":"LIST",
+"Value":65118,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15971":{
+"Label":"LIST2",
+"Value":65123,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15980":{
+"Label":"MINI",
+"Value":65132,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15983":{
+"Label":"TRACE",
+"Value":65135,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15985":{
+"Label":"STEPZ",
+"Value":65137,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15999":{
+"Label":"A1PCRTS",
+"Value":65151,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16006":{
+"Label":"SETIFLG",
+"Value":65158,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16011":{
+"Label":"INPORT",
+"Value":65163,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16013":{
+"Label":"INPRT",
+"Value":65165,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16027":{
+"Label":"IOPRT",
+"Value":65179,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16021":{
+"Label":"OUTPORT",
+"Value":65173,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16023":{
+"Label":"OUTPRT",
+"Value":65175,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16039":{
+"Label":"NOTPRT0",
+"Value":65191,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16094":{
+"Label":"IOPRT1",
+"Value":65246,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16066":{
+"Label":"OPRT0",
+"Value":65218,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16043":{
+"Label":"IOPRT2",
+"Value":65195,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16048":{
+"Label":"XBASIC",
+"Value":65200,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16051":{
+"Label":"BASCONT",
+"Value":65203,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16054":{
+"Label":"GO",
+"Value":65206,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16063":{
+"Label":"REGZ",
+"Value":65215,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16074":{
+"Label":"USR",
+"Value":65226,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16077":{
+"Label":"WRITE",
+"Value":65229,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16078":{
+"Label":"DOPR0",
+"Value":65230,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15063":{
+"Label":"REGDSP",
+"Value":64215,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16110":{
+"Label":"SETCUR1",
+"Value":65262,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16118":{
+"Label":"CRMON",
+"Value":65270,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16233":{
+"Label":"MONZ",
+"Value":65385,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16125":{
+"Label":"READ",
+"Value":65277,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16173":{
+"Label":"PRERR",
+"Value":65325,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"16355":{
+"Label":"SUBTBL",
+"Value":65507,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
@@ -15587,6 +16281,194 @@
 "Label":"PICK",
 "Part":"Low"}},
 
+"15764":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"15779":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"15789":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"15803":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"15825":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"15916":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"15926":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"15935":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"15992":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"16013":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"KSWL",
+"Part":"Low"}},
+
+"16015":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"KEYIN",
+"Part":"Low"}},
+
+"16023":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CSWL",
+"Part":"Low"}},
+
+"16025":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cout1",
+"Part":"Low"}},
+
+"16033":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"KEYIN",
+"Part":"Low"}},
+
+"16039":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"IOADR",
+"Part":"Low"}},
+
+"16048":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"BASIC",
+"Part":"Low"}},
+
+"16051":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"BASIC2",
+"Part":"Low"}},
+
+"16081":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CLRALTCHAR",
+"Part":"Low"}},
+
+"16094":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cout1",
+"Part":"High"}},
+
+"16105":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"16153":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"16154":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"16155":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"16156":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"16157":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
 "16194":{
 "Length":2,
 "Format":"NumericLE",
@@ -15691,11 +16573,213 @@
 "Label":"A2H",
 "Part":"Low"}},
 
+"16318":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GO",
+"Part":"High"}},
+
+"16355":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"BASCONT",
+"Part":"Low"}},
+
+"16356":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"USR",
+"Part":"Low"}},
+
+"16357":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"REGZ",
+"Part":"Low"}},
+
+"16358":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"MINI",
+"Part":"Low"}},
+
+"16359":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"VERIFY",
+"Part":"Low"}},
+
+"16360":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"INPRT",
+"Part":"Low"}},
+
+"16361":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"OUTPRT",
+"Part":"Low"}},
+
+"16362":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"XBASIC",
+"Part":"Low"}},
+
+"16363":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETMODE",
+"Part":"Low"}},
+
+"16364":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETMODE",
+"Part":"Low"}},
+
+"16365":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"MOVE",
+"Part":"Low"}},
+
+"16366":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LT",
+"Part":"Low"}},
+
+"16367":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETNORM",
+"Part":"Low"}},
+
+"16368":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETINV",
+"Part":"Low"}},
+
+"16369":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LIST",
+"Part":"Low"}},
+
+"16370":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GO",
+"Part":"Low"}},
+
+"16371":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETMODE",
+"Part":"Low"}},
+
+"16372":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETMODE",
+"Part":"Low"}},
+
+"16373":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CRMON",
+"Part":"Low"}},
+
+"16374":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"BLANK",
+"Part":"Low"}},
+
+"16375":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"STEPZ",
+"Part":"Low"}},
+
+"16376":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TRACE",
+"Part":"Low"}},
+
+"16378":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"NMI",
+"Part":"Low"}},
+
 "16380":{
 "Length":2,
 "Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null}},
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RESET",
+"Part":"Low"}},
+
+"16382":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"NEWIRQ",
+"Part":"Low"}}},
 
 "LvTables":{
 },
