@@ -20,9 +20,13 @@
 <pre>                   ********************************************************************************
                    * Apple IIc ROM3 (slinky)  - Bank 1                                            *
                    * Re-created by James Lewis (@baldengineer)                                    *
-                   * *****************************************************************            *
-                   * ** Work In-Progress! ** Work In-Progress! ** Work In-Progress! **            *
-                   * *****************************************************************            *
+                   * ******************************************************************           *
+                   *  2023-03-05 v0.9: Decode of bank 1 done                                      *
+                   *                   Needs lots of proof-reading!                               *
+                   *                     Skipped AppleSoft ($D000-$F7FF).                         *
+                   *                     Left ROM Switch Rountines ($C780) un-decoded             *
+                   *                      (SourceGen doesn't like the bank 2 addrs)               *
+                   * ******************************************************************           *
                    *                                                                              *
                    * For more information visit:                                                  *
                    * https://github.com/baldengineer/Apple-IIc-ROM-Disassembly                    *
@@ -95,6 +99,7 @@
                    <span id="SymPCH">PCH</span>             EQU     $3B    {addr/1}
                    <span id="SymA1L">A1L</span>             EQU     $3C    {addr/1}   ;Monitor Temp
                    <span id="SymBOOTTMP">BOOTTMP</span>         EQU     $3C               ;Disk II boot rom equate
+                   <span id="Symxqt">xqt</span>             EQU     $3C
                    <span id="SymA1H">A1H</span>             EQU     $3D    {addr/1}   ;Monitor Temp
                    <span id="SymA2L">A2L</span>             EQU     $3E    {addr/1}   ;Monitor Temp
                    <span id="SymA2H">A2H</span>             EQU     $3F    {addr/1}   ;Monitor Temp
@@ -1423,7 +1428,6 @@ C70E: 02                           DFB     <a href="#Sympnull">pnull</a>
 C70F: 02                           DFB     <a href="#Sympnull">pnull</a>
 C710: 02                           DFB     <a href="#Sympnull">pnull</a>
 C711: 00                           DFB     $00
-                   NOTE: verify these match up to below
 C712: 1C                           DFB     &lt;<a href="#Symxsetmou">xsetmou</a>          ;SETMOUSE
 C713: 22                           DFB     &lt;<a href="#Symxmtstint">xmtstint</a>         ;SERVEMOUSE
 C714: 28                           DFB     &lt;<a href="#Symxmread">xmread</a>           ;READMOUSE
@@ -1695,14 +1699,14 @@ C8C7: 9A           <span id="SymGBNOTROM">GBNOTROM</span>        txs            
 C8C8: 68                           pla                       ;Get state back
 C8C9: 4C 47 FA     <span id="SymGBBRK">GBBRK</span>           jmp     <a href="#SymNEWBRK">NEWBRK</a>            ;Go do the break
 
-                   NOTE:   The following routine is for reading key-
-                   board from buffers or directly.
-                     Type-ahead buffering only occurs for non-auto
-                   repeat keypresses.  When a key is pressed for
-                   auto-repreat the buffer is first emptied, then the
-                   repeated characters are returned.
-                     The minus flag is used to indicate if a keystroke
-                   is being returned.
+                   ;   The following routine is for reading key-
+                   ; board from buffers or directly.
+                   ;   Type-ahead buffering only occurs for non-auto
+                   ; repeat keypresses.  When a key is pressed for
+                   ; auto-repreat the buffer is first emptied, then the
+                   ; repeated characters are returned.
+                   ;   The minus flag is used to indicate if a keystroke
+                   ; is being returned.
 C8CC: AD 00 C0     <span id="SymXRKBD1">XRKBD1</span>          lda     <a href="#SymKBD">KBD</a>               ;test keyboard directly
 C8CF: 10 04                        bpl     <a href="#SymXRDKBD">XRDKBD</a>            ;loop if buffered since test
 C8D1: 8D 10 C0                     sta     <a href="#SymKBDSTRB">KBDSTRB</a>           ;Clear keyboard strobe.
@@ -1803,7 +1807,7 @@ C954: 60                           rts
                    ; 
 C955: E9 81        <span id="SymREL">REL</span>             sbc     #$81              ;calc relative address
 C957: 4A                           lsr     A
-C958: D0 14                        bne     $C96E             ;bad branch
+C958: D0 14                        bne     <a href="#SymGOERR">GOERR</a>             ;bad branch
 C95A: A4 3F                        ldy     <a href="#SymA2H">A2H</a>
 C95C: A6 3E                        ldx     <a href="#SymA2L">A2L</a>
 C95E: D0 01                        bne     <a href="#SymREL1">REL1</a>
@@ -1817,7 +1821,7 @@ C968: 10 01                        bpl     <a href="#SymREL2">REL2</a>          
 C96A: C8                           iny
 C96B: 98           <span id="SymREL2">REL2</span>            tya                       ;get page
 C96C: E5 3B                        sbc     <a href="#SymPCH">PCH</a>               ;check page
-C96E: D0 57                        bne     <a href="#SymMINIERR">MINIERR</a>           ;display error
+C96E: D0 57        <span id="SymGOERR">GOERR</span>           bne     <a href="#SymMINIERR">MINIERR</a>           ;display error
                    ; 
                    ; Move instruction to memory
                    ; 
@@ -1973,7 +1977,7 @@ CA5F: 68                           pla
 CA60: 85 2D                        sta     <a href="#Symrtnh">rtnh</a>              ;Save return address
 CA62: A2 08                        ldx     #$08
 CA64: BD 04 CB     <span id="Symxqinit">xqinit</span>          lda     <a href="#Syminitbl">initbl</a>-1,X
-CA67: 95 3C                        sta     $3C,X
+CA67: 95 3C                        sta     <a href="#Symxqt">xqt</a>,X
 CA69: CA                           dex
 CA6A: D0 F8                        bne     <a href="#Symxqinit">xqinit</a>
 CA6C: A1 3A                        lda     (<a href="#SymPCL">PCL</a>,X)
@@ -1999,11 +2003,11 @@ CA92: 49 14                        eor     #$14
 CA94: C9 04                        cmp     #$04
 CA96: F0 02                        beq     <a href="#Symxq2">xq2</a>               ;Copy user inst to xeq area
 CA98: B1 3A        <span id="Symxq1">xq1</span>             lda     (<a href="#SymPCL">PCL</a>),Y           ;Change rel branch
-CA9A: 99 3C 00     <span id="Symxq2">xq2</span>             sta     $003C,Y           ;displacement to 4 for jmp to branch
+CA9A: 99 3C 00     <span id="Symxq2">xq2</span>             sta     <a href="#Symxqt">xqt</a>,Y             ;displacement to 4 for jmp to branch
 CA9D: 88                           dey                       ;or jump to nbranch
 CA9E: 10 F8                        bpl     <a href="#Symxq1">xq1</a>
 CAA0: 20 3F FF                     jsr     <a href="#SymRESTORE">RESTORE</a>           ;Restore user reg contents
-CAA3: 4C 3C 00                     jmp     $003C             ;Xeq user op from ram
+CAA3: 4C 3C 00                     jmp     <a href="#Symxqt">xqt</a>               ;Xeq user op from ram
 
 CAA6: A9 64        <span id="Symxbrk">xbrk</span>            lda     #&lt;<a href="#SymMON">MON</a>-1           ;Print registers and go to monitor
 CAA8: A2 FF                        ldx     #&gt;<a href="#SymMON">MON</a>
@@ -2531,10 +2535,9 @@ CD26: 98                           DFB     $98               ;mouse chars off
 CD27: 99                           DFB     $99               ;home cursor
 CD28: 9A                           DFB     $9A               ;clear line
 CD29: 9B                           DFB     $9B               ;mouse chars on
-                   <span style="background-color: #cbcb00">NOTE: TODO: Makes sure these resolved. (from pg 455)</span>
 CD2A: 66 FC        <span id="SymCTLADR">CTLADR</span>          DW      <a href="#SymLF">LF</a>                ;move cursor down
 CD2C: 1A FC                        DW      <a href="#SymUP">UP</a>                ;move cursor up
-CD2E: A0 FB                        DW      $FBA0             ;forward a space
+CD2E: A0 FB                        DW      <a href="#SymNEWADV">NEWADV</a>            ;forward a space
 CD30: 58 FC                        DW      <a href="#SymHOME">HOME</a>              ;home cursor, clear screen
 CD32: 9C FC                        DW      <a href="#SymCLREOL">CLREOL</a>            ;clear to end of line
 CD34: 42 FC                        DW      <a href="#SymCLREOP">CLREOP</a>            ;clear to end of page
@@ -3687,7 +3690,7 @@ FB97: 30 64                        bmi     <a href="#SymVIDOUT">VIDOUT</a>      
 FB99: 89 60                        bit     #$60              ;is it a control?
 FB9B: F0 B7                        beq     <a href="#SymDOCTL">DOCTL</a>             ;=&gt;YES, DO IT
 FB9D: 20 B8 C3                     jsr     <a href="#Symstorch">storch</a>            ;print w/inverse mask
-FBA0: EE 7B 05                     inc     <a href="#SymOURCH">OURCH</a>             ;advance cursor
+FBA0: EE 7B 05     <span id="SymNEWADV">NEWADV</span>          inc     <a href="#SymOURCH">OURCH</a>             ;advance cursor
 FBA3: AD 7B 05                     lda     <a href="#SymOURCH">OURCH</a>             ;and update others
 FBA6: 2C 1F C0                     bit     <a href="#SymRD80VID">RD80VID</a>           ;but only if not 80 columns
 FBA9: 30 05                        bmi     <a href="#SymNEWADV1">NEWADV1</a>           ;=&gt;80 columns, leav'em
@@ -4460,7 +4463,7 @@ FFFE: 03 C8                        DW      <a href="#SymNEWIRQ">NEWIRQ</a>      
 <div id="footer">
     <hr/>
     <p>HTML generated by <a href="https://6502bench.com/">6502bench SourceGen</a> v1.8.4
-    on 2023/03/05 <!--14:29:03 -06:00--></p>
+    on 2023/03/05 <!--14:40:01 -06:00--></p>
     <p>Expression style: Merlin</p>
     <!-- parameters: cols=16,8,18,100;extraCols=Address,Bytes;byteSpc=True;commaBulk=True;nonuPfx=':';varPfx=']';labelBrk=False;notes=True;gfx=True;opWrap=32 -->
 </div>

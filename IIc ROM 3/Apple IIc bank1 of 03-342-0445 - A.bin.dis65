@@ -3392,6 +3392,23 @@
 "Type":"Constant",
 "LabelAnno":"None"},
 
+"xqt":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"xqt",
+"Value":60,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "XQT":{
 "DataDescriptor":{
 "Length":1,
@@ -5996,7 +6013,7 @@
 
 "LongComments":{
 "-2147483647":{
-"Text":"Apple IIc ROM3 (slinky)  - Bank 1\r\nRe-created by James Lewis (@baldengineer)\r\n*****************************************************************\r\n** Work In-Progress! ** Work In-Progress! ** Work In-Progress! ** \r\n*****************************************************************\r\n\r\nFor more information visit:\r\nhttps://github.com/baldengineer/Apple-IIc-ROM-Disassembly\r\n\r\n(Original attributions are in comments below, as shown in original ROM Listings.)\r\n\r\nRecreated work licensed as Attribution-NonCommercial-ShareAlike 4.0 International.\r\n\r\nGenerated with 6502bench SourceGen v1.8.4",
+"Text":"Apple IIc ROM3 (slinky)  - Bank 1\r\nRe-created by James Lewis (@baldengineer)\r\n******************************************************************\r\n 2023-03-05 v0.9: Decode of bank 1 done                            \r\n                  Needs lots of proof-reading!                   \r\n                    Skipped AppleSoft ($D000-$F7FF).             \r\n                    Left ROM Switch Rountines ($C780) un-decoded \r\n                     (SourceGen doesn\u0027t like the bank 2 addrs)   \r\n******************************************************************\r\n\r\nFor more information visit:\r\nhttps://github.com/baldengineer/Apple-IIc-ROM-Disassembly\r\n\r\n(Original attributions are in comments below, as shown in original ROM Listings.)\r\n\r\nRecreated work licensed as Attribution-NonCommercial-ShareAlike 4.0 International.\r\n\r\nGenerated with 6502bench SourceGen v1.8.4",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -6971,6 +6988,12 @@
 "Text":"\r\nTable of low order monitor routine\r\ndispatch addresses.\r\n\r\n",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"2252":{
+"Text":"  The following routine is for reading key-\r\nboard from buffers or directly.\r\n  Type-ahead buffering only occurs for non-auto\r\nrepeat keypresses.  When a key is pressed for\r\nauto-repreat the buffer is first emptied, then the\r\nrepeated characters are returned.\r\n  The minus flag is used to indicate if a keystroke\r\nis being returned.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -6991,12 +7014,6 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-256},
-
-"1810":{
-"Text":"verify these match up to below",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":0},
 
 "1818":{
 "Text":"C71A ;dfb \u003epnull\r\nC71A ;dfb \u003egoxmint",
@@ -7021,18 +7038,6 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-5383962},
-
-"2252":{
-"Text":"  The following routine is for reading key-\r\nboard from buffers or directly.\r\n  Type-ahead buffering only occurs for non-auto\r\nrepeat keypresses.  When a key is pressed for\r\nauto-repreat the buffer is first emptied, then the\r\nrepeated characters are returned.\r\n  The minus flag is used to indicate if a keystroke\r\nis being returned.",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":0},
-
-"3370":{
-"Text":"TODO: Makes sure these resolved. (from pg 455)",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":-256},
 
 "3447":{
 "Text":"M_CTL+M_CTL2",
@@ -11798,6 +11803,20 @@
 "16355":{
 "Label":"SUBTBL",
 "Value":65507,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2414":{
+"Label":"GOERR",
+"Value":51566,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"15264":{
+"Label":"NEWADV",
+"Value":64416,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
