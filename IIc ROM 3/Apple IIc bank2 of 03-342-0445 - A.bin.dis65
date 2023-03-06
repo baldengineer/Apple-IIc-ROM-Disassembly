@@ -1774,6 +1774,7 @@
 "261":"Assume interrupt not handled",
 "753":"Get data and check xon, etc.",
 "1261":"branch forever",
+"2176":"The //c bank switch jumps here",
 "2179":"Does a bunch of stuff",
 "2182":"This set X reg",
 "2185":"This is the mode value",
@@ -5927,6 +5928,13 @@
 "1018":{
 "Label":"mem5",
 "Value":50170,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"3404":{
+"Label":"Entry",
+"Value":52556,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
