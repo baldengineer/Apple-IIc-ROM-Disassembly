@@ -1240,16 +1240,13 @@ C7ED: C0                           DFB     $C0
 C7EE: 6C                           DFB     $6C
 C7EF: ED                           DFB     $ED
 C7F0: 03                           DFB     $03
-C7F1: DA                           DFB     $DA
-C7F2: 20                           DFB     $20
-C7F3: 16                           DFB     $16
-C7F4: C8                           DFB     $C8
-C7F5: 5A                           DFB     $5A
-C7F6: 20                           DFB     $20
-C7F7: A0                           DFB     $A0
-C7F8: D1                           DFB     $D1
-C7F9: 80                           DFB     $80
-C7FA: 13                           DFB     $13
+
+C7F1: DA                           phx
+C7F2: 20 16 C8                     jsr     <a href="#Symgetlc">getlc</a>
+C7F5: 5A                           phy
+C7F6: 20 A0 D1                     jsr     <a href="#SymLD1A0">LD1A0</a>
+C7F9: 80 13                        bra     <a href="#SymLC80E">LC80E</a>
+
 C7FB: 00 00 00 00+                 DS      8,$00
 C803: 4C                           DFB     $4C
 C804: 8E                           DFB     $8E
@@ -3363,91 +3360,48 @@ D19C: A0                           DFB     $A0
 D19D: D1                           DFB     $D1
 D19E: 80                           DFB     $80
 D19F: A8                           DFB     $A8
-D1A0: BD                           DFB     $BD
-D1A1: B8                           DFB     $B8
-D1A2: 03                           DFB     $03
-D1A3: 89                           DFB     $89
-D1A4: 40                           DFB     $40
-D1A5: 90                           DFB     $90
-D1A6: 12                           DFB     $12
-D1A7: D0                           DFB     $D0
-D1A8: 20                           DFB     $20
-D1A9: E4                           DFB     $E4
-D1AA: 39                           DFB     $39
-D1AB: D0                           DFB     $D0
-D1AC: 47                           DFB     $47
-D1AD: 09                           DFB     $09
-D1AE: 40                           DFB     $40
-D1AF: AC                           DFB     $AC
-D1B0: 79                           DFB     $79
-D1B1: 06                           DFB     $06
-D1B2: 8C                           DFB     $8C
-D1B3: 7A                           DFB     $7A
-D1B4: 06                           DFB     $06
-D1B5: A0                           DFB     $A0
-D1B6: DF                           DFB     $DF
-D1B7: 80                           DFB     $80
-D1B8: 07                           DFB     $07
-D1B9: F0                           DFB     $F0
-D1BA: 0E                           DFB     $0E
-D1BB: 29                           DFB     $29
-D1BC: BF                           DFB     $BF
-D1BD: AC                           DFB     $AC
-D1BE: 7A                           DFB     $7A
-D1BF: 06                           DFB     $06
-D1C0: 9D                           DFB     $9D
-D1C1: B8                           DFB     $B8
-D1C2: 03                           DFB     $03
-D1C3: 8C                           DFB     $8C
-D1C4: 79                           DFB     $79
-D1C5: 06                           DFB     $06
-D1C6: 8C                           DFB     $8C
-D1C7: FB                           DFB     $FB
-D1C8: 07                           DFB     $07
-D1C9: BC                           DFB     $BC
-D1CA: 42                           DFB     $42
-D1CB: C1                           DFB     $C1
-D1CC: 58                           DFB     $58
-D1CD: 08                           DFB     $08
-D1CE: 78                           DFB     $78
-D1CF: B9                           DFB     $B9
-D1D0: FA                           DFB     $FA
-D1D1: BF                           DFB     $BF
-D1D2: 09                           DFB     $09
-D1D3: 02                           DFB     $02
-D1D4: 90                           DFB     $90
-D1D5: 02                           DFB     $02
-D1D6: 29                           DFB     $29
-D1D7: FD                           DFB     $FD
-D1D8: 99                           DFB     $99
-D1D9: FA                           DFB     $FA
-D1DA: BF                           DFB     $BF
-D1DB: A9                           DFB     $A9
-D1DC: 00                           DFB     $00
-D1DD: 6A                           DFB     $6A
-D1DE: 8D                           DFB     $8D
-D1DF: FA                           DFB     $FA
-D1E0: 05                           DFB     $05
-D1E1: 10                           DFB     $10
-D1E2: 07                           DFB     $07
-D1E3: 9C                           DFB     $9C
-D1E4: 7C                           DFB     $7C
-D1E5: 05                           DFB     $05
-D1E6: 9C                           DFB     $9C
-D1E7: 7C                           DFB     $7C
-D1E8: 06                           DFB     $06
-D1E9: 8A                           DFB     $8A
-D1EA: 8D                           DFB     $8D
-D1EB: FC                           DFB     $FC
-D1EC: 04                           DFB     $04
-D1ED: 28                           DFB     $28
-D1EE: 8E                           DFB     $8E
-D1EF: FC                           DFB     $FC
-D1F0: 05                           DFB     $05
-D1F1: 8E                           DFB     $8E
-D1F2: FF                           DFB     $FF
-D1F3: 06                           DFB     $06
-D1F4: 60 38 38 38+                 ASC     ‘`888..OKJ’
+
+D1A0: BD B8 03     <span id="SymLD1A0">LD1A0</span>           lda     $03B8,X
+D1A3: 89 40                        bit     #$40
+D1A5: 90 12                        bcc     <a href="#SymLD1B9">LD1B9</a>
+D1A7: D0 20                        bne     <a href="#SymLD1C9">LD1C9</a>
+D1A9: E4 39                        cpx     $39
+D1AB: D0 47                        bne     <a href="#SymLD1F4">LD1F4</a>
+D1AD: 09 40                        ora     #$40
+D1AF: AC 79 06                     ldy     $0679
+D1B2: 8C 7A 06                     sty     $067A
+D1B5: A0 DF                        ldy     #$DF
+D1B7: 80 07                        bra     <a href="#SymLD1C0">LD1C0</a>
+
+D1B9: F0 0E        <span id="SymLD1B9">LD1B9</span>           beq     <a href="#SymLD1C9">LD1C9</a>
+D1BB: 29 BF                        and     #$BF
+D1BD: AC 7A 06                     ldy     $067A
+D1C0: 9D B8 03     <span id="SymLD1C0">LD1C0</span>           sta     $03B8,X
+D1C3: 8C 79 06                     sty     $0679
+D1C6: 8C FB 07                     sty     $07FB
+D1C9: BC 42 C1     <span id="SymLD1C9">LD1C9</span>           ldy     <a href="#SymLC141">LC141</a>+1,X
+D1CC: 58                           cli
+D1CD: 08                           php
+D1CE: 78                           sei
+D1CF: B9 FA BF                     lda     <a href="#Symaddrh">addrh</a>,Y
+D1D2: 09 02                        ora     #$02
+D1D4: 90 02                        bcc     <a href="#SymLD1D8">LD1D8</a>
+D1D6: 29 FD                        and     #$FD
+D1D8: 99 FA BF     <span id="SymLD1D8">LD1D8</span>           sta     <a href="#Symaddrh">addrh</a>,Y
+D1DB: A9 00                        lda     #$00
+D1DD: 6A                           ror     A
+D1DE: 8D FA 05                     sta     $05FA
+D1E1: 10 07                        bpl     <a href="#SymLD1EA">LD1EA</a>
+D1E3: 9C 7C 05                     stz     $057C
+D1E6: 9C 7C 06                     stz     $067C
+D1E9: 8A                           txa
+D1EA: 8D FC 04     <span id="SymLD1EA">LD1EA</span>           sta     $04FC
+D1ED: 28                           plp
+D1EE: 8E FC 05                     stx     $05FC
+D1F1: 8E FF 06                     stx     $06FF
+D1F4: 60           <span id="SymLD1F4">LD1F4</span>           rts
+
+D1F5: 38 38 38 2E+                 ASC     ‘888..OKJ’
 D1FD: 96                           DFB     $96
 D1FE: 87                           DFB     $87
 D1FF: 6B                           DFB     $6B
@@ -5032,7 +4986,7 @@ FFFF: C7                           DFB     $C7
 <div id="footer">
     <hr/>
     <p>HTML generated by <a href="https://6502bench.com/">6502bench SourceGen</a> v1.8.4
-    on 2023/03/05 <!--21:17:32 -06:00--></p>
+    on 2023/03/05 <!--21:32:43 -06:00--></p>
     <p>Expression style: Merlin</p>
     <!-- parameters: cols=16,8,18,100;extraCols=Address,Bytes;byteSpc=True;commaBulk=True;nonuPfx=':';varPfx=']';labelBrk=False;notes=True;gfx=True;opWrap=32 -->
 </div>
