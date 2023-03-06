@@ -49,11 +49,14 @@
                    <span id="SymESCNUM">ESCNUM</span>          EQU     $13    {const}    ;$CD0C-ESCTAB-1
                    <span id="SymNUMOPS">NUMOPS</span>          EQU     $16    {const}    ;*-OPTBL-1 ; number of bytes to check
                    <span id="SymM_CTL2">M_CTL2</span>          EQU     $20    {const}    ;Don't print controls
+                   <span id="SymSlot">Slot</span>            EQU     $58    {const}    ;not the same as slot ($04)
                    <span id="Symxon">xon</span>             EQU     $91    {const}    ;XON character
                    <span id="SymPICK">PICK</span>            EQU     $95    {const}    ;CONTROL-U character
                    <span id="SymESC">ESC</span>             EQU     $9B    {const}    ;what ESC generates
                    <span id="Symflags">flags</span>           EQU     $06B8  {const}    ;D7 = Video echo D6 = CRLF 779 &amp; 77A
+                   <span id="SymClearIOROMs">ClearIOROMs</span>     EQU     $CFFF  {const}
                    <span id="SymLOC0">LOC0</span>            EQU     $00    {addr/1}   ;vector for autostart from disk
+                   <span id="SymPCID2">PCID2</span>           EQU     $00               ;@C5FB
                    <span id="SymLOC1">LOC1</span>            EQU     $01    {addr/1}
                    <span id="Symbadcmd">badcmd</span>          EQU     $01               ;bad command
                    <span id="Symibslot">ibslot</span>          EQU     $01               ;slot * 16
@@ -62,6 +65,7 @@
                    <span id="Symzused">zused</span>           EQU     $0A               ;tempptr-cmmand+2 ;zero page bytes used
                    <span id="Symibstat">ibstat</span>          EQU     $0D               ;status
                    <span id="Symbadunit">badunit</span>         EQU     $11               ;bad unit number
+                   <span id="Symbmsglen">bmsglen</span>         EQU     $11               ;@c552
                    <span id="Sympcrevnum">pcrevnum</span>        EQU     $11               ;smartport rev 1.1
                    <span id="SymWNDLFT">WNDLFT</span>          EQU     $20    {addr/1}   ;left edge of text window
                    <span id="SymWNDWDTH">WNDWDTH</span>         EQU     $21    {addr/1}   ;width of text window
@@ -106,6 +110,7 @@
                    <span id="SymA3L">A3L</span>             EQU     $40    {addr/1}   ;Monitor Temp
                    <span id="SymA3H">A3H</span>             EQU     $41    {addr/1}   ;Monitor Temp
                    <span id="SymA4L">A4L</span>             EQU     $42    {addr/1}   ;Monitor Temp
+                   <span id="Symcmdcode">cmdcode</span>         EQU     $42               ;It's in $C500 code but not elsewhere?
                    <span id="Symcmmand">cmmand</span>          EQU     $42               ;command to be executed
                    <span id="SymA4H">A4H</span>             EQU     $43    {addr/1}   ;Monitor Temp
                    <span id="Symunit">unit</span>            EQU     $43               ;D&lt;6-4&gt; = slot
@@ -125,6 +130,7 @@
                    <span id="SymRNDH">RNDH</span>            EQU     $4F    {addr/1}   ;random counter high
                    <span id="SymBOOTDEV">BOOTDEV</span>         EQU     $4F               ;Disk II boot rom equate
                    <span id="Symdoserr">doserr</span>          EQU     $80               ;DOS I/O error
+                   <span id="SymPDIDByte">PDIDByte</span>        EQU     $BF               ;@C5FE
                    <span id="Symrevnum">revnum</span>          EQU     $0101             ;revision 1.0.1
                    <span id="SymIN">IN</span>              EQU     $0200  {addr/2}   ;input buffer for GETLN
                    <span id="Syminbuf">inbuf</span>           EQU     $0200             ;Input buffer
@@ -137,6 +143,7 @@
                    <span id="SymUSRADR">USRADR</span>          EQU     $03F8  {addr/2}   ;APPLESOFT USR function vector
                    <span id="SymNMI">NMI</span>             EQU     $03FB  {addr/2}   ;NMI vector
                    <span id="SymLINE1">LINE1</span>           EQU     $0400  {addr/2}   ;first line of text screen
+                   <span id="SymProFLAG">ProFLAG</span>         EQU     $0473             ;Elsewhere "proflag" is defined as $BF00
                    <span id="SymROMSTATE">ROMSTATE</span>        EQU     $0478  {addr/2}   ;temp store of ROM state
                    <span id="SymOLDCH">OLDCH</span>           EQU     $047B  {addr/2}   ;($478+3) last value of CH
                    <span id="Symmouxl">mouxl</span>           EQU     $047F             ;X position low byte
@@ -162,11 +169,11 @@
                    <span id="Symtrkey">trkey</span>           EQU     $06FF             ;Retrieve buffer for type ahead buffer
                    <span id="Symcol">col</span>             EQU     $0738             ;Current printer column 7F9 &amp; 7FA
                    <span id="SymNXTCUR">NXTCUR</span>          EQU     $077B  {addr/2}   ;($778+3) next cursor to display
+                   <span id="Symbootscrn">bootscrn</span>        EQU     $07DB             ;@c557
                    <span id="SymMSLOT">MSLOT</span>           EQU     $07F8  {addr/2}   ;owner of $C8 space
                    <span id="SymCURSOR">CURSOR</span>          EQU     $07FB  {addr/2}   ;($7F8+3) the current cursor char
                    <span id="Symmoumode">moumode</span>         EQU     $07FF             ;Mouse mode
                    <span id="Symbootbuf">bootbuf</span>         EQU     $0800             ;into $800
-                   <span id="Symthbuf">thbuf</span>           EQU     $0800             ;Buffer in alt ram space
                    <span id="Symrwts">rwts</span>            EQU     $BD00             ;RWTS entry point
                    <span id="Symscomd">scomd</span>           EQU     $BFFA             ;ACIA command register
                    <span id="Symscntl">scntl</span>           EQU     $BFFB             ;ACIA control register
@@ -227,6 +234,7 @@
                    <span id="Symsw_mclamp">sw_mclamp</span>       EQU     $C6EE             ;bank2?
                    <span id="Symsw_mhome">sw_mhome</span>        EQU     $C6F9             ;bank2?
                    <span id="Symsw_initmouse">sw_initmouse</span>    EQU     $C704             ;bank2?
+                   <span id="SymSWPROTO">SWPROTO</span>         EQU     $C797             ;same as swpcnv
                    <span id="Symmoveaux">moveaux</span>         EQU     $C7AF             ;bank2
                    <span id="Symswcmd3">swcmd3</span>          EQU     $C806             ;bank2?
                    <span id="Symfixlc">fixlc</span>           EQU     $C80E             ;bank2
@@ -1058,64 +1066,92 @@ C4FE: 4F                           DFB     $4F
 C4FF: 4E                           DFB     &lt;<a href="#Symentry4">entry4</a>
                                    ADREND  ↑ ~$C400
 
+                   NOTE: PC.BOOTSPACE, pdf pg 509 
+                   (out of order in the listing)
                    ; 
                    ; Here beginneth that code which resideth in the boot space
                    ;   at the time the card resteth in sloth the fifth.
+                   ; 
+                   ; Auto Boot Signature bytes
+                   ;  This is also the boot (auto &amp; PR#5) entry point.
                    ; 
 C500:              UniDisk_Routines
                                    ORG     *+$0000
 C500: A2 20        <span id="SymC500org">C500org</span>         ldx     #$20
 C502: A2 00                        ldx     #$00
 C504: A2 03                        ldx     #$03
+                   ; 
 C506: C9 00                        cmp     #0                ;Flag that this is a boot
 C508: B0 17                        bcs     <a href="#SymBootC">BootC</a>
+                   ; 
+                   ; Set up so that ProFLAG will have the top bit set
+                   ; 
 C50A: 38           <span id="SymProDOSEntry">ProDOSEntry</span>     sec
-C50B: B0 01                        bcs     <a href="#SymLC50E">LC50E</a>
+                   NOTE: *+3
+C50B: B0 01                        bcs     <a href="#SymLC50E">LC50E</a>             ;Skip the clear
 
-C50D: 18           <span id="SymMLIEntry">MLIEntry</span>        clc
+                   ; 
+                   ; This is the MLIxface entry point
+                   ; 
+C50D: 18           <span id="SymMLIEntry">MLIEntry</span>        clc                       ;Only use this label in //c version
 C50E: A2 05        <span id="SymLC50E">LC50E</span>           ldx     #$05
-C510: 7E 73 04                     ror     $0473,X
-C513: 18                           clc
-C514: A2 C5                        ldx     #$C5
+                   <span style="background-color: #cb9099">NOTE: ProFLAG is $473?</span>
+C510: 7E 73 04                     ror     <a href="#SymProFLAG">ProFLAG</a>,X         ;ProFLAG[7]=1 if ProDOS, =0 if MLI
+C513: 18                           clc                       ;This is not a boot entry
+                   ; 
+                   ; Now save mslot and clear all $C800 ROMs
+                   ; 
+C514: A2 C5        <span id="Symbootcase5">bootcase5</span>       ldx     #$C5              ;Load value for MSLOT
 C516: 8E F8 07                     stx     <a href="#SymMSLOT">MSLOT</a>
 C519: A2 05                        ldx     #$05
-C51B: AD FF CF                     lda     <a href="#SymClearIOROMs">ClearIOROMs</a>
-C51E: 4C 97 C7                     jmp     <a href="#Symswpcnv">swpcnv</a>
+C51B: AD FF CF                     lda     <a href="#SymClearIOROMs">ClearIOROMs</a>       ;Clear all $C800 latches but ours
+C51E: 4C 97 C7                     jmp     <a href="#SymSWPROTO">SWPROTO</a>
 
-C521: A2 05        <span id="SymBootC">BootC</span>           ldx     #$05
-C523: 86 58                        stx     $58
+C521: A2 05        <span id="SymBootC">BootC</span>           ldx     #$05              ;Need slot number
+C523: 86 58        <span id="SymBootcode">Bootcode</span>        stx     <a href="#SymSlot">Slot</a>
 C525: A9 C5                        lda     #$C5
 C527: 8D F8 07                     sta     <a href="#SymMSLOT">MSLOT</a>
 C52A: 20 76 C5                     jsr     <a href="#SymReset">Reset</a>
-C52D: A0 05                        ldy     #$05
-C52F: B9 70 C5     <span id="SymLC52F">LC52F</span>           lda     <a href="#Symmbsglen">mbsglen</a>,Y
-C532: 99 42 00                     sta     <a href="#SymA4L">A4L</a>,Y
+                   ; 
+C52D: A0 05                        ldy     #5                ;Copy a command table
+C52F: B9 70 C5     <span id="Symbcl">bcl</span>             lda     <a href="#Symboottab">boottab</a>,Y
+C532: 99 42 00                     sta     <a href="#Symcmdcode">cmdcode</a>,Y
 C535: 88                           dey
-C536: 10 F7                        bpl     <a href="#SymLC52F">LC52F</a>
+C536: 10 F7                        bpl     <a href="#Symbcl">bcl</a>
+                   ; 
+                   ; Now do the read from block zero
+                   ; 
 C538: 20 0A C5                     jsr     <a href="#SymProDOSEntry">ProDOSEntry</a>
-C53B: B0 15                        bcs     <a href="#SymLC552">LC552</a>
-C53D: AE 00 08                     ldx     <a href="#Symthbuf">thbuf</a>
+C53B: B0 15                        bcs     <a href="#SymBOOTFAIL">BOOTFAIL</a>          ;If fail, check loc
+                   ; 
+C53D: AE 00 08                     ldx     $0800             ;If ($800)&lt;&gt;1 this is no A// boot disk
 C540: CA                           dex
-C541: D0 0F                        bne     <a href="#SymLC552">LC552</a>
-C543: AE 01 08                     ldx     $0801
-C546: F0 0A                        beq     <a href="#SymLC552">LC552</a>
-C548: A5 58                        lda     $58
+C541: D0 0F                        bne     <a href="#SymBOOTFAIL">BOOTFAIL</a>
+                   ; 
+C543: AE 01 08                     ldx     $0801             ;If $801 is zero, no boot
+C546: F0 0A                        beq     <a href="#SymBOOTFAIL">BOOTFAIL</a>
+                   ; 
+                   ; It all looks okay.  Jump to the code with N0 in X.
+                   ; 
+C548: A5 58                        lda     <a href="#SymSlot">Slot</a>
 C54A: 0A                           asl     A
 C54B: 0A                           asl     A
 C54C: 0A                           asl     A
 C54D: 0A                           asl     A
 C54E: AA                           tax
-C54F: 4C 01 08                     jmp     $0801
+C54F: 4C 01 08                     jmp     $0801             ;Jump to it
 
-C552: A2 10        <span id="SymLC552">LC552</span>           ldx     #$10
-C554: BD 5F C5     <span id="SymLC554">LC554</span>           lda     <a href="#Symbootmsg">bootmsg</a>,X
-C557: 9D DB 07                     sta     $07DB,X
+                   NOTE: not to be confused with "bootfail" -jl
+C552: A2 10        <span id="SymBOOTFAIL">BOOTFAIL</span>        ldx     #<a href="#Symbmsglen">bmsglen</a>-1
+C554: BD 5F C5     <span id="Symmorchrs">morchrs</span>         lda     <a href="#Symbootmsg">bootmsg</a>,X
+C557: 9D DB 07                     sta     <a href="#Symbootscrn">bootscrn</a>,X
 C55A: CA                           dex
-C55B: 10 F7                        bpl     <a href="#SymLC554">LC554</a>
-C55D: 80 FE        <span id="SymLC55D">LC55D</span>           bra     <a href="#SymLC55D">LC55D</a>
+C55B: 10 F7                        bpl     <a href="#Symmorchrs">morchrs</a>
+C55D: 80 FE        <span id="Symcoma">coma</span>            bra     <a href="#Symcoma">coma</a>              ;He's dead Jim.
 
 C55F: C3 E8 E5 E3+ <span id="Symbootmsg">bootmsg</span>         ASC     “Check Disk Drive.”
-C570: 01 50 00 08+ <span id="Symmbsglen">mbsglen</span>         HEX     $01,$50,$00,$08,$00,$00
+                   ; ReadCMD,$50,0,8,0,0 ;Read from 1st; blk0-&gt;$801
+C570: 01 50 00 08+ <span id="Symboottab">boottab</span>         HEX     $01,$50,$00,$08,$00,$00
 
                    ; 
                    ; 
@@ -1137,8 +1173,7 @@ C587: 09 00                        DW      $0009
 C589: 60                           rts
 
 C58A: 01 00                        HEX     $01,$00           ;One parm - the unit $00
-C58C: 00                           DFB     $00
-C58D: 00                           DFB     $00
+C58C: 00 00                        DW      $0000
                                    ADREND  ↑ $C500
 
                    ********************************************************************************
@@ -1213,15 +1248,14 @@ C5EE: 4C 9D C7     <span id="Symgobasicin">gobasicin</span>       jmp     <a hre
 
 C5F1: 00 00 00 00                  HEX     $00,$00,$00,$00
 
-C5F5: 4C 52 C5     <span id="Symbootfail">bootfail</span>        jmp     <a href="#SymLC552">LC552</a>
+C5F5: 4C 52 C5     <span id="Symbootfail">bootfail</span>        jmp     <a href="#SymBOOTFAIL">BOOTFAIL</a>          ;Jump to the boot failure message
 
 C5F8: 4C 76 C5     <span id="SymPCNVRST">PCNVRST</span>         jmp     <a href="#SymReset">Reset</a>
 
-C5FB: 00                           DFB     $00
-C5FC: 00                           DFB     $00
-C5FD: 00                           DFB     $00
-C5FE: BF                           DFB     $BF
-C5FF: 0A                           DFB     $0A
+C5FB: 00                           DFB     <a href="#SymPCID2">PCID2</a>
+C5FC: 00 00                        DW      $0000
+C5FE: BF                           DFB     <a href="#SymPDIDByte">PDIDByte</a>
+C5FF: 0A                           DFB     &lt;<a href="#SymProDOSEntry">ProDOSEntry</a>
                                    ADREND  ↑ $C58E
 
                    ********************************************************************************
@@ -1488,6 +1522,7 @@ C793: C7                           DFB     $C7
 C794: 4C                           DFB     $4C
 C795: 04                           DFB     $04
 C796: C8                           DFB     $C8
+                   NOTE: also known as SWPROTO
 C797: 8D 28 C0     <span id="Symswpcnv">swpcnv</span>          ADR     <a href="#SymROMBANK">ROMBANK</a>+$BF6865   ;Protocol converter
 C79A: 4C                           DFB     $4C               ;Jump to sethooks from other side
 C79B: F1                           DFB     $F1
@@ -3022,7 +3057,8 @@ CFE1: 4C A7 FF     <span id="Symlacr">lacr</span>            jmp     <a href="#S
 CFE4: 60           <span id="Symladone">ladone</span>          rts
 
 CFE5: 00 00 00 00+                 DS      26,$00
-CFFF: D0           <span id="SymClearIOROMs">ClearIOROMs</span>     DFB     $D0
+                   NOTE: $CFFF isn't ClearIOROMs (that's a switch, I think)
+CFFF: D0                           DFB     $D0
                    <span style="background-color: #89acb7">NOTE: Applesoft BASIC *skip*</span>
 D000:              Applesoft_Basic
                                    ORG     *+$0000
@@ -4463,7 +4499,7 @@ FFFE: 03 C8                        DW      <a href="#SymNEWIRQ">NEWIRQ</a>      
 <div id="footer">
     <hr/>
     <p>HTML generated by <a href="https://6502bench.com/">6502bench SourceGen</a> v1.8.4
-    on 2023/03/05 <!--14:40:01 -06:00--></p>
+    on 2023/03/05 <!--18:46:18 -06:00--></p>
     <p>Expression style: Merlin</p>
     <!-- parameters: cols=16,8,18,100;extraCols=Address,Bytes;byteSpc=True;commaBulk=True;nonuPfx=':';varPfx=']';labelBrk=False;notes=True;gfx=True;opWrap=32 -->
 </div>

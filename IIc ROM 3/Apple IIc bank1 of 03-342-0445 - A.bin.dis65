@@ -520,6 +520,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"ClearIOROMs":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"ClearIOROMs",
+"Value":53247,
+"Source":"Project",
+"Type":"Constant",
+"LabelAnno":"None"},
+
 "CLR80COL":{
 "DataDescriptor":{
 "Length":2,
@@ -7184,6 +7201,12 @@
 "MaxWidth":80,
 "BackgroundColor":0},
 
+"4095":{
+"Text":"$CFFF isn\u0027t ClearIOROMs (that\u0027s a switch, I think)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
 "4096":{
 "Text":"Applesoft BASIC *skip*",
 "BoxMode":false,
@@ -8757,13 +8780,6 @@
 "1280":{
 "Label":"C500org",
 "Value":50432,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"4095":{
-"Label":"ClearIOROMs",
-"Value":53247,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
@@ -13247,6 +13263,14 @@
 "SubFormat":"Symbol",
 "SymbolRef":{
 "Label":"ProFLAG",
+"Part":"Low"}},
+
+"1307":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ClearIOROMs",
 "Part":"Low"}},
 
 "1310":{
