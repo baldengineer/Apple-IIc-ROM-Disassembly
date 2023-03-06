@@ -11,13 +11,110 @@
 *SYNOPSIS Apple IIc Protocol Converter Equates
 
 
+; equates from Pg 507
+PDIDByte	@ $BF   ;ProDOS attributes byte
+PCID2		@ $00   ;This means a Liron card
+
+; Zero page (temps)
+zeropage	@ $0040
+checksum	@ $40
+topbits		@ $41
+CMDCode		@ $42
+CMDPcount	@ $43
+CMDUnit		@ $43
+CMDBuffer	@ $44
+CMDBufferl	@ $44
+CMDBufferh	@ $45
+CMDSCode	@ $46
+CMDBlock	@ $46
+CMDBlockl	@ $46
+CMDBlockh	@ $47
+CMDBlocks	@ $48
+CMDSpare1	@ $49
+CMDSpare2	@ $4A
+rcvbuf		@ $4B
+grp7ctr		@ $4B
+oddbytes	@ $4C
+statbyte	@ $4D
+bytecount	@ $4D
+bytecountl	@ $4D
+next		@ $4D
+next1		@ $4D
+AuxType		@ $4E
+bytecounth	@ $4E
+next2		@ $4E
+RPacketType	@ $4F
+next3		@ $4F
+DeviceID	@ $50
+next4		@ $50
+HostID		@ $51
+next5		@ $51
+pointer		@ $52
+next6		@ $52
+next7		@ $53
+buffer		@ $54
+auxptr		@ $56
+buffer2		@ $56
+Slot		@ $58
+temp		@ $59
+tbodd		@ $59
+Unit		@ $5a
+WpacketType	@ $5B
+
+ZPSize		@ $1c
+
+ClearIOROMs	@ $CFFF
+stack		@ $100
+
+; Screenhole Storage
+;
+; The screenhole layout is as follows:
+;
+;				 //e    	 //c
+; ------------------------------
+; ProFlag		$478+n 		$478
+; Retry			$4F8+n 		$4F8
+; SHTemp1		$578+n 		$578
+; SHTempX		$5F8+n 		$5F8
+; SHTempY		$678+n 		$678
+; Power1		$6F8+n 		----
+; Power2		$778+n 		----
+; NumDevices	$7F8+n 		$6FE
+; SvBcL			$6F8		$6F8
+; SvBcH 		$778		$778
+
+scholes		@ $473	;Use the slot 0 sholes for temps
+
+ProFLAG		@ $473  ;scholes
+Retry		@ $4F3	;scholes+$80
+SHTemp1		@ $573  ;scholes+$100
+Retry2		@ $573  ;SHTemp1
+SHTempX		@ $5F3  ;scholes+$180
+SHTempY		@ $673  ;scholes+$200
+NumDevices	@ $6F9			;Actually in slot 6
+
+SvBcL		@ $6F8
+SvBcH		@ $778
+
+cv 			@ $25
+ch 			@ $24
+vtab 		@ $FC22
+cout 		@ $FDED
+bootscrn	@ $7DB
+MSlot 		@ $7F8
+setvid 		@ $FE93
+setkbd 		@ $FE89
+AutoScan 	@ $FABA
+Basic		@ $E000
+loc0 		@ $0 		;Boot parms
+loc1 		@ $1 		;
+
+SWPROTO		@ $C797		;//c bank switch to $C800
+SWRTS2		@ $C784 	;RTS to bank 1
+
 ; These are in the listing but I didn't see their equs.
-ProFLAG		@ $473  ;Elsewhere "proflag" is defined as $BF00
-cmdcode		@ $42   ;It's in $C500 code but not elsewhere?
 bmsglen		@ $11	;@c552
-bootscrn	@ $7db	;@c557
-PCID2		@ $00   ;@C5FB
-PDIDByte	@ $BF   ;@C5FE
+
 
 ; pdf page 508
 ; General Equates
