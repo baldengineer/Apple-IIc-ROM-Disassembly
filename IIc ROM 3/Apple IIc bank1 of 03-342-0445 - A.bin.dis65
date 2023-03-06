@@ -23,7 +23,8 @@
 "RT:Apple/F8-ROM.sym65",
 "RT:Apple/Applesoft.sym65",
 "PROJ:mouse equates.sym65",
-"PROJ:slinky equates.sym65"],
+"PROJ:slinky equates.sym65",
+"PROJ:slinky protocol converter equates.sym65"],
 "ExtensionScriptFileIdentifiers":[],
 "ProjectSyms":{
 "A1H":{
@@ -2644,6 +2645,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"Slot":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"not the same as slot ($04)",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"Slot",
+"Value":88,
+"Source":"Project",
+"Type":"Constant",
+"LabelAnno":"None"},
+
 "SLOTZ":{
 "DataDescriptor":{
 "Length":1,
@@ -2861,6 +2879,23 @@
 "MultiMask":null,
 "Label":"swcmd3",
 "Value":51206,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SWPROTO":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"same as swpcnv",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SWPROTO",
+"Value":51095,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -4646,6 +4681,19 @@
 "1275":"Mark ram card",
 "1276":"Number of blocks = 0 for status call",
 "1286":"Flag that this is a boot",
+"1291":"Skip the clear",
+"1293":"Only use this label in //c version",
+"1296":"ProFLAG[7]=1 if ProDOS, =0 if MLI",
+"1299":"This is not a boot entry",
+"1300":"Load value for MSLOT",
+"1307":"Clear all $C800 latches but ours",
+"1313":"Need slot number",
+"1325":"Copy a command table",
+"1339":"If fail, check loc",
+"1341":"If ($800)\u003c\u003e1 this is no A// boot disk",
+"1347":"If $801 is zero, no boot",
+"1359":"Jump to it",
+"1373":"He\u0027s dead Jim.",
 "1418":"One parm - the unit $00",
 "1488":"input?",
 "1490":"input from $C400?",
@@ -4653,6 +4701,7 @@
 "1502":"we don\u0027t care about high bit",
 "1506":"only 0,1 valid",
 "1518":"go to input routine",
+"1525":"Jump to the boot failure message",
 "1551":"Y=1 IF DRIVE 2 BOOT, ELSE Y=0",
 "1559":"SELECT DRIVE 1 or @",
 "1602":"RESTORE X TO $60",
@@ -6253,7 +6302,7 @@
 "BackgroundColor":0},
 
 "1280":{
-"Text":"\r\nHere beginneth that code which resideth in the boot space\r\n  at the time the card resteth in sloth the fifth.\r\n\r\n",
+"Text":"\r\nHere beginneth that code which resideth in the boot space\r\n  at the time the card resteth in sloth the fifth.\r\n\r\nAuto Boot Signature bytes\r\n This is also the boot (auto \u0026 PR#5) entry point.\r\n\r\n",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -6994,6 +7043,66 @@
 "Text":"  The following routine is for reading key-\r\nboard from buffers or directly.\r\n  Type-ahead buffering only occurs for non-auto\r\nrepeat keypresses.  When a key is pressed for\r\nauto-repreat the buffer is first emptied, then the\r\nrepeated characters are returned.\r\n  The minus flag is used to indicate if a keystroke\r\nis being returned.",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"1286":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1290":{
+"Text":"\r\nSet up so that ProFLAG will have the top bit set\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1293":{
+"Text":"\r\nThis is the MLIxface entry point\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1300":{
+"Text":"\r\nNow save mslot and clear all $C800 ROMs\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1325":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1336":{
+"Text":"\r\nNow do the read from block zero\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1341":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1347":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1352":{
+"Text":"\r\nIt all looks okay.  Jump to the code with N0 in X.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1392":{
+"Text":"ReadCMD,$50,0,8,0,0 ;Read from 1st; blk0-\u003e$801",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -7002,6 +7111,30 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-5383962},
+
+"1280":{
+"Text":"PC.BOOTSPACE, pdf pg 509 \r\n(out of order in the listing)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1291":{
+"Text":"*+3",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1296":{
+"Text":"ProFLAG is $473?",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-18751},
+
+"1362":{
+"Text":"not to be confused with \"bootfail\" -jl",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
 
 "1729":{
 "Text":"Watch this line when decoding bank vector code",
@@ -7026,6 +7159,12 @@
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-18751},
+
+"1943":{
+"Text":"also known as SWPROTO",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
 
 "2060":{
 "Text":"these loads are supposed to be two byte?",
@@ -8595,7 +8734,7 @@
 "LabelAnno":"None"},
 
 "1392":{
-"Label":"mbsglen",
+"Label":"boottab",
 "Value":50544,
 "Source":"User",
 "Type":"GlobalAddr",
@@ -11819,6 +11958,48 @@
 "Value":64416,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1300":{
+"Label":"bootcase5",
+"Value":50452,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1315":{
+"Label":"Bootcode",
+"Value":50467,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1327":{
+"Label":"bcl",
+"Value":50479,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1362":{
+"Label":"BOOTFAIL",
+"Value":50514,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1364":{
+"Label":"morchrs",
+"Value":50516,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1373":{
+"Label":"coma",
+"Value":50525,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -13060,6 +13241,82 @@
 "SubFormat":"Decimal",
 "SymbolRef":null},
 
+"1296":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ProFLAG",
+"Part":"Low"}},
+
+"1310":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SWPROTO",
+"Part":"Low"}},
+
+"1315":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"Slot",
+"Part":"Low"}},
+
+"1325":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1330":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdcode",
+"Part":"Low"}},
+
+"1339":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"BOOTFAIL",
+"Part":"Low"}},
+
+"1341":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1352":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"Slot",
+"Part":"Low"}},
+
+"1362":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"bmsglen",
+"Part":"Low"}},
+
+"1367":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"bootscrn",
+"Part":"Low"}},
+
 "1392":{
 "Length":6,
 "Format":"Dense",
@@ -13105,6 +13362,12 @@
 "1418":{
 "Length":2,
 "Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"1420":{
+"Length":2,
+"Format":"NumericLE",
 "SubFormat":"None",
 "SymbolRef":null},
 
@@ -13195,6 +13458,36 @@
 "Format":"Dense",
 "SubFormat":"None",
 "SymbolRef":null},
+
+"1531":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"PCID2",
+"Part":"Low"}},
+
+"1532":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"1534":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"PDIDByte",
+"Part":"Low"}},
+
+"1535":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ProDOSEntry",
+"Part":"Low"}},
 
 "1540":{
 "Length":2,
