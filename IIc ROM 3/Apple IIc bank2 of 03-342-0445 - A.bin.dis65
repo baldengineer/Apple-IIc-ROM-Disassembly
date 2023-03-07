@@ -108,6 +108,11 @@
 "Hint":"Code"},
 
 {
+"Low":1823,
+"High":1823,
+"Hint":"Code"},
+
+{
 "Low":1862,
 "High":1867,
 "Hint":"InlineData"},
@@ -245,7 +250,7 @@
 "261":"Assume interrupt not handled",
 "753":"Get data and check xon, etc.",
 "1261":"branch forever",
-"2176":"The //c bank switch jumps here",
+"1263":"MMUIDX",
 "2179":"Does a bunch of stuff",
 "2182":"This set X reg",
 "2185":"This is the mode value",
@@ -2118,9 +2123,33 @@
 "Text":"\r\n",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"2176":{
+"Text":"The //c bank switch jumps here for pcnv (protocol converter)",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1284":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
+"1263":{
+"Text":"pdf pg 480 (diags listing)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"1315":{
+"Text":"jumps from c880 if not a boot\r\nTHIS IS NOT THE BOOTCODE WE ARE LOOKING FOR!",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-5383962},
+
 "2176":{
 "Text":"pdf page 510",
 "BoxMode":false,
@@ -2134,7 +2163,7 @@
 "BackgroundColor":0},
 
 "3404":{
-"Text":"C880 jumps to here\r\nThis is the code I care most about --James",
+"Text":"C880 jumps to here\r\nThis is the smart port / protocol converter code I care most about --James",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-5383962},
@@ -3186,13 +3215,6 @@
 "3409":{
 "Label":"bentry",
 "Value":52561,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"1315":{
-"Label":"bootcode",
-"Value":50467,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
@@ -4420,6 +4442,76 @@
 "Value":52556,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1263":{
+"Label":"SWCHTST",
+"Value":50415,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1288":{
+"Label":"swtst4",
+"Value":50440,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2113":{
+"Label":"SWTBL1",
+"Value":51265,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2095":{
+"Label":"SWTBL0",
+"Value":51247,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1284":{
+"Label":"click",
+"Value":50436,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2131":{
+"Label":"RSWTBL",
+"Value":51283,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1313":{
+"Label":"swtst6",
+"Value":50465,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1335":{
+"Label":"swerr",
+"Value":50487,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1331":{
+"Label":"swtst7",
+"Value":50483,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1343":{
+"Label":"BIGLOOP",
+"Value":50495,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -5182,111 +5274,33 @@
 "SymbolRef":null},
 
 "2892":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2893":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2894":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
+"Length":3,
+"Format":"Dense",
+"SubFormat":"None",
 "SymbolRef":null},
 
 "2895":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2896":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2897":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
+"Length":3,
+"Format":"Dense",
+"SubFormat":"None",
 "SymbolRef":null},
 
 "2898":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2899":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2900":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2901":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2902":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2903":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
+"Length":6,
+"Format":"Dense",
+"SubFormat":"None",
 "SymbolRef":null},
 
 "2904":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
+"Length":6,
+"Format":"Dense",
+"SubFormat":"None",
 "SymbolRef":null},
 
-"2905":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2906":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2907":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2908":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
-"SymbolRef":null},
-
-"2909":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Decimal",
+"2910":{
+"Length":3,
+"Format":"Dense",
+"SubFormat":"None",
 "SymbolRef":null},
 
 "2913":{

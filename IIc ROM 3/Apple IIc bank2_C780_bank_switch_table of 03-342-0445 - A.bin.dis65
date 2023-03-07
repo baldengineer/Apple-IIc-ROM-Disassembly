@@ -2,7 +2,7 @@
 {
 "_ContentVersion":5,
 "FileDataLength":128,
-"FileDataCrc32":-1470979291,
+"FileDataCrc32":-613445307,
 "ProjectProps":{
 "CpuName":"65C02",
 "IncludeUndocumentedInstr":false,
@@ -38,6 +38,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"basicin":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"basicin",
+"Value":54272,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "diags":{
 "DataDescriptor":{
 "Length":1,
@@ -55,6 +72,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"fixlc":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"fixlc",
+"Value":51214,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "getbuf":{
 "DataDescriptor":{
 "Length":1,
@@ -68,6 +102,23 @@
 "MultiMask":null,
 "Label":"getbuf",
 "Value":49911,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"getlc":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"getlc",
+"Value":51222,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -106,7 +157,7 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"mouseinit":{
+"mouseint":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -117,7 +168,7 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"mouseinit",
+"Label":"mouseint",
 "Value":49408,
 "Source":"Project",
 "Type":"ExternalAddr",
@@ -140,7 +191,7 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"reset":{
+"pcnv":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -151,24 +202,41 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"reset",
+"Label":"pcnv",
+"Value":51328,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"RESET":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"RESET",
 "Value":64098,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"rombank":{
+"ROMBANK":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
 "SubFormat":"Hex",
 "SymbolRef":null},
 
-"Comment":"",
+"Comment":"Soft switch to change ROM banks",
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"rombank",
+"Label":"ROMBANK",
 "Value":49192,
 "Source":"Project",
 "Type":"ExternalAddr",
@@ -191,7 +259,7 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
-"sethooks":{
+"setterm":{
 "DataDescriptor":{
 "Length":1,
 "Format":"NumericLE",
@@ -202,8 +270,8 @@
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
-"Label":"sethooks",
-"Value":52771,
+"Label":"setterm",
+"Value":53664,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -272,23 +340,6 @@
 "MultiMask":null,
 "Label":"zznm",
 "Value":54469,
-"Source":"Project",
-"Type":"ExternalAddr",
-"LabelAnno":"None"},
-
-"zzquit":{
-"DataDescriptor":{
-"Length":1,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"Comment":"",
-"HasWidth":false,
-"Direction":"ReadWrite",
-"MultiMask":null,
-"Label":"zzquit",
-"Value":52813,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"}}},
@@ -397,31 +448,26 @@
 },
 
 "Comments":{
-"0":"RTI to the other bank",
-"4":"RTS to the other bank",
-"8":"Reset routine",
-"14":"Interrupt routine",
-"17":"Set V = 1 for other bank",
-"23":"Protocol Converter",
-"26":"Jump to sethooks from other side",
-"29":"Mouse BASIC routines",
-"32":"Jump to zzquit from other side",
+"14":"Irq entry",
+"29":"Mouse basic routines",
 "35":"Set terminal mode",
-"41":"Serial port command processor",
-"47":"Moveaux",
+"41":"Jump to command routine",
+"47":"Aux move",
+"53":"XFER",
 "59":"Mouse interrupt handler",
-"71":"Jump to appletalk",
-"77":"Jump to serout3",
-"83":"Jump to getstat",
-"89":"Jump to xrdser",
-"95":"Jump to getbuf",
-"107":"Jump to users xfer dest",
-"123":"should be at $C7FB",
-"127":"Appletalk version number"},
+"65":"Diagnostics",
+"71":"Appletalk",
+"77":"Serial output",
+"83":"Get status",
+"89":"Read from serial port",
+"95":"Get char from buffer",
+"107":"Go to users xfer dest",
+"113":"Save X",
+"121":"Fix Language card and return"},
 
 "LongComments":{
 "-2147483647":{
-"Text":"Apple IIc ROM3 (slinky)  - C780 ROM Bank 1 Switch Table\r\nRe-created by James Lewis (@baldengineer)\r\n******************************************************************\r\n   ...Work in Progress...Work in Progress...Work in Progress...\r\n******************************************************************\r\n\r\nFor more information visit:\r\nhttps://github.com/baldengineer/Apple-IIc-ROM-Disassembly\r\n\r\n(Original attributions are in comments below, as shown in original ROM Listings.)\r\n\r\nRecreated work licensed as Attribution-NonCommercial-ShareAlike 4.0 International.\r\n\r\nGenerated with 6502bench SourceGen v1.8.4",
+"Text":"Apple IIc ROM3 (slinky)  - C780 ROM Bank 2 Switch Table\r\nRe-created by James Lewis (@baldengineer)\r\n******************************************************************\r\n   ...Work in Progress...Work in Progress...Work in Progress...\r\n******************************************************************\r\n\r\nFor more information visit:\r\nhttps://github.com/baldengineer/Apple-IIc-ROM-Disassembly\r\n\r\n(Original attributions are in comments below, as shown in original ROM Listings.)\r\n\r\nRecreated work licensed as Attribution-NonCommercial-ShareAlike 4.0 International.\r\n\r\nGenerated with 6502bench SourceGen v1.8.4",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -431,15 +477,57 @@
 
 "UserLabels":{
 "0":{
-"Label":"swrti",
+"Label":"swrti2",
 "Value":51072,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
 "4":{
-"Label":"swrts",
+"Label":"swrts2",
 "Value":51076,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"8":{
+"Label":"swreset2",
+"Value":51080,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"14":{
+"Label":"swirq2",
+"Value":51086,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"23":{
+"Label":"swsthk2",
+"Value":51095,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"29":{
+"Label":"swzzqt2",
+"Value":51101,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"107":{
+"Label":"swxfgo2",
+"Value":51179,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"113":{
+"Label":"swsttm3",
+"Value":51185,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
@@ -449,146 +537,10 @@
 "Value":51079,
 "Source":"User",
 "Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"8":{
-"Label":"swreset",
-"Value":51080,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"23":{
-"Label":"swpcnv",
-"Value":51095,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"29":{
-"Label":"swbasicin",
-"Value":51101,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"35":{
-"Label":"swsttm",
-"Value":51107,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"41":{
-"Label":"swcmd",
-"Value":51113,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"47":{
-"Label":"swaux",
-"Value":51119,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"53":{
-"Label":"swxfer",
-"Value":51125,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"59":{
-"Label":"swmint",
-"Value":51131,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"65":{
-"Label":"banger",
-"Value":51137,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"71":{
-"Label":"swatalk",
-"Value":51143,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"77":{
-"Label":"swser3",
-"Value":51149,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"83":{
-"Label":"swgetst",
-"Value":51155,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"89":{
-"Label":"swread",
-"Value":51161,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"95":{
-"Label":"swgetb",
-"Value":51167,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"101":{
-"Label":"swzznm",
-"Value":51173,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"107":{
-"Label":"swxfgo",
-"Value":51179,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"113":{
-"Label":"swsthk3",
-"Value":51185,
-"Source":"User",
-"Type":"GlobalAddr",
-"LabelAnno":"None"},
-
-"118":{
-"Label":"swzzqt3",
-"Value":51190,
-"Source":"User",
-"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
-"110":{
-"Length":3,
-"Format":"NumericLE",
-"SubFormat":"Hex",
-"SymbolRef":null},
-
-"124":{
-"Length":3,
-"Format":"Dense",
-"SubFormat":"None",
-"SymbolRef":null}},
+},
 
 "LvTables":{
 },

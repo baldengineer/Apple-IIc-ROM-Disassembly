@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="SGStyle.css"/>
+
+    <meta name="description" content="SourceGen-generated disassembly of Apple IIc bank2_C780_bank_switch_table of 03-342-0445 - A.bin"/>
+    <title>Apple IIc bank2_C780_bank_switch_table of 03-342-0445 - A.bin Disassembly</title>
+</head>
+
+<body>
+
+<p style="font-size:smaller;"><a href="./">(back to project page)</a></p>
+<h1>Apple IIc bank2_C780_bank_switch_table of 03-342-0445 - A.bin Disassembly</h1>
+
+<div id="code-lines">
+    <!-- The CodeLines marker is not optional, and may only appear once -->
+<pre>                   ; Apple IIc ROM3 (slinky)  - C780 ROM Bank 2 Switch Table
+                   ; Re-created by James Lewis (@baldengineer)
+                   ; ******************************************************************
+                   ;    ...Work in Progress...Work in Progress...Work in Progress...
+                   ; ******************************************************************
+                   ; 
+                   ; For more information visit:
+                   ; https://github.com/baldengineer/Apple-IIc-ROM-Disassembly
+                   ; 
+                   ; (Original attributions are in comments below, as shown in original ROM
+                   ; Listings.)
+                   ; 
+                   ; Recreated work licensed as Attribution-NonCommercial-ShareAlike 4.0
+                   ; International.
+                   ; 
+                   ; Generated with 6502bench SourceGen v1.8.4
+                   <span id="SymROMBANK">ROMBANK</span>         EQU     $C028             ;Soft switch to change ROM banks
+                   <span id="Symmouseint">mouseint</span>        EQU     $C100
+                   <span id="Symserout3">serout3</span>         EQU     $C24F
+                   <span id="Symgetstat">getstat</span>         EQU     $C2AC
+                   <span id="Symxrdser">xrdser</span>          EQU     $C2C3
+                   <span id="Symgetbuf">getbuf</span>          EQU     $C2F7
+                   <span id="Symmoveaux">moveaux</span>         EQU     $C34E
+                   <span id="Symxfer">xfer</span>            EQU     $C397
+                   <span id="Symatalk">atalk</span>           EQU     $C580
+                   <span id="Symirqent">irqent</span>          EQU     $C804
+                   <span id="Symswcmd3">swcmd3</span>          EQU     $C806
+                   <span id="Symfixlc">fixlc</span>           EQU     $C80E
+                   <span id="Symgetlc">getlc</span>           EQU     $C816
+                   <span id="Sympcnv">pcnv</span>            EQU     $C880
+                   <span id="Symsetterm">setterm</span>         EQU     $D1A0
+                   <span id="Symbasicin">basicin</span>         EQU     $D400
+                   <span id="Symdiags">diags</span>           EQU     $D48E
+                   <span id="Symzznm">zznm</span>            EQU     $D4C5
+                   <span id="SymRESET">RESET</span>           EQU     $FA62
+
+                                   ORG     $C780
+C780: 8D 28 C0     <span id="Symswrti2">swrti2</span>          sta     <a href="#SymROMBANK">ROMBANK</a>
+C783: 40                           rti
+
+C784: 8D 28 C0     <span id="Symswrts2">swrts2</span>          sta     <a href="#SymROMBANK">ROMBANK</a>
+C787: 60           <span id="Symswrtsop">swrtsop</span>         rts
+
+C788: 8D 28 C0     <span id="Symswreset2">swreset2</span>        sta     <a href="#SymROMBANK">ROMBANK</a>
+C78B: 4C 62 FA                     jmp     <a href="#SymRESET">RESET</a>
+
+C78E: 8D 28 C0     <span id="Symswirq2">swirq2</span>          sta     <a href="#SymROMBANK">ROMBANK</a>           ;Irq entry
+C791: 2C 87 C7                     bit     <a href="#Symswrtsop">swrtsop</a>
+C794: 4C 04 C8                     jmp     <a href="#Symirqent">irqent</a>
+
+C797: 8D 28 C0     <span id="Symswsthk2">swsthk2</span>         sta     <a href="#SymROMBANK">ROMBANK</a>
+C79A: 4C 80 C8                     jmp     <a href="#Sympcnv">pcnv</a>
+
+C79D: 8D 28 C0     <span id="Symswzzqt2">swzzqt2</span>         sta     <a href="#SymROMBANK">ROMBANK</a>           ;Mouse basic routines
+C7A0: 4C 00 D4                     jmp     <a href="#Symbasicin">basicin</a>
+
+C7A3: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>           ;Set terminal mode
+C7A6: 4C F1 C7                     jmp     <a href="#Symswsttm3">swsttm3</a>
+
+C7A9: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>           ;Jump to command routine
+C7AC: 4C 06 C8                     jmp     <a href="#Symswcmd3">swcmd3</a>
+
+C7AF: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>           ;Aux move
+C7B2: 4C 4E C3                     jmp     <a href="#Symmoveaux">moveaux</a>
+
+C7B5: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>           ;XFER
+C7B8: 4C 97 C3                     jmp     <a href="#Symxfer">xfer</a>
+
+C7BB: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>           ;Mouse interrupt handler
+C7BE: 4C 00 C1                     jmp     <a href="#Symmouseint">mouseint</a>
+
+C7C1: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>           ;Diagnostics
+C7C4: 4C 8E D4                     jmp     <a href="#Symdiags">diags</a>
+
+C7C7: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>           ;Appletalk
+C7CA: 4C 80 C5                     jmp     <a href="#Symatalk">atalk</a>
+
+C7CD: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>           ;Serial output
+C7D0: 4C 4F C2                     jmp     <a href="#Symserout3">serout3</a>
+
+C7D3: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>           ;Get status
+C7D6: 4C AC C2                     jmp     <a href="#Symgetstat">getstat</a>
+
+C7D9: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>           ;Read from serial port
+C7DC: 4C C3 C2                     jmp     <a href="#Symxrdser">xrdser</a>
+
+C7DF: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>           ;Get char from buffer
+C7E2: 4C F7 C2                     jmp     <a href="#Symgetbuf">getbuf</a>
+
+C7E5: 8D 28 C0                     sta     <a href="#SymROMBANK">ROMBANK</a>
+C7E8: 4C C5 D4                     jmp     <a href="#Symzznm">zznm</a>
+
+C7EB: 8D 28 C0     <span id="Symswxfgo2">swxfgo2</span>         sta     <a href="#SymROMBANK">ROMBANK</a>           ;Go to users xfer dest
+C7EE: 6C ED 03                     jmp     ($03ED)
+
+C7F1: DA           <span id="Symswsttm3">swsttm3</span>         phx                       ;Save X
+C7F2: 20 16 C8                     jsr     <a href="#Symgetlc">getlc</a>
+C7F5: 5A                           phy
+C7F6: 20 A0 D1                     jsr     <a href="#Symsetterm">setterm</a>
+C7F9: 80 13                        bra     <a href="#Symfixlc">fixlc</a>             ;Fix Language card and return
+
+C7FB: 00 00 00 00+                 DS      5,$00
+                                   ADREND  ↑ $C780
+</pre>
+
+
+</div>
+
+<!-- SymbolTable is optional; remove this entire section from the template if you don't want it -->
+<div id="symbol-table">
+    <h2>Symbol Table</h2>
+<p>No exported symbols found.</p>
+
+</div>
+
+<div id="footer">
+    <hr/>
+    <p>HTML generated by <a href="https://6502bench.com/">6502bench SourceGen</a> v1.8.4
+    on 2023/03/06 <!--20:21:23 -06:00--></p>
+    <p>Expression style: Merlin</p>
+    <!-- parameters: cols=16,8,18,100;extraCols=Address,Bytes;byteSpc=True;commaBulk=True;nonuPfx=':';varPfx=']';labelBrk=False;notes=True;gfx=True;opWrap=32 -->
+</div>
+
+</body>
+</html>
