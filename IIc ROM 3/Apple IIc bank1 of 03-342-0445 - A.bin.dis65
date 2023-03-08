@@ -7183,12 +7183,6 @@
 "MaxWidth":80,
 "BackgroundColor":0},
 
-"2060":{
-"Text":"these loads are supposed to be two byte?",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":-18751},
-
 "2230":{
 "Text":"These \u003e and \u003c are as commented in OG code. But I have a feeling they are backward (like all other high/low references.)",
 "BoxMode":false,
