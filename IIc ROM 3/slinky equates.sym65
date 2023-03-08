@@ -103,3 +103,7 @@ slot		@ $04		;slot #
 diagcode	@ $DC00		;location of diagnostic code
 diagdest	@ $2000		;location of diagnostics in ram
 diagstart	@ $1FFF		;diagtest-1 ;start location of diagnostics
+
+; Command processor for serial & Comm ($D000, bank 2)
+charCR		@ $0D
+ucspace		@ $00

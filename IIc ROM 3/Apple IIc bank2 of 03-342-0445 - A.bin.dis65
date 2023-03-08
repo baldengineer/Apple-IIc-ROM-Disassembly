@@ -19,9 +19,112 @@
 "SmartPlbHandling":true},
 
 "PlatformSymbolFileIdentifiers":["PROJ:slinky equates.sym65",
-"PROJ:slinky protocol converter equates.sym65"],
+"PROJ:slinky protocol converter equates.sym65",
+"PROJ:slinky serial equates.sym65"],
 "ExtensionScriptFileIdentifiers":[],
 "ProjectSyms":{
+"cmdcr":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"same as cmdn",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"cmdcr",
+"Value":53551,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"cmdk":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"same as cmdi and cmdl",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"cmdk",
+"Value":53561,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"cmdl":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"same as cmdi and cmdk",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"cmdl",
+"Value":53561,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"cmdn":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"same as cmdcr",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"cmdn",
+"Value":53551,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"cursor":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"cursor",
+"Value":2043,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"devno2":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"devno2",
+"Value":49474,
+"Source":"Project",
+"Type":"Constant",
+"LabelAnno":"None"},
+
 "Divide7":{
 "DataDescriptor":{
 "Length":1,
@@ -161,6 +264,81 @@
 "Low":3517,
 "High":3517,
 "Hint":"Code"},
+
+{
+"Low":4096,
+"High":4096,
+"Hint":"Code"},
+
+{
+"Low":4294,
+"High":4294,
+"Hint":"InlineData"},
+
+{
+"Low":4295,
+"High":4295,
+"Hint":"Code"},
+
+{
+"Low":4390,
+"High":4390,
+"Hint":"Code"},
+
+{
+"Low":4409,
+"High":4409,
+"Hint":"Code"},
+
+{
+"Low":4427,
+"High":4427,
+"Hint":"Code"},
+
+{
+"Low":4431,
+"High":4431,
+"Hint":"InlineData"},
+
+{
+"Low":4432,
+"High":4432,
+"Hint":"Code"},
+
+{
+"Low":4460,
+"High":4460,
+"Hint":"Code"},
+
+{
+"Low":4488,
+"High":4488,
+"Hint":"Code"},
+
+{
+"Low":4504,
+"High":4504,
+"Hint":"InlineData"},
+
+{
+"Low":4505,
+"High":4505,
+"Hint":"Code"},
+
+{
+"Low":4597,
+"High":4604,
+"Hint":"InlineData"},
+
+{
+"Low":4615,
+"High":4620,
+"Hint":"InlineData"},
+
+{
+"Low":4632,
+"High":4644,
+"Hint":"InlineData"},
 
 {
 "Low":5120,
@@ -627,6 +805,144 @@
 "4049":"If okay, skip to get response",
 "4056":"Get the response",
 "4067":"Devices out there",
+"4096":"shove character on stack",
+"4097":"Already in command?",
+"4100":"If so, go do it",
+"4102":"If eschar = 0 ignore commands",
+"4107":"Is it the command char?",
+"4110":"Ignore high bit",
+"4111":"char not command char",
+"4113":"Save the cursor",
+"4119":"Set command cursor",
+"4124":"initiate command mode",
+"4127":"Mark char not handled",
+"4128":"Restore original char",
+"4130":"Get index for ACIA",
+"4133":"no hi-bit and upshift lower case",
+"4135":"save character",
+"4136":"need to see if in 2-chr command",
+"4139":"bit 3 set if so",
+"4141":"branch if so",
+"4143":"pull char back, not in 2-chr cmd",
+"4144":"go on with regular command mode",
+"4146":"pull char off stack",
+"4147":" \u0026 reshove it to keep stack neat",
+"4148":"is it a space? (uppercased)",
+"4150":"no, go on with 2-chr cmd handling",
+"4152":"yes, ignore spaces between characters",
+"4153":"pull uppercased char off stack",
+"4154":"ie mark them \"handled\" and don\u0027t do anything else",
+"4156":"get sermode back",
+"4159":"save sermode for a minit",
+"4160":"throw out all but bits 0-2",
+"4162":"save - this is index of which cmd it is",
+"4165":"get sermode back",
+"4166":"now clear bits 0-3",
+"4168":"since we\u0027re done with them now",
+"4171":"get character back",
+"4172":"shove x (Cn) on stack",
+"4173":"get index to command\u0027s 1st chr",
+"4176":"is it an E?",
+"4178":"yes",
+"4180":"no, is it a D?",
+"4182":"yes",
+"4184":"retriefve X=Cn (old X still in temp)",
+"4185":"push it back to keep stack neat",
+"4186":"compare to the command character",
+"4189":"save result of comparison for a bit",
+"4190":"reload X= index to cmd\u0027s first chr",
+"4193":"retrieve result of comparison of char",
+"4194":"yes tis 1-chr cmd followed by nother cmd",
+"4196":"is it a (guess what) CR?",
+"4198":"yes - a 1-chr command",
+"4200":"pull x (Cn) off stack",
+"4201":"restore non-cmd-mode cursor",
+"4207":"clear cmd-mode bit (bit 7 of sermode)",
+"4210":"by shifting out bit 7 \u0026 shifting in a 0",
+"4213":"return marking character not handled",
+"4215":"next X=Cn to set bit 0 of sermode",
+"4216":"but leave Cn on stack too",
+"4217":"bit 0 was 0, but is now 1",
+"4220":"X= index to cmd\u0027s first chr",
+"4223":"get command chr",
+"4226":"treat it as if we jot got it",
+"4228":"Save slot",
+"4229":"check 5 possible 5-chr cmds",
+"4231":"is it there?",
+"4234":"yes, need to flag it for next time",
+"4236":"nope",
+"4237":"try next if there is one",
+"4239":"Check 13 commands",
+"4244":"Right char?",
+"4249":"We didn\u0027t find it",
+"4252":"if char is cntl char",
+"4254":"it can be the new comd char",
+"4256":"branch if not cntrl character",
+"4258":"save command char and",
+"4261":"zap it down to 0n if char was a digit",
+"4263":"is it a digit?",
+"4265":"skip if no, an unexpected intruder",
+"4267":"A = A + 10 * current number",
+"4269":"C=0 on first entry",
+"4275":"not starting new cmd mode, just save #",
+"4277":"get sermode",
+"4280":"clear bits 0-5 (starting a new cmd seq--",
+"4282":"they are used for misc during cmd mode)",
+"4285":"load a 0 to stuff in NUMBER",
+"4290":"Mark in command mode",
+"4293":"set charry",
+"4294":"bcc to skip next byte (the CLC)",
+"4295":"clear carry",
+"4296":"push P to save carry",
+"4297":"if X=0 then command is LE or LD",
+"4299":"so just make it act like L or K",
+"4301":"if X=4 then command is CE or CD",
+"4303":"skip if so",
+"4305":"copy x to acc for arithmetic",
+"4306":"clear carry for arithmetic",
+"4307":"multiply index by 2",
+"4308":"add 3 to get mask index",
+"4310":"put mask index in X",
+"4311":"get carry back",
+"4312":"carry set = Enable so X is ready",
+"4314":"cmd was Disable so inc X to next mask",
+"4315":"go do mask stuff to FLAGS",
+"4318":"so get it",
+"4321":"shift bit 0 to carry",
+"4322":"if set, start new cmd mode",
+"4324":"Restore the cursor",
+"4327":"\u0026 fall through to cmset with carry clear",
+"4331":"set command mode according to carry",
+"4335":"leaves carry clear",
+"4338":"character handled",
+"4339":"because carry clear...",
+"4340":"make LE look like L",
+"4342":"get P back with carry indicating E or D",
+"4343":"carry set means it was an E",
+"4345":"make LD look like X",
+"4349":"copy index of cmd to acc",
+"4350":"restore X to Cn",
+"4351":"copy top 2 bits of sermode",
+"4354":"\u0026 set bit 3 - 2-chr-command-mode flag",
+"4356":"sermode = index to 2-chr cmds issued",
+"4359":"set carry so we stay in command mode",
+"4360":"for next time",
+"4362":"get hi byte of where to go",
+"4364":"save it on stack",
+"4365":"get lo byte of where to go",
+"4368":"save it on stack",
+"4369":"go there by RTSing",
+"4370":"restore status to check carry bit",
+"4371":"restore slot number in x",
+"4372":"skip if enable",
+"4374":"CD is same as PWDTH=0, no CR",
+"4377":"we\u0027re done here",
+"4379":"get y index into aux screenholes",
+"4382":"go get it from aux",
+"4385":"restore default PWDTH",
+"4388":"we\u0027re done here",
+"4390":"Zero escape character",
+"4391":"And the width",
 "6475":"switch rom bank and return",
 "6962":"move the code"},
 
@@ -2114,7 +2430,7 @@
 "BackgroundColor":0},
 
 "4096":{
-"Text":"Command processor for serial \u0026 comm\r\npdf pg 486",
+"Text":"The command routine now supports 5 new 2-character commands.  These\r\ncommands enable or disable af eature of the serial port and\r\nare derived from their equivalent in the super serial card for the //.\r\n\r\nThe new commands are as follows:\r\n  L - send LF out after CR\r\n  X - detect XOFF, and wait for XON\r\n  F - accept keyboard input\r\n  M - ignore LF in after CR\r\n  C - auto CR when column count \u003e printer width\r\n\r\nUsage of location $779 (port 1) and $77A (port 2) are as follows:\r\n  bit 7 - echo output to screen if on\r\n  bit 6 - generate LF after CR if on\r\n  bit 5 - accept XOFF if on\r\n  bit 4 - ignore keyboard input if on\r\n  bit 3 - accept LF in after CR if on\r\n  bit 2 - a character was received through the ACIA and is in\r\n     location $5FE (port 1) or $67E (port 2) if on\r\n  bit 1 - XOFF is accepted, awaiting XON if on\r\n  bit 0 - signifies comm port if on, printer port if off",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -2133,6 +2449,120 @@
 
 "1284":{
 "Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4399":{
+"Text":"cmdcr equ D12F\r\ncmdn  equ D12F",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4409":{
+"Text":"cmdi equ D139\r\ncmdk equ D139\r\ncmkl equ D139",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4146":{
+"Text":"handle 2nd chr of 2-char commands",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4153":{
+"Text":"                                       of 2-chr commands",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4194":{
+"Text":"                                       to command char",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4200":{
+"Text":"\r\ncome here for unimplemented byt legal 2-char commands\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4215":{
+"Text":"                                      ;come here if eschar after LXFM or T",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4220":{
+"Text":"                                       1 means new command mode",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4223":{
+"Text":"                                      ;come here if 2-chr cmd turns out 1 chr",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4228":{
+"Text":"                                      ;in command mode, not 2-chrs tho",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4239":{
+"Text":"                                      ;come here to check for 1-chr cmds",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4261":{
+"Text":"                                       drop thur ckdig to cdone",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4277":{
+"Text":"                                      ;start new cmd mode here",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4293":{
+"Text":"                                      ;got a 2-chr command aE",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4295":{
+"Text":"                                      ;got a 2-chr command aD",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4305":{
+"Text":"for other 2-chr cmds, their FLAGS masks\u0027 indexes are 2X+3\r\nfor an E or 2X+4 for a D",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4318":{
+"Text":";$D0DE: ;sermode bit 0 tells whether to set or clear command mode",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4340":{
+"Text":"                                      ;come here to handle LE \u0026 LD",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4379":{
+"Text":"defidx2-$C1",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -2194,6 +2624,18 @@
 
 "4033":{
 "Text":"Odo agrees",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4096":{
+"Text":"Command processor for serial \u0026 comm\r\npdf pg 486",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4399":{
+"Text":"pickup\r\npick up from here\r\npdf page 488 (123)",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -4517,6 +4959,398 @@
 "2176":{
 "Label":"pcnv",
 "Value":51328,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4096":{
+"Label":"command",
+"Value":53248,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4113":{
+"Label":"command1",
+"Value":53265,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4127":{
+"Label":"nocmd",
+"Value":53279,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4128":{
+"Label":"nocmd2",
+"Value":53280,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4130":{
+"Label":"incmd",
+"Value":53282,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4146":{
+"Label":"incmd2",
+"Value":53298,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4156":{
+"Label":"incmd3",
+"Value":53308,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4215":{
+"Label":"flagit",
+"Value":53367,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4200":{
+"Label":"cmd2null",
+"Value":53352,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4223":{
+"Label":"oneletter",
+"Value":53375,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4228":{
+"Label":"incmd1",
+"Value":53380,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4231":{
+"Label":"cmd2loop",
+"Value":53383,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4239":{
+"Label":"backto1",
+"Value":53391,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4241":{
+"Label":"cmdloop",
+"Value":53393,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4261":{
+"Label":"ckdig",
+"Value":53413,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4269":{
+"Label":"digloop",
+"Value":53421,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4258":{
+"Label":"cmdz2",
+"Value":53410,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4277":{
+"Label":"cominit1",
+"Value":53429,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4293":{
+"Label":"enable",
+"Value":53445,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4295":{
+"Label":"disable",
+"Value":53447,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4645":{
+"Label":"cmd2list",
+"Value":53797,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4349":{
+"Label":"cmd2found",
+"Value":53501,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4632":{
+"Label":"cmdlist",
+"Value":53784,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4362":{
+"Label":"cmfound",
+"Value":53514,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4287":{
+"Label":"cominit",
+"Value":53439,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4318":{
+"Label":"cdone",
+"Value":53470,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4330":{
+"Label":"cmset",
+"Value":53482,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4340":{
+"Label":"cmd21",
+"Value":53492,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4370":{
+"Label":"cmd_c",
+"Value":53522,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4315":{
+"Label":"xready",
+"Value":53467,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4409":{
+"Label":"cmdi",
+"Value":53561,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4379":{
+"Label":"cmd_cl",
+"Value":53531,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4390":{
+"Label":"cmdz",
+"Value":53542,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4424":{
+"Label":"cdone2",
+"Value":53576,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4410":{
+"Label":"cmdi2",
+"Value":53562,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4427":{
+"Label":"cmdp",
+"Value":53579,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4428":{
+"Label":"cmdd",
+"Value":53580,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4432":{
+"Label":"cmdb",
+"Value":53584,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4454":{
+"Label":"noshift",
+"Value":53606,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4460":{
+"Label":"cmds",
+"Value":53612,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4471":{
+"Label":"mswait",
+"Value":53623,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4473":{
+"Label":"msloop",
+"Value":53625,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4483":{
+"Label":"cmdp2",
+"Value":53635,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4488":{
+"Label":"cmdr",
+"Value":53640,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4503":{
+"Label":"cmdq",
+"Value":53655,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4505":{
+"Label":"cmdt",
+"Value":53657,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4512":{
+"Label":"setterm",
+"Value":53664,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4537":{
+"Label":"stclr",
+"Value":53689,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4544":{
+"Label":"stset",
+"Value":53696,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4553":{
+"Label":"stwasok",
+"Value":53705,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4568":{
+"Label":"cmdt2",
+"Value":53720,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4586":{
+"Label":"cmdt3",
+"Value":53738,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4590":{
+"Label":"flush",
+"Value":53742,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4596":{
+"Label":"strts",
+"Value":53748,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4597":{
+"Label":"cmdtable",
+"Value":53749,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4650":{
+"Label":"r_getalt",
+"Value":53802,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
@@ -6919,6 +7753,268 @@
 "SymbolRef":{
 "Label":"CMDCode",
 "Part":"Low"}},
+
+"4097":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4102":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"eschar",
+"Part":"Low"}},
+
+"4113":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cursor",
+"Part":"Low"}},
+
+"4119":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdcur",
+"Part":"Low"}},
+
+"4130":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"devno2",
+"Part":"Low"}},
+
+"4136":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4148":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ucspace",
+"Part":"Low"}},
+
+"4156":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4160":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4168":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4196":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"charCR",
+"Part":"Low"}},
+
+"4207":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4210":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4217":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4229":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4239":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4267":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4277":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4282":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4285":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4297":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4301":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4308":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4318":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4331":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4335":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4351":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4356":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4362":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdcr",
+"Part":"High"}},
+
+"4365":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdtable",
+"Part":"Low"}},
+
+"4372":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmd_cl",
+"Part":"Low"}},
+
+"4394":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4610":{
+"Length":11,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4621":{
+"Length":11,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"4632":{
+"Length":4,
+"Format":"StringGeneric",
+"SubFormat":"Ascii",
+"SymbolRef":null},
+
+"4637":{
+"Length":8,
+"Format":"StringGeneric",
+"SubFormat":"Ascii",
+"SymbolRef":null},
 
 "6823":{
 "Length":2,

@@ -38,6 +38,11 @@
                    * *****                                                                        *
                    * pdf page 508 has the equates                                                 *
                    ********************************************************************************
+                   <span id="Symucspace">ucspace</span>         EQU     $00    {const}    ;need an "upper case" space character
+                   <span id="SymcharCR">charCR</span>          EQU     $0D    {const}
+                   <span id="Symcmdcur">cmdcur</span>          EQU     191    {const}    ;'?' ;63_128 ;Cursor while in command mode
+                   <span id="Symsermode">sermode</span>         EQU     $03B8  {const}    ;D7=1 if in command D6=1 if terminal
+                   <span id="Symdevno2">devno2</span>          EQU     $C142  {const}
                    <span id="Symloc0">loc0</span>            EQU     $00               ;Boot parms
                    <span id="SymPowerReset">PowerReset</span>      EQU     $00
                    <span id="SymBadCmd">BadCmd</span>          EQU     $01
@@ -101,7 +106,6 @@
                    <span id="Symbuffer2">buffer2</span>         EQU     $56
                    <span id="SymSlot">Slot</span>            EQU     $58
                    <span id="Symtbodd">tbodd</span>           EQU     $59
-                   <span id="Symtemp">temp</span>            EQU     $59
                    <span id="SymUnit">Unit</span>            EQU     $5A
                    <span id="SymWpacketType">WpacketType</span>     EQU     $5B
                    <span id="Symcmdmark">cmdmark</span>         EQU     $80               ;Command packet identifier
@@ -110,31 +114,50 @@
                    <span id="Sympacketbeg">packetbeg</span>       EQU     $C3               ;Mark at beginning of packet
                    <span id="Sympacketend">packetend</span>       EQU     $C8               ;End of packet mark
                    <span id="SymPBCValue">PBCValue</span>        EQU     $FF               ;Powerup Byte Complement Value
+                   <span id="Symastat">astat</span>           EQU     $0438             ;Acia status from int AF9 &amp; 4FA
                    <span id="SymProFLAG">ProFLAG</span>         EQU     $0473             ;scholes
                    <span id="Symnumbanks">numbanks</span>        EQU     $0478             ;-$C0  ;sl.scrn1 ;number of 64K banks on card
+                   <span id="Sympwdth">pwdth</span>           EQU     $04B8             ;Printer width 579 &amp; 5FA
                    <span id="SymRetry">Retry</span>           EQU     $04F3             ;scholes+$80
                    <span id="Symerror">error</span>           EQU     $04F8             ;error flag
+                   <span id="Symaciabuf">aciabuf</span>         EQU     $04FC             ;Owner of serial buffer
+                   <span id="Symextint">extint</span>          EQU     $0538             ;extint &amp; typhed enable 5F9 &amp; 5FA
                    <span id="SymRetry2">Retry2</span>          EQU     $0573             ;SHTemp1
                    <span id="SymSHTemp1">SHTemp1</span>         EQU     $0573             ;scholes+$100
                    <span id="Symsl_scrn3">sl_scrn3</span>        EQU     $0578             ;-$C0
+                   <span id="Symtwser">twser</span>           EQU     $057C             ;Storage pointer for serial buffer
                    <span id="SymSHTempX">SHTempX</span>         EQU     $05F3             ;scholes+$180
                    <span id="Symsl_scrn4">sl_scrn4</span>        EQU     $05F8             ;-$C0
+                   <span id="Symextint2">extint2</span>         EQU     $05F9
+                   <span id="Symtyphed">typhed</span>          EQU     $05FA
+                   <span id="Symtwkey">twkey</span>           EQU     $05FC             ;Storage pointer for type ahead buffer
+                   <span id="Symcharbuf">charbuf</span>         EQU     $05FE             ;5FE, 67E are one byte character buffers
+                   <span id="Symeschar">eschar</span>          EQU     $0638             ;Current escape character 6F9 &amp; 6FA
                    <span id="SymSHTempY">SHTempY</span>         EQU     $0673             ;scholes+$200
                    <span id="Symsl_lcstate">sl_lcstate</span>      EQU     $0678             ;language card state
-                   <span id="SymSvBcL">SvBcL</span>           EQU     $06F8
+                   <span id="Symoldcur">oldcur</span>          EQU     $0679             ;Saves cursor while in command
+                   <span id="Symoldcur2">oldcur2</span>         EQU     $067A             ;Saves cursor while in terminal mode
+                   <span id="Symtrser">trser</span>           EQU     $067C             ;Retrieve pointer for serial buffer
+                   <span id="Symflags">flags</span>           EQU     $06B8             ;D7 = Video echo D6 = CRLF 779 &amp; 77A
+                   <span id="Symtemp">temp</span>            EQU     $06F8             ;Temp storage
                    <span id="SymNumDevices">NumDevices</span>      EQU     $06F9             ;Actually in slot 6
+                   <span id="Symtrkey">trkey</span>           EQU     $06FF             ;Retrieve buffer for type ahead buffer
+                   <span id="Symcol">col</span>             EQU     $0738             ;Current printer column 7F9 &amp; 7FA
                    <span id="SymSvBcH">SvBcH</span>           EQU     $0778
+                   <span id="Symnumber">number</span>          EQU     $077E             ;Number accumulated in command
                    <span id="SymMSlot">MSlot</span>           EQU     $07F8
-                   <span id="Symbootbuf">bootbuf</span>         EQU     $0800             ;into $800
+                   <span id="Symcursor">cursor</span>          EQU     $07FB
+                   <span id="Symthbuf">thbuf</span>           EQU     $0800             ;Buffer in alt ram space
                    <span id="SymRC1">RC1</span>             EQU     $0BB8             ;Send a command pack 3000 times (3 sec)
                    <span id="Symdiagdest">diagdest</span>        EQU     $2000             ;location of diagnostics in ram
                    <span id="Symdosinit">dosinit</span>         EQU     $9D1E             ;DOS init vector use addr-1
                    <span id="Symrwts">rwts</span>            EQU     $BD00             ;RWTS entry point
                    <span id="Symproflag">proflag</span>         EQU     $BF00             ;0 = Pascal, $4C = ProDOS, other = DOS
-                   <span id="Symaddrl">addrl</span>           EQU     $BFF8             ;address pointer
-                   <span id="Symaddrm">addrm</span>           EQU     $BFF9             ;auto incs after every data access
-                   <span id="Symaddrh">addrh</span>           EQU     $BFFA
-                   <span id="Symdata">data</span>            EQU     $BFFB             ;data pointed to
+                   <span id="Symsdata">sdata</span>           EQU     $BFF8             ;+$N0+$90 is output port
+                   <span id="Symsstat">sstat</span>           EQU     $BFF9             ;ACIA status register
+                   <span id="Symscomd">scomd</span>           EQU     $BFFA             ;ACIA command register
+                   <span id="Symscntl">scntl</span>           EQU     $BFFB             ;ACIA control register
+                   <span id="Symcmdcr">cmdcr</span>           EQU     $D12F             ;same as cmdn
 
                                    ORG     $C000
 C000: 00 00 00 00+ <span id="SymLC000">LC000</span>           DS      25
@@ -174,7 +197,7 @@ C106: AD 19 C0                     lda     <a href="#Symvblint">vblint</a>
 C109: 10 2B                        bpl     <a href="#Symchkmou">chkmou</a>
 C10B: 8D 79 C0                     sta     <a href="#Symmoubut">moubut</a>+22
 C10E: A9 0C                        lda     #$0C
-C110: 2C FF 07                     bit     <a href="#Symbootbuf">bootbuf</a>-1
+C110: 2C FF 07                     bit     <a href="#Symthbuf">thbuf</a>-1
 C113: D0 03                        bne     <a href="#Symcvnovbl">cvnovbl</a>
 C115: 8D 5A C0                     sta     <a href="#Symiou_p_2">iou_p_2</a>
 C118: 09 02        <span id="Symcvnovbl">cvnovbl</span>         ora     #$02
@@ -185,11 +208,11 @@ C122: A9 0C                        lda     #$0C
 C124: 2C 63 C0     <span id="Symcvmoved">cvmoved</span>         bit     <a href="#Symmoubut">moubut</a>
 C127: 10 02                        bpl     <a href="#Symcvbut">cvbut</a>
 C129: 49 04                        eor     #$04
-C12B: 2D FF 07     <span id="Symcvbut">cvbut</span>           and     <a href="#Symbootbuf">bootbuf</a>-1
+C12B: 2D FF 07     <span id="Symcvbut">cvbut</span>           and     <a href="#Symthbuf">thbuf</a>-1
 C12E: 0C 7F 07                     tsb     $077F
 C131: 1C 7F 06                     trb     $067F
 C134: 69 FE                        adc     #$FE
-C136: AD FF 07     <span id="Symchkmou">chkmou</span>          lda     <a href="#Symbootbuf">bootbuf</a>-1
+C136: AD FF 07     <span id="Symchkmou">chkmou</span>          lda     <a href="#Symthbuf">thbuf</a>-1
 C139: 30 72                        bmi     <a href="#Symxmdone">xmdone</a>
 C13B: AD 15 C0                     lda     <a href="#SymLC000">LC000</a>+21
 C13E: 0D 17 C0                     ora     <a href="#SymLC000">LC000</a>+23
@@ -220,7 +243,7 @@ C173: 80 15                        bra     <a href="#Symcmnoint">cmnoint</a>
 C175: DD 7D 06     <span id="Symcmrght">cmrght</span>          cmp     $067D,X
 C178: D0 08                        bne     <a href="#Symcmrok">cmrok</a>
 C17A: BD 7F 05                     lda     $057F,X
-C17D: DD 7D 07                     cmp     $077D,X
+C17D: DD 7D 07                     cmp     <a href="#Symnumber">number</a>-1,X
 C180: F0 08                        beq     <a href="#Symcmnoint">cmnoint</a>
 C182: FE 7F 04     <span id="Symcmrok">cmrok</span>           inc     $047F,X
 C185: D0 03                        bne     <a href="#Symcmnoint">cmnoint</a>
@@ -229,7 +252,7 @@ C18A: E0 00        <span id="Symcmnoint">cmnoint</span>         cpx     #$00
 C18C: F0 BD                        beq     <a href="#Symcmloop">cmloop</a>
 C18E: 8D 48 C0     <span id="Symcmnoy">cmnoy</span>           sta     <a href="#Symvblint">vblint</a>+47
 C191: A9 02                        lda     #$02
-C193: 2D FF 07                     and     <a href="#Symbootbuf">bootbuf</a>-1
+C193: 2D FF 07                     and     <a href="#Symthbuf">thbuf</a>-1
 C196: F0 09                        beq     <a href="#Symcmnovbl">cmnovbl</a>
 C198: 8D 79 C0                     sta     <a href="#Symmoubut">moubut</a>+22
 C19B: 8D 5B C0                     sta     <a href="#Symiou_p_2">iou_p_2</a>+1
@@ -254,16 +277,16 @@ C1BF: 90 F2                        bcc     <a href="#Symacdone">acdone</a>
 C1C1: CA                           dex
 C1C2: BC 42 C1     <span id="Symaciatst">aciatst</span>         ldy     <a href="#SymLC141">LC141</a>+1,X
 C1C5: A9 04                        lda     #$04
-C1C7: 59 FA BF                     eor     <a href="#Symaddrh">addrh</a>,Y
+C1C7: 59 FA BF                     eor     <a href="#Symscomd">scomd</a>,Y
 C1CA: 29 0C                        and     #$0C
 C1CC: F0 E4                        beq     <a href="#Symnotacia">notacia</a>
-C1CE: B9 F9 BF                     lda     <a href="#Symaddrm">addrm</a>,Y
-C1D1: 9D 38 04                     sta     $0438,X
+C1CE: B9 F9 BF                     lda     <a href="#Symsstat">sstat</a>,Y
+C1D1: 9D 38 04                     sta     <a href="#Symastat">astat</a>,X
 C1D4: 10 DC                        bpl     <a href="#Symnotacia">notacia</a>
 C1D6: E0 C2        <span id="Symaitst2">aitst2</span>          cpx     #$C2
 C1D8: B0 02                        bcs     <a href="#Symaiport2">aiport2</a>
 C1DA: 49 40                        eor     #$40
-C1DC: 3C 38 05     <span id="Symaiport2">aiport2</span>         bit     $0538,X
+C1DC: 3C 38 05     <span id="Symaiport2">aiport2</span>         bit     <a href="#Symextint">extint</a>,X
 C1DF: 70 29                        bvs     <a href="#Symaipass">aipass</a>
 C1E1: 10 25                        bpl     <a href="#Symaieatit">aieatit</a>
 C1E3: 90 23                        bcc     <a href="#Symaieatit">aieatit</a>
@@ -277,22 +300,22 @@ C1F1: C9 98                        cmp     #$98
 C1F3: D0 0B                        bne     <a href="#Symainoflsh">ainoflsh</a>
 C1F5: AD 62 C0                     lda     <a href="#Symmoubut">moubut</a>-1
 C1F8: 10 06                        bpl     <a href="#Symainoflsh">ainoflsh</a>
-C1FA: 8E FC 05                     stx     $05FC
-C1FD: 8E FF 06                     stx     $06FF
+C1FA: 8E FC 05                     stx     <a href="#Symtwkey">twkey</a>
+C1FD: 8E FF 06                     stx     <a href="#Symtrkey">trkey</a>
 C200: AD 10 C0     <span id="Symainoflsh">ainoflsh</span>        lda     <a href="#SymLC000">LC000</a>+16
 C203: A0 B0                        ldy     #$B0
-C205: B9 F9 BF                     lda     <a href="#Symaddrm">addrm</a>,Y
+C205: B9 F9 BF                     lda     <a href="#Symsstat">sstat</a>,Y
 C208: 29 BF        <span id="Symaieatit">aieatit</span>         and     #$BF
 C20A: 0A           <span id="Symaipass">aipass</span>          asl     A
 C20B: 0A                           asl     A
 C20C: 29 20                        and     #$20
 C20E: F0 3E                        beq     <a href="#Symaciadone">aciadone</a>
-C210: B9 FA BF                     lda     <a href="#Symaddrh">addrh</a>,Y
+C210: B9 FA BF                     lda     <a href="#Symscomd">scomd</a>,Y
 C213: 49 01                        eor     #$01
 C215: 29 03                        and     #$03
 C217: D0 35                        bne     <a href="#Symaciadone">aciadone</a>
 C219: 8A                           txa
-C21A: 4D FC 04                     eor     $04FC
+C21A: 4D FC 04                     eor     <a href="#Symaciabuf">aciabuf</a>
 C21D: D0 93                        bne     <a href="#Symnotacia">notacia</a>
 C21F: 08                           php
 C220: 20 22 C3                     jsr     <a href="#Symgetdata">getdata</a>
@@ -302,19 +325,19 @@ C227: D0                           bne ▼   <a href="#SymLC230">LC230</a>+1
 C228: 08           <span id="Symputbuf">putbuf</span>          php
 C229: DA                           phx
 C22A: 48                           pha
-C22B: B9 7C 05                     lda     $057C,Y
+C22B: B9 7C 05                     lda     <a href="#Symtwser">twser</a>,Y
 C22E: AA                           tax
 C22F: 1A                           inc     A
 C230: 89 7F        <span id="SymLC230">LC230</span>           bit     #$7F
 C232: D0 01                        bne     <a href="#Sympbok">pbok</a>
 C234: 98           <span id="SymLC234">LC234</span>           tya
-C235: D9 7C 06     <span id="Sympbok">pbok</span>            cmp     $067C,Y
+C235: D9 7C 06     <span id="Sympbok">pbok</span>            cmp     <a href="#Symtrser">trser</a>,Y
 C238: F0 03                        beq     <a href="#Sympbfull">pbfull</a>
-C23A: 99 7C 05                     sta     $057C,Y
+C23A: 99 7C 05                     sta     <a href="#Symtwser">twser</a>,Y
 C23D: 68           <span id="Sympbfull">pbfull</span>          pla
 C23E: 2C 14 C0                     bit     <a href="#SymLC000">LC000</a>+20
 C241: 8D 05 C0                     sta     <a href="#SymLC000">LC000</a>+5
-C244: 9D 00 08                     sta     <a href="#Symbootbuf">bootbuf</a>,X
+C244: 9D 00 08                     sta     <a href="#Symthbuf">thbuf</a>,X
 C247: 30 03                        bmi     <a href="#Symaiaux">aiaux</a>
 C249: 8D 04 C0                     sta     <a href="#SymLC000">LC000</a>+4
 C24C: FA           <span id="Symaiaux">aiaux</span>           plx
@@ -331,31 +354,31 @@ C252: 4C 84 C7                     jmp     <a href="#Symswrts2">swrts2</a>
 C255: 48           <span id="Symserout4">serout4</span>         pha
 C256: 2C AB C2                     bit     <a href="#Symsorts">sorts</a>
 C259: F0 03                        beq     <a href="#Symsordy">sordy</a>
-C25B: FE 38 07                     inc     $0738,X
+C25B: FE 38 07                     inc     <a href="#Symcol">col</a>,X
 C25E: 20 B2 C2     <span id="Symsordy">sordy</span>           jsr     <a href="#Symgetstat2">getstat2</a>
 C261: 29 30                        and     #$30
 C263: C9 10                        cmp     #$10
 C265: D0 F7                        bne     <a href="#Symsordy">sordy</a>
-C267: BD B8 06                     lda     $06B8,X
+C267: BD B8 06                     lda     <a href="#Symflags">flags</a>,X
 C26A: 89 20                        bit     #$20
 C26C: F0 1F                        beq     <a href="#Symsook">sook</a>
-C26E: EC FC 04                     cpx     $04FC
+C26E: EC FC 04                     cpx     <a href="#Symaciabuf">aciabuf</a>
 C271: F0 13                        beq     <a href="#Symsotst">sotst</a>
 C273: 20 E9 C2                     jsr     <a href="#Symxrdnobuf">xrdnobuf</a>
 C276: 90 0E                        bcc     <a href="#Symsotst">sotst</a>
 C278: BC 34 C2                     ldy     <a href="#SymLC234">LC234</a>,X
-C27B: 99 FE 05                     sta     $05FE,Y
-C27E: BD B8 06                     lda     $06B8,X
+C27B: 99 FE 05                     sta     <a href="#Symcharbuf">charbuf</a>,Y
+C27E: BD B8 06                     lda     <a href="#Symflags">flags</a>,X
 C281: 09 04                        ora     #$04
-C283: 9D B8 06                     sta     $06B8,X
-C286: BD B8 06     <span id="Symsotst">sotst</span>           lda     $06B8,X
+C283: 9D B8 06                     sta     <a href="#Symflags">flags</a>,X
+C286: BD B8 06     <span id="Symsotst">sotst</span>           lda     <a href="#Symflags">flags</a>,X
 C289: 29 02                        and     #$02
 C28B: D0 D1                        bne     <a href="#Symsordy">sordy</a>
 C28D: BC 42 C1     <span id="Symsook">sook</span>            ldy     <a href="#SymLC141">LC141</a>+1,X
 C290: 68                           pla
 C291: 48                           pha
-C292: 99 F8 BF                     sta     <a href="#Symaddrl">addrl</a>,Y
-C295: 3C B8 06                     bit     $06B8,X
+C292: 99 F8 BF                     sta     <a href="#Symsdata">sdata</a>,Y
+C295: 3C B8 06                     bit     <a href="#Symflags">flags</a>,X
 C298: 49 0D                        eor     #$0D
 C29A: 0A                           asl     A
 C29B: D0 0D                        bne     <a href="#Symsodone">sodone</a>
@@ -364,7 +387,7 @@ C29F: A9 14                        lda     #$14
 C2A1: 6A                           ror     A
 C2A2: 20 55 C2                     jsr     <a href="#Symserout4">serout4</a>
 C2A5: 64 24        <span id="Symclrcol">clrcol</span>          stz     <a href="#Symch">ch</a>
-C2A7: 9E 38 07                     stz     $0738,X
+C2A7: 9E 38 07                     stz     <a href="#Symcol">col</a>,X
 C2AA: 68           <span id="Symsodone">sodone</span>          pla
 C2AB: 60           <span id="Symsorts">sorts</span>           rts
 
@@ -380,7 +403,7 @@ C2AF: 4C 84 C7                     jmp     <a href="#Symswrts2">swrts2</a>
 C2B2: 08           <span id="Symgetstat2">getstat2</span>        php
 C2B3: 78                           sei
 C2B4: BC 42 C1     <span id="Symgsttst">gsttst</span>          ldy     <a href="#SymLC141">LC141</a>+1,X
-C2B7: B9 F9 BF                     lda     <a href="#Symaddrm">addrm</a>,Y
+C2B7: B9 F9 BF                     lda     <a href="#Symsstat">sstat</a>,Y
 C2BA: 10 05                        bpl     <a href="#Symgstnoint">gstnoint</a>
 C2BC: 20 D6 C1                     jsr     <a href="#Symaitst2">aitst2</a>
 C2BF: 80 F3                        bra     <a href="#Symgsttst">gsttst</a>
@@ -396,18 +419,18 @@ C2C2: 60                           rts
 C2C3: 20 C9 C2     <span id="Symxrdser">xrdser</span>          jsr     <a href="#Symxrdser2">xrdser2</a>
 C2C6: 4C 84 C7                     jmp     <a href="#Symswrts2">swrts2</a>
 
-C2C9: EC FC 04     <span id="Symxrdser2">xrdser2</span>         cpx     $04FC
+C2C9: EC FC 04     <span id="Symxrdser2">xrdser2</span>         cpx     <a href="#Symaciabuf">aciabuf</a>
 C2CC: D0 07                        bne     <a href="#Symxnosbuf">xnosbuf</a>
 C2CE: A0 00                        ldy     #$00
 C2D0: 20 FD C2                     jsr     <a href="#Symgetbuf2">getbuf2</a>
 C2D3: B0 1F                        bcs     <a href="#Symxrddone">xrddone</a>
-C2D5: BD B8 06     <span id="Symxnosbuf">xnosbuf</span>         lda     $06B8,X
+C2D5: BD B8 06     <span id="Symxnosbuf">xnosbuf</span>         lda     <a href="#Symflags">flags</a>,X
 C2D8: 89 04                        bit     #$04
 C2DA: F0 0D                        beq     <a href="#Symxrdnobuf">xrdnobuf</a>
 C2DC: 29 FB                        and     #$FB
-C2DE: 9D B8 06                     sta     $06B8,X
+C2DE: 9D B8 06                     sta     <a href="#Symflags">flags</a>,X
 C2E1: BC 34 C2                     ldy     <a href="#SymLC234">LC234</a>,X
-C2E4: B9 FE 05                     lda     $05FE,Y
+C2E4: B9 FE 05                     lda     <a href="#Symcharbuf">charbuf</a>,Y
 C2E7: 38                           sec
 C2E8: 60                           rts
 
@@ -431,8 +454,8 @@ C2F6: 80                           DFB     $80
 C2F7: 20 FD C2     <span id="Symgetbuf">getbuf</span>          jsr     <a href="#Symgetbuf2">getbuf2</a>
 C2FA: 4C 84 C7                     jmp     <a href="#Symswrts2">swrts2</a>
 
-C2FD: B9 7C 06     <span id="Symgetbuf2">getbuf2</span>         lda     $067C,Y
-C300: D9 7C 05                     cmp     $057C,Y
+C2FD: B9 7C 06     <span id="Symgetbuf2">getbuf2</span>         lda     <a href="#Symtrser">trser</a>,Y
+C300: D9 7C 05                     cmp     <a href="#Symtwser">twser</a>,Y
 C303: 18                           clc
 C304: F0 1B                        beq     <a href="#Symgbdone">gbdone</a>
 C306: 48                           pha
@@ -440,12 +463,12 @@ C307: 1A                           inc     A
 C308: 89 7F                        bit     #$7F
 C30A: D0 01                        bne     <a href="#Symgbnoovr">gbnoovr</a>
 C30C: 98                           tya
-C30D: 99 7C 06     <span id="Symgbnoovr">gbnoovr</span>         sta     $067C,Y
+C30D: 99 7C 06     <span id="Symgbnoovr">gbnoovr</span>         sta     <a href="#Symtrser">trser</a>,Y
 C310: 7A                           ply
 C311: AD 13 C0                     lda     <a href="#SymLC000">LC000</a>+19
 C314: 0A                           asl     A
 C315: 8D 03 C0                     sta     <a href="#SymLC000">LC000</a>+3
-C318: B9 00 08                     lda     <a href="#Symbootbuf">bootbuf</a>,Y
+C318: B9 00 08                     lda     <a href="#Symthbuf">thbuf</a>,Y
 C31B: B0 04                        bcs     <a href="#Symgbdone">gbdone</a>
 C31D: 8D 02 C0                     sta     <a href="#SymLC000">LC000</a>+2
 C320: 38                           sec
@@ -459,11 +482,11 @@ C321: 60           <span id="Symgbdone">gbdone</span>          rts
                    * outputs: A = data, Y dest, C = 1 if data ok = 0 if eaten                     *
                    *                                                                              *
                    ********************************************************************************
-C322: B9 F8 BF     <span id="Symgetdata">getdata</span>         lda     <a href="#Symaddrl">addrl</a>,Y
+C322: B9 F8 BF     <span id="Symgetdata">getdata</span>         lda     <a href="#Symsdata">sdata</a>,Y
 C325: 48                           pha
 C326: 09 80                        ora     #$80
 C328: A8                           tay
-C329: BD B8 06                     lda     $06B8,X
+C329: BD B8 06                     lda     <a href="#Symflags">flags</a>,X
 C32C: 89 08                        bit     #$08
 C32E: D0 04                        bne     <a href="#Symgdnolf">gdnolf</a>
 C330: C0 8A                        cpy     #$8A
@@ -481,7 +504,7 @@ C344: 09 02                        ora     #$02
 C346: 18           <span id="Symgdeat">gdeat</span>           clc
 C347: B0                           bcs ▼   <a href="#SymLC381">LC381</a>
 C348: 38           <span id="Symgdok">gdok</span>            sec
-C349: 9D B8 06                     sta     $06B8,X
+C349: 9D B8 06                     sta     <a href="#Symflags">flags</a>,X
 C34C: 68                           pla
 C34D: 60                           rts
 
@@ -679,7 +702,7 @@ C466: 8D 81 C0                     sta     <a href="#Symreqset">reqset</a>
 C469: 4C 97 D4                     jmp     <a href="#SymLD497">LD497</a>
 
 C46C: 8D 08 C0     <span id="SymLC46C">LC46C</span>           sta     <a href="#SymLC000">LC000</a>+8
-C46F: 4C EF C4                     jmp     <a href="#SymLC4EF">LC4EF</a>
+C46F: 4C EF C4                     jmp     <a href="#SymSWCHTST">SWCHTST</a>
 
 C472: 38           <span id="SymLC472">LC472</span>           sec
 C473: AA           <span id="SymLC473">LC473</span>           tax
@@ -746,54 +769,58 @@ C4EA: CA                           dex
 C4EB: 10 E1                        bpl     <a href="#SymLC4CE">LC4CE</a>
 C4ED: 30 FE        <span id="Symhangy">hangy</span>           bmi     <a href="#Symhangy">hangy</a>             ;branch forever
 
-C4EF: A0 01        <span id="SymLC4EF">LC4EF</span>           ldy     #$01
+                   NOTE: pdf pg 480 (diags listing)
+C4EF: A0 01        <span id="SymSWCHTST">SWCHTST</span>         ldy     #$01              ;MMUIDX
 C4F1: A9 7F        <span id="Symswtst1">swtst1</span>          lda     #$7F
 C4F3: 6A           <span id="Symswtst2">swtst2</span>          ror     A
-C4F4: BE 2F C8                     ldx     <a href="#SymLC82F">LC82F</a>,Y
-C4F7: F0 0F                        beq     <a href="#SymLC508">LC508</a>
+C4F4: BE 2F C8                     ldx     <a href="#SymSWTBL0">SWTBL0</a>,Y
+C4F7: F0 0F                        beq     <a href="#Symswtst4">swtst4</a>
 C4F9: 90 03                        bcc     <a href="#Symswtst3">swtst3</a>
-C4FB: BE 41 C8                     ldx     <a href="#SymLC841">LC841</a>,Y
+C4FB: BE 41 C8                     ldx     <a href="#SymSWTBL1">SWTBL1</a>,Y
 C4FE: 9D FF BF     <span id="Symswtst3">swtst3</span>          sta     <a href="#SymLC000">LC000</a>-1,X
 C501: C8                           iny
 C502: D0 EF                        bne     <a href="#Symswtst2">swtst2</a>
-C504: AE 30 C0     <span id="SymLC504">LC504</span>           ldx     <a href="#Symvblint">vblint</a>+23
+                   ; 
+C504: AE 30 C0     <span id="Symclick">click</span>           ldx     <a href="#Symvblint">vblint</a>+23
 C507: 2A                           rol     A
-C508: 88           <span id="SymLC508">LC508</span>           dey
-C509: BE 53 C8                     ldx     <a href="#SymLC853">LC853</a>,Y
-C50C: F0 13                        beq     <a href="#SymLC521">LC521</a>
-C50E: 30 F4                        bmi     <a href="#SymLC504">LC504</a>
+C508: 88           <span id="Symswtst4">swtst4</span>          dey
+C509: BE 53 C8                     ldx     <a href="#SymRSWTBL">RSWTBL</a>,Y
+C50C: F0 13                        beq     <a href="#Symswtst6">swtst6</a>
+C50E: 30 F4                        bmi     <a href="#Symclick">click</a>
 C510: 2A                           rol     A
 C511: 90 07                        bcc     <a href="#SymLC51A">LC51A</a>
 C513: 1E 00 C0                     asl     <a href="#SymLC000">LC000</a>,X
-C516: 90 1F                        bcc     <a href="#SymLC537">LC537</a>
-C518: B0 EE                        bcs     <a href="#SymLC508">LC508</a>
+C516: 90 1F                        bcc     <a href="#Symswerr">swerr</a>
+C518: B0 EE                        bcs     <a href="#Symswtst4">swtst4</a>
 
 C51A: 1E 00 C0     <span id="SymLC51A">LC51A</span>           asl     <a href="#SymLC000">LC000</a>,X
-C51D: B0 18                        bcs     <a href="#SymLC537">LC537</a>
-C51F: 90 E7                        bcc     <a href="#SymLC508">LC508</a>
+C51D: B0 18                        bcs     <a href="#Symswerr">swerr</a>
+C51F: 90 E7                        bcc     <a href="#Symswtst4">swtst4</a>
 
-C521: 2A           <span id="SymLC521">LC521</span>           rol     A
+C521: 2A           <span id="Symswtst6">swtst6</span>          rol     A
 C522: C8                           iny
-C523: 38           <span id="Symbootcode">bootcode</span>        sec
+                   <span style="background-color: #89acb7">NOTE: jumps from c880 if not a boot</span>
+                   <span style="background-color: #89acb7">THIS IS NOT THE BOOTCODE WE ARE LOOKING FOR!</span>
+C523: 38           <span id="SymLC523">LC523</span>           sec
 C524: E9 01                        sbc     #$01
 C526: B0 CB                        bcs     <a href="#Symswtst2">swtst2</a>
 C528: 88                           dey
-C529: F0 08                        beq     <a href="#SymLC533">LC533</a>
+C529: F0 08                        beq     <a href="#Symswtst7">swtst7</a>
 C52B: C0 08                        cpy     #$08
-C52D: D0 10                        bne     <a href="#SymLC53F">LC53F</a>
+C52D: D0 10                        bne     <a href="#SymBIGLOOP">BIGLOOP</a>
 C52F: A0 11                        ldy     #$11
 C531: D0 BE                        bne     <a href="#Symswtst1">swtst1</a>
 
-C533: A0 09        <span id="SymLC533">LC533</span>           ldy     #$09
+C533: A0 09        <span id="Symswtst7">swtst7</span>          ldy     #$09
 C535: D0 BA                        bne     <a href="#Symswtst1">swtst1</a>
 
-C537: 5A           <span id="SymLC537">LC537</span>           phy
+C537: 5A           <span id="Symswerr">swerr</span>           phy
 C538: A2 00                        ldx     #$00
 C53A: C0 0A                        cpy     #$0A
 C53C: 4C 7D C4                     jmp     <a href="#SymLC47D">LC47D</a>
 
-C53F: 46 80        <span id="SymLC53F">LC53F</span>           lsr     <a href="#Symcmdmark">cmdmark</a>
-C541: D0 AC                        bne     <a href="#SymLC4EF">LC4EF</a>
+C53F: 46 80        <span id="SymBIGLOOP">BIGLOOP</span>         lsr     <a href="#Symcmdmark">cmdmark</a>
+C541: D0 AC                        bne     <a href="#SymSWCHTST">SWCHTST</a>
 C543: A9 A0                        lda     #$A0
 C545: A0 00                        ldy     #$00
 C547: 99 00 04     <span id="SymLC547">LC547</span>           sta     $0400,Y
@@ -825,14 +852,14 @@ C581: AE 78 06                     ldx     <a href="#Symsl_lcstate">sl_lcstate</
 C584: FE 00 C0                     inc     <a href="#SymLC000">LC000</a>,X
 C587: FA                           plx
 C588: A5 49                        lda     <a href="#SymCMDSpare1">CMDSpare1</a>
-C58A: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X
+C58A: 9D F8 BF                     sta     <a href="#Symsdata">sdata</a>,X
 C58D: A5 4A                        lda     <a href="#SymCMDSpare2">CMDSpare2</a>
-C58F: 9D F9 BF                     sta     <a href="#Symaddrm">addrm</a>,X
+C58F: 9D F9 BF                     sta     <a href="#Symsstat">sstat</a>,X
 C592: A5 4B                        lda     <a href="#Symgrp7ctr">grp7ctr</a>
 C594: 29 7F                        and     #$7F
 C596: D9 B8 03                     cmp     $03B8,Y
 C599: B0 53                        bcs     <a href="#SymLC5EE">LC5EE</a>
-C59B: 9D FA BF                     sta     <a href="#Symaddrh">addrh</a>,X
+C59B: 9D FA BF                     sta     <a href="#Symscomd">scomd</a>,X
 C59E: 2C 14 C0                     bit     <a href="#SymLC000">LC000</a>+20
 C5A1: 08                           php
 C5A2: 8D 04 C0                     sta     <a href="#SymLC000">LC000</a>+4
@@ -843,10 +870,10 @@ C5AC: A0 00        <span id="SymLC5AC">LC5AC</span>           ldy     #$00
 C5AE: A5 48                        lda     <a href="#SymCMDBlocks">CMDBlocks</a>
 C5B0: 8D F8 05                     sta     <a href="#Symsl_scrn4">sl_scrn4</a>
 C5B3: F0 14                        beq     <a href="#SymLC5C9">LC5C9</a>
-C5B5: BD FB BF     <span id="SymLC5B5">LC5B5</span>           lda     <a href="#Symdata">data</a>,X
+C5B5: BD FB BF     <span id="SymLC5B5">LC5B5</span>           lda     <a href="#Symscntl">scntl</a>,X
 C5B8: 91 45                        sta     (<a href="#SymCMDBufferh">CMDBufferh</a>),Y
 C5BA: C8                           iny
-C5BB: BD FB BF                     lda     <a href="#Symdata">data</a>,X
+C5BB: BD FB BF                     lda     <a href="#Symscntl">scntl</a>,X
 C5BE: 91 45                        sta     (<a href="#SymCMDBufferh">CMDBufferh</a>),Y
 C5C0: C8                           iny
 C5C1: D0 F2                        bne     <a href="#SymLC5B5">LC5B5</a>
@@ -858,10 +885,10 @@ C5CB: F0 16                        beq     <a href="#SymLC5E3">LC5E3</a>
 C5CD: 8D 78 05                     sta     <a href="#Symsl_scrn3">sl_scrn3</a>
 C5D0: 4A                           lsr     A
 C5D1: B0 06                        bcs     <a href="#SymLC5D9">LC5D9</a>
-C5D3: BD FB BF     <span id="SymLC5D3">LC5D3</span>           lda     <a href="#Symdata">data</a>,X
+C5D3: BD FB BF     <span id="SymLC5D3">LC5D3</span>           lda     <a href="#Symscntl">scntl</a>,X
 C5D6: 91 45                        sta     (<a href="#SymCMDBufferh">CMDBufferh</a>),Y
 C5D8: C8                           iny
-C5D9: BD FB BF     <span id="SymLC5D9">LC5D9</span>           lda     <a href="#Symdata">data</a>,X
+C5D9: BD FB BF     <span id="SymLC5D9">LC5D9</span>           lda     <a href="#Symscntl">scntl</a>,X
 C5DC: 91 45                        sta     (<a href="#SymCMDBufferh">CMDBufferh</a>),Y
 C5DE: C8                           iny
 C5DF: C4 47                        cpy     <a href="#SymCMDBlockh">CMDBlockh</a>
@@ -882,14 +909,14 @@ C5F8: AE 78 06                     ldx     <a href="#Symsl_lcstate">sl_lcstate</
 C5FB: FE 00 C0                     inc     <a href="#SymLC000">LC000</a>,X
 C5FE: FA                           plx
 C5FF: A5 49                        lda     <a href="#SymCMDSpare1">CMDSpare1</a>
-C601: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X
+C601: 9D F8 BF                     sta     <a href="#Symsdata">sdata</a>,X
 C604: A5 4A                        lda     <a href="#SymCMDSpare2">CMDSpare2</a>
-C606: 9D F9 BF                     sta     <a href="#Symaddrm">addrm</a>,X
+C606: 9D F9 BF                     sta     <a href="#Symsstat">sstat</a>,X
 C609: A5 4B                        lda     <a href="#Symgrp7ctr">grp7ctr</a>
 C60B: 29 7F                        and     #$7F
 C60D: D9 B8 03                     cmp     $03B8,Y
 C610: B0 DC                        bcs     <a href="#SymLC5EE">LC5EE</a>
-C612: 9D FA BF                     sta     <a href="#Symaddrh">addrh</a>,X
+C612: 9D FA BF                     sta     <a href="#Symscomd">scomd</a>,X
 C615: 2C 13 C0                     bit     <a href="#SymLC000">LC000</a>+19
 C618: 08                           php
 C619: 8D 02 C0                     sta     <a href="#SymLC000">LC000</a>+2
@@ -901,10 +928,10 @@ C625: A5 48                        lda     <a href="#SymCMDBlocks">CMDBlocks</a>
 C627: 8D F8 05                     sta     <a href="#Symsl_scrn4">sl_scrn4</a>
 C62A: F0 14                        beq     <a href="#SymLC640">LC640</a>
 C62C: B1 45        <span id="SymLC62C">LC62C</span>           lda     (<a href="#SymCMDBufferh">CMDBufferh</a>),Y
-C62E: 9D FB BF                     sta     <a href="#Symdata">data</a>,X
+C62E: 9D FB BF                     sta     <a href="#Symscntl">scntl</a>,X
 C631: C8                           iny
 C632: B1 45                        lda     (<a href="#SymCMDBufferh">CMDBufferh</a>),Y
-C634: 9D FB BF                     sta     <a href="#Symdata">data</a>,X
+C634: 9D FB BF                     sta     <a href="#Symscntl">scntl</a>,X
 C637: C8                           iny
 C638: D0 F2                        bne     <a href="#SymLC62C">LC62C</a>
 C63A: E6 46                        inc     <a href="#SymCMDBlock">CMDBlock</a>
@@ -916,10 +943,10 @@ C645: F0 13                        beq     <a href="#SymLC65A">LC65A</a>
 C647: 4A                           lsr     A
 C648: B0 06                        bcs     <a href="#SymLC650">LC650</a>
 C64A: B1 45        <span id="SymLC64A">LC64A</span>           lda     (<a href="#SymCMDBufferh">CMDBufferh</a>),Y
-C64C: 9D FB BF                     sta     <a href="#Symdata">data</a>,X
+C64C: 9D FB BF                     sta     <a href="#Symscntl">scntl</a>,X
 C64F: C8                           iny
 C650: B1 45        <span id="SymLC650">LC650</span>           lda     (<a href="#SymCMDBufferh">CMDBufferh</a>),Y
-C652: 9D FB BF                     sta     <a href="#Symdata">data</a>,X
+C652: 9D FB BF                     sta     <a href="#Symscntl">scntl</a>,X
 C655: C8                           iny
 C656: C4 47                        cpy     <a href="#SymCMDBlockh">CMDBlockh</a>
 C658: D0 F0                        bne     <a href="#SymLC64A">LC64A</a>
@@ -975,17 +1002,12 @@ C6B9: 8C 78 06                     sty     <a href="#Symsl_lcstate">sl_lcstate</
 C6BC: 20 EF D8                     jsr     <a href="#Symbool_sl">bool_sl</a>
 C6BF: 4C 0E C8                     jmp     <a href="#SymLC80E">LC80E</a>
 
-C6C2: DA                           DFB     $DA
-C6C3: 20                           DFB     $20
-C6C4: 16                           DFB     $16
-C6C5: C8                           DFB     $C8
-C6C6: 5A                           DFB     $5A
-C6C7: 20                           DFB     $20
-C6C8: 21                           DFB     $21
-C6C9: D6                           DFB     $D6
-C6CA: 4C                           DFB     $4C
-C6CB: 0E                           DFB     $0E
-C6CC: C8                           DFB     $C8
+C6C2: DA           <span id="SymLC6C2">LC6C2</span>           phx
+C6C3: 20 16 C8                     jsr     <a href="#Symgetlc">getlc</a>
+C6C6: 5A                           phy
+C6C7: 20 21 D6                     jsr     <a href="#Symx_setmou">x_setmou</a>
+C6CA: 4C 0E C8                     jmp     <a href="#SymLC80E">LC80E</a>
+
 C6CD: DA                           DFB     $DA
 C6CE: 20                           DFB     $20
 C6CF: 16                           DFB     $16
@@ -1056,9 +1078,9 @@ C70F: 00 00 00 00+                 DS      13,$00
 C71C: 8D                           DFB     $8D
 C71D: 28                           DFB     $28
 C71E: C0                           DFB     $C0
-C71F: 4C                           DFB     $4C
-C720: C2                           DFB     $C2
-C721: C6                           DFB     $C6
+
+C71F: 4C C2 C6                     jmp     <a href="#SymLC6C2">LC6C2</a>
+
 C722: 8D                           DFB     $8D
 C723: 28                           DFB     $28
 C724: C0                           DFB     $C0
@@ -1153,15 +1175,12 @@ C794: 4C                           DFB     $4C
 C795: 04                           DFB     $04
 C796: C8                           DFB     $C8
 
-C797: 8D 28 C0                     sta     <a href="#Symvblint">vblint</a>+15
-C79A: 4C 80 C8                     jmp     <a href="#SymLC880">LC880</a>
+C797: 8D 28 C0     <span id="SymLC797">LC797</span>           sta     <a href="#Symvblint">vblint</a>+15
+C79A: 4C 80 C8                     jmp     <a href="#Sympcnv">pcnv</a>
 
-C79D: 8D                           DFB     $8D
-C79E: 28                           DFB     $28
-C79F: C0                           DFB     $C0
-C7A0: 4C                           DFB     $4C
-C7A1: 00                           DFB     $00
-C7A2: D4                           DFB     $D4
+C79D: 8D 28 C0     <span id="SymLC79D">LC79D</span>           sta     <a href="#Symvblint">vblint</a>+15
+C7A0: 4C 00 D4                     jmp     <a href="#Symbasicin">basicin</a>
+
 C7A3: 8D                           DFB     $8D
 C7A4: 28                           DFB     $28
 C7A5: C0                           DFB     $C0
@@ -1244,7 +1263,7 @@ C7F0: 03                           DFB     $03
 C7F1: DA                           phx
 C7F2: 20 16 C8                     jsr     <a href="#Symgetlc">getlc</a>
 C7F5: 5A                           phy
-C7F6: 20 A0 D1                     jsr     <a href="#SymLD1A0">LD1A0</a>
+C7F6: 20 A0 D1                     jsr     <a href="#Symsetterm">setterm</a>
 C7F9: 80 13                        bra     <a href="#SymLC80E">LC80E</a>
 
 C7FB: 00 00 00 00+                 DS      8,$00
@@ -1279,7 +1298,7 @@ C826: 8D 81 C0     <span id="Symglcbnk1">glcbnk1</span>         sta     <a href=
 C829: 60           <span id="Symglcdone">glcdone</span>         rts
 
 C82A: 53 43 2B 29+                 ASC     ‘SC+)’,$07
-C82F: 00           <span id="SymLC82F">LC82F</span>           DFB     $00
+C82F: 00           <span id="SymSWTBL0">SWTBL0</span>          DFB     $00
 C830: 89                           DFB     $89
 C831: 03                           DFB     $03
 C832: 05                           DFB     $05
@@ -1294,7 +1313,7 @@ C83D: 0F                           DFB     $0F
 C83E: 0D                           DFB     $0D
 C83F: 00                           DFB     $00
 C840: 80                           DFB     $80
-C841: 00           <span id="SymLC841">LC841</span>           DFB     $00
+C841: 00           <span id="SymSWTBL1">SWTBL1</span>          DFB     $00
 C842: 81                           DFB     $81
 C843: 04                           DFB     $04
 C844: 06                           DFB     $06
@@ -1309,7 +1328,7 @@ C84F: 10                           DFB     $10
 C850: 0E                           DFB     $0E
 C851: 00                           DFB     $00
 C852: 7F                           DFB     $7F
-C853: 00           <span id="SymLC853">LC853</span>           DFB     $00
+C853: 00           <span id="SymRSWTBL">RSWTBL</span>          DFB     $00
 C854: 11                           DFB     $11
 C855: 13                           DFB     $13
 C856: 14                           DFB     $14
@@ -1343,7 +1362,10 @@ C87E: 00                           DFB     $00
 C87F: 00                           DFB     $00
 
                    NOTE: pdf page 510
-C880: 4C 4C CD     <span id="SymLC880">LC880</span>           jmp     <a href="#SymEntry">Entry</a>             ;The //c bank switch jumps here
+                   ********************************************************************************
+                   * The //c bank switch jumps here for pcnv (protocol converter)                 *
+                   ********************************************************************************
+C880: 4C 4C CD     <span id="Sympcnv">pcnv</span>            jmp     <a href="#SymEntry">Entry</a>
 
                    ****************************************************************
                    *                                                              *
@@ -1484,11 +1506,11 @@ C902: 9D 8D C0                     sta     <a href="#Syml6set">l6set</a>,X
                    ; 
 C905: A5 4D                        lda     <a href="#Symbytecount">bytecount</a>
 C907: 09 80                        ora     #$80
-C909: 84 59                        sty     <a href="#Symtemp">temp</a>              ;Swap Y for short handshake
+C909: 84 59                        sty     &lt;<a href="#Symtemp">temp</a>+97          ;Swap Y for short handshake
 C90B: BC 8C C0     <span id="Symachel">achel</span>           ldy     <a href="#Syml6clr">l6clr</a>,X           ;Wait 'til buffer ready
 C90E: 10 FB                        bpl     <a href="#Symachel">achel</a>
 C910: 9D 8D C0                     sta     <a href="#Syml6set">l6set</a>,X           ;Send the byte
-C913: A4 59                        ldy     <a href="#Symtemp">temp</a>              ;Get back Y
+C913: A4 59                        ldy     &lt;<a href="#Symtemp">temp</a>+97          ;Get back Y
                    ; 
                    ; Prep the next "1st" byte for next time
                    ; 
@@ -1873,7 +1895,7 @@ CAEC: 90 FA                        bcc     <a href="#Symsdoubt">sdoubt</a>
 CAEE: A9 80                        lda     #<a href="#SymCommReset">CommReset</a>        ;This is a communications failure
 CAF0: 20 98 CF                     jsr     <a href="#SymAssignID">AssignID</a>
                    ; 
-CAF3: AD F8 06                     lda     <a href="#SymSvBcL">SvBcL</a>             ;Get back the packetlength
+CAF3: AD F8 06                     lda     <a href="#Symtemp">temp</a>              ;Get back the packetlength
 CAF6: 85 4D                        sta     <a href="#Symbytecountl">bytecountl</a>
 CAF8: AD 78 07                     lda     <a href="#SymSvBcH">SvBcH</a>
 CAFB: 85 4E                        sta     <a href="#Symbytecounth">bytecounth</a>
@@ -1889,13 +1911,13 @@ CB07: 9D 73 05                     sta     <a href="#SymRetry2">Retry2</a>,X
                    ; SendPack destroys the bytecount
                    ; 
 CB0A: A5 4D        <span id="Symspile1">spile1</span>          lda     <a href="#Symbytecountl">bytecountl</a>
-CB0C: 8D F8 06                     sta     <a href="#SymSvBcL">SvBcL</a>
+CB0C: 8D F8 06                     sta     <a href="#Symtemp">temp</a>
 CB0F: A5 4E                        lda     <a href="#Symbytecounth">bytecounth</a>
 CB11: 8D 78 07                     sta     <a href="#SymSvBcH">SvBcH</a>
                    ; 
 CB14: 20 83 C8                     jsr     <a href="#SymSendOnePack">SendOnePack</a>       ;Send the packet
                    ; 
-CB17: AD F8 06                     lda     <a href="#SymSvBcL">SvBcL</a>
+CB17: AD F8 06                     lda     <a href="#Symtemp">temp</a>
 CB1A: 85 4D                        sta     <a href="#Symbytecountl">bytecountl</a>
 CB1C: AD 78 07                     lda     <a href="#SymSvBcH">SvBcH</a>
 CB1F: 85 4E                        sta     <a href="#Symbytecounth">bytecounth</a>
@@ -1937,28 +1959,12 @@ CB4B: 60           <span id="Symrpout">rpout</span>           rts
                    *           grp7ctr      &lt;- bytecount DIV 7                                    *
                    *                                                                              *
                    ********************************************************************************
-CB4C: 00           <span id="Sympdiv7tab">pdiv7tab</span>        DFB     0
-CB4D: 24                           DFB     36
-CB4E: 49                           DFB     73
-CB4F: 00           <span id="Sympmod7tab">pmod7tab</span>        DFB     0
-CB50: 04                           DFB     4
-CB51: 01                           DFB     1
-CB52: 00           <span id="Symdiv7tab">div7tab</span>         DFB     0
-CB53: 01                           DFB     1
-CB54: 02                           DFB     2
-CB55: 04                           DFB     4
-CB56: 09                           DFB     9
-CB57: 12                           DFB     18
-CB58: 00           <span id="Symmod7tab">mod7tab</span>         DFB     0
-CB59: 01                           DFB     1
-CB5A: 02                           DFB     2
-CB5B: 04                           DFB     4
-CB5C: 01                           DFB     1
-CB5D: 02                           DFB     2
+CB4C: 00 24 49     <span id="Sympdiv7tab">pdiv7tab</span>        HEX     $00,$24,$49
+CB4F: 00 04 01     <span id="Sympmod7tab">pmod7tab</span>        HEX     $00,$04,$01
+CB52: 00 01 02 04+ <span id="Symdiv7tab">div7tab</span>         HEX     $00,$01,$02,$04,$09,$12
+CB58: 00 01 02 04+ <span id="Symmod7tab">mod7tab</span>         HEX     $00,$01,$02,$04,$01,$02
                    ; 
-CB5E: 00           <span id="Symauxptrinc">auxptrinc</span>       DFB     $00
-CB5F: 7F                           DFB     $7F
-CB60: FF                           DFB     $FF
+CB5E: 00 7F FF     <span id="Symauxptrinc">auxptrinc</span>       HEX     $00,$7F,$FF
 
                    ; 
                    ; Set up auxptr &lt;- buffer+$80   if $0FF &lt; bytecount &lt; $200
@@ -1997,11 +2003,11 @@ CB84: 85 4C                        sta     <a href="#Symoddbytes">oddbytes</a>
                    ; 
 CB86: A2 05                        ldx     #5                ;Do for five bits
 CB88: A5 4D                        lda     <a href="#Symbytecountl">bytecountl</a>
-CB8A: 85 59                        sta     <a href="#Symtemp">temp</a>              ;Store lo order for shifting
+CB8A: 85 59                        sta     &lt;<a href="#Symtemp">temp</a>+97          ;Store lo order for shifting
 CB8C: 29 07                        and     #%00000111        ;Save lo three for later
 CB8E: A8                           tay
                    ; 
-CB8F: 06 59        <span id="Symdivide3">divide3</span>         asl     <a href="#Symtemp">temp</a>              ;C &lt;- next from bytecountl
+CB8F: 06 59        <span id="Symdivide3">divide3</span>         asl     &lt;<a href="#Symtemp">temp</a>+97          ;C &lt;- next from bytecountl
 CB91: 90 15                        bcc     <a href="#Symdivide2">divide2</a>           ;If clear, no effect on DIV,MOD
 CB93: BD 58 CB                     lda     <a href="#Symmod7tab">mod7tab</a>,X         ;Get MOD7 for 2^n
                    ; 
@@ -2226,7 +2232,7 @@ CC7A: 4C 0A CD                     jmp     <a href="#Symdone5">done5</a>        
                    ; 
 CC7D: AD EC C0     <span id="Symstart35">start35</span>         lda     <a href="#Syml6clr">l6clr</a>+96          ;l6clr+TheOff ;Get topbits
 CC80: 10 FB                        bpl     <a href="#Symstart35">start35</a>
-CC82: 85 59                        sta     <a href="#Symtemp">temp</a>              ;Just a second
+CC82: 85 59                        sta     &lt;<a href="#Symtemp">temp</a>+97          ;Just a second
                    ; Split up the seven bits into two indices for topbit tables
                    ; 
 CC84: 4A                           lsr     A                 ;0   1  d1  d2  d3  d4  d5  d6
@@ -2234,9 +2240,9 @@ CC85: 4A                           lsr     A                 ;0   0   1  d1  d2 
 CC86: 4A                           lsr     A                 ;0   0   0   1  d1  d2  d3  d4
 CC87: 29 0F                        and     #%00001111        ;0   0   0   0  d1  d2  d3  d4
 CC89: AA                           tax                       ;First index into the tables
-CC8A: A5 59                        lda     <a href="#Symtemp">temp</a>              ;1  d1  d2  d3  d4  d5  d6  d7
+CC8A: A5 59                        lda     &lt;<a href="#Symtemp">temp</a>+97          ;1  d1  d2  d3  d4  d5  d6  d7
 CC8C: 29 07                        and     #%00000111        ;0   0   0   0   0  d5  d6  d7
-CC8E: 85 59                        sta     <a href="#Symtemp">temp</a>              ;Keep for last three bytes
+CC8E: 85 59                        sta     &lt;<a href="#Symtemp">temp</a>+97          ;Keep for last three bytes
                    ; 
                    ; Read the 1st byte, reunite its msb, store and checksum it
                    ; 
@@ -2290,7 +2296,7 @@ CCCF: C8                           iny
 CCD0: D0 02                        bne     <a href="#SymLCCD4">LCCD4</a>             ;*+4
 CCD2: E6 57                        inc     <a href="#Symbuffer2">buffer2</a>+1
                    ; 
-CCD4: A6 59        <span id="SymLCCD4">LCCD4</span>           ldx     <a href="#Symtemp">temp</a>              ;Now we need the other index
+CCD4: A6 59        <span id="SymLCCD4">LCCD4</span>           ldx     &lt;<a href="#Symtemp">temp</a>+97          ;Now we need the other index
                    ; 
                    ;  Now the fifth byte
                    ; 
@@ -2333,7 +2339,7 @@ CD07: 4C 7D CC                     jmp     <a href="#Symstart35">start35</a>    
                    ; 
 CD0A: AD EC C0     <span id="Symdone5">done5</span>           lda     <a href="#Syml6clr">l6clr</a>+96          ;l6clr+TheOff
 CD0D: 10 FB                        bpl     <a href="#Symdone5">done5</a>             ;*-3
-CD0F: 85 59                        sta     <a href="#Symtemp">temp</a>              ;1 c6 1 c4 1 c2 1 c0
+CD0F: 85 59                        sta     &lt;<a href="#Symtemp">temp</a>+97          ;1 c6 1 c4 1 c2 1 c0
                    ; 
 CD11: 68                           pla                       ;Restore groups of 7 counter
 CD12: 85 4B                        sta     <a href="#Symgrp7ctr">grp7ctr</a>
@@ -2342,7 +2348,7 @@ CD14: AD EC C0     <span id="SymLCD14">LCD14</span>           lda     <a href="#
 CD17: 10 FB                        bpl     <a href="#SymLCD14">LCD14</a>             ;*-3
 CD19: 38                           sec
 CD1A: 2A                           rol     A                 ;c7 1 c5 1 c3 1 c1 1
-CD1B: 25 59                        and     <a href="#Symtemp">temp</a>              ;c7 c6 c5 c4 c3 c2 c1 c0
+CD1B: 25 59                        and     &lt;<a href="#Symtemp">temp</a>+97          ;c7 c6 c5 c4 c3 c2 c1 c0
 CD1D: 45 40                        eor     <a href="#Symbushog">bushog</a>            ;When we're done, should be zero
                    ; 
                    ;  Get the packet end mark. Is it correct?
@@ -2392,12 +2398,12 @@ CD4A: 38           <span id="Symgserror5">gserror5</span>        sec
 CD4B: 60                           rts
 
                    <span style="background-color: #89acb7">NOTE: C880 jumps to here</span>
-                   <span style="background-color: #89acb7">This is the code I care most about --James</span>
+                   <span style="background-color: #89acb7">This is the smart port / protocol converter code I care most about --James</span>
                    ; include pc.main
                    ; 
                    ; 
 CD4C: 90 03        <span id="SymEntry">Entry</span>           bcc     <a href="#Symbentry">bentry</a>            ;If non-boot, skip jump to boot
-CD4E: 4C 23 C5                     jmp     <a href="#Symbootcode">bootcode</a>
+CD4E: 4C 23 C5                     jmp     <a href="#SymLC523">LC523</a>
 
                    ; 
                    ; X is still set to slot number
@@ -2588,7 +2594,7 @@ CE2A: D0 93                        bne     <a href="#SymErrorHitch">ErrorHitch</
 
                    ; 
 CE2C: A9 C0        <span id="Symenabint">enabint</span>         lda     #$C0
-CE2E: 8D F9 05                     sta     $05F9
+CE2E: 8D F9 05                     sta     <a href="#Symextint2">extint2</a>
 CE31: A9 0F                        lda     #$0F
 CE33: 0C 9A C0                     tsb     $C09A
 CE36: D0 05                        bne     <a href="#Symaokayhitch">aokayhitch</a>
@@ -2959,306 +2965,232 @@ CFF6: 9D 73 06                     sta     <a href="#SymSHTempY">SHTempY</a>,X
 CFF9: 60                           rts
 
 CFFA: 00 00 00 00+                 DS      6,$00
+
+                   NOTE: Command processor for serial &amp; comm
+                   pdf pg 486
                    ********************************************************************************
-                   * Command processor for serial &amp; comm                                          *
-                   * pdf pg 486                                                                   *
+                   * The command routine now supports 5 new 2-character commands.  These          *
+                   * commands enable or disable af eature of the serial port and                  *
+                   * are derived from their equivalent in the super serial card for the //.       *
+                   *                                                                              *
+                   * The new commands are as follows:                                             *
+                   *   L - send LF out after CR                                                   *
+                   *   X - detect XOFF, and wait for XON                                          *
+                   *   F - accept keyboard input                                                  *
+                   *   M - ignore LF in after CR                                                  *
+                   *   C - auto CR when column count &gt; printer width                              *
+                   *                                                                              *
+                   * Usage of location $779 (port 1) and $77A (port 2) are as follows:            *
+                   *   bit 7 - echo output to screen if on                                        *
+                   *   bit 6 - generate LF after CR if on                                         *
+                   *   bit 5 - accept XOFF if on                                                  *
+                   *   bit 4 - ignore keyboard input if on                                        *
+                   *   bit 3 - accept LF in after CR if on                                        *
+                   *   bit 2 - a character was received through the ACIA and is in                *
+                   *      location $5FE (port 1) or $67E (port 2) if on                           *
+                   *   bit 1 - XOFF is accepted, awaiting XON if on                               *
+                   *   bit 0 - signifies comm port if on, printer port if off                     *
                    ********************************************************************************
-D000: 48                           DFB     $48
-D001: 3C                           DFB     $3C
-D002: B8                           DFB     $B8
-D003: 03                           DFB     $03
-D004: 30                           DFB     $30
-D005: 1C                           DFB     $1C
-D006: BC                           DFB     $BC
-D007: 38                           DFB     $38
-D008: 06                           DFB     $06
-D009: F0                           DFB     $F0
-D00A: 14                           DFB     $14
-D00B: 5D                           DFB     $5D
-D00C: 38                           DFB     $38
-D00D: 06                           DFB     $06
-D00E: 0A                           DFB     $0A
-D00F: D0                           DFB     $D0
-D010: 0E                           DFB     $0E
-D011: AC                           DFB     $AC
-D012: FB                           DFB     $FB
-D013: 07                           DFB     $07
-D014: 8C                           DFB     $8C
-D015: 79                           DFB     $79
-D016: 06                           DFB     $06
-D017: A0                           DFB     $A0
-D018: BF                           DFB     $BF
-D019: 8C                           DFB     $8C
-D01A: FB                           DFB     $FB
-D01B: 07                           DFB     $07
-D01C: 4C                           DFB     $4C
-D01D: B5                           DFB     $B5
-D01E: D0                           DFB     $D0
-D01F: 38                           DFB     $38
-D020: 68                           DFB     $68
-D021: 60                           DFB     $60
-D022: BC                           DFB     $BC
-D023: 42                           DFB     $42
-D024: C1                           DFB     $C1
-D025: 29                           DFB     $29
-D026: 5F                           DFB     $5F
-D027: 48                           DFB     $48
-D028: BD                           DFB     $BD
-D029: B8                           DFB     $B8
-D02A: 03                           DFB     $03
-D02B: 89                           DFB     $89
-D02C: 08                           DFB     $08
-D02D: D0                           DFB     $D0
-D02E: 03                           DFB     $03
-D02F: 68                           DFB     $68
-D030: 80                           DFB     $80
-D031: 52                           DFB     $52
-D032: 68                           DFB     $68
-D033: 48                           DFB     $48
-D034: C9                           DFB     $C9
-D035: 00                           DFB     $00
-D036: D0                           DFB     $D0
-D037: 04                           DFB     $04
-D038: 18                           DFB     $18
-D039: 68                           DFB     $68
-D03A: 80                           DFB     $80
-D03B: E4                           DFB     $E4
-D03C: BD                           DFB     $BD
-D03D: B8                           DFB     $B8
-D03E: 03                           DFB     $03
-D03F: 48                           DFB     $48
-D040: 29                           DFB     $29
-D041: 07                           DFB     $07
-D042: 8D                           DFB     $8D
-D043: F8                           DFB     $F8
-D044: 06                           DFB     $06
-D045: 68                           DFB     $68
-D046: 29                           DFB     $29
-D047: F0                           DFB     $F0
-D048: 9D                           DFB     $9D
-D049: B8                           DFB     $B8
-D04A: 03                           DFB     $03
-D04B: 68                           DFB     $68
-D04C: DA                           DFB     $DA
-D04D: AE                           DFB     $AE
-D04E: F8                           DFB     $F8
-D04F: 06                           DFB     $06
-D050: C9                           DFB     $C9
-D051: 45                           DFB     $45
-D052: F0                           DFB     $F0
-D053: 71                           DFB     $71
-D054: C9                           DFB     $C9
-D055: 44                           DFB     $44
-D056: F0                           DFB     $F0
-D057: 6F                           DFB     $6F
-D058: FA                           DFB     $FA
-D059: DA                           DFB     $DA
-D05A: DD                           DFB     $DD
-D05B: 38                           DFB     $38
-D05C: 06                           DFB     $06
-D05D: 08                           DFB     $08
-D05E: AE                           DFB     $AE
-D05F: F8                           DFB     $F8
-D060: 06                           DFB     $06
-D061: 28                           DFB     $28
-D062: F0                           DFB     $F0
-D063: 13                           DFB     $13
-D064: C9                           DFB     $C9
-D065: 0D                           DFB     $0D
-D066: F0                           DFB     $F0
-D067: 17                           DFB     $17
-D068: FA                           DFB     $FA
-D069: AD                           DFB     $AD
-D06A: 79                           DFB     $79
-D06B: 06                           DFB     $06
-D06C: 8D                           DFB     $8D
-D06D: FB                           DFB     $FB
-D06E: 07                           DFB     $07
-D06F: 1E                           DFB     $1E
-D070: B8                           DFB     $B8
-D071: 03                           DFB     $03
-D072: 5E                           DFB     $5E
-D073: B8                           DFB     $B8
-D074: 03                           DFB     $03
-D075: 80                           DFB     $80
-D076: A8 FA DA FE+                 ASC     “(zZ~8”
-D07B: 03                           DFB     $03
-D07C: AE                           DFB     $AE
-D07D: F8                           DFB     $F8
-D07E: 06                           DFB     $06
-D07F: BD                           DFB     $BD
-D080: 25                           DFB     $25
-D081: D2                           DFB     $D2
-D082: 80                           DFB     $80
-D083: 0B                           DFB     $0B
-D084: DA                           DFB     $DA
-D085: A2                           DFB     $A2
-D086: 04                           DFB     $04
-D087: DD                           DFB     $DD
-D088: 25                           DFB     $25
-D089: D2                           DFB     $D2
-D08A: F0                           DFB     $F0
-D08B: 71                           DFB     $71
-D08C: CA                           DFB     $CA
-D08D: 10                           DFB     $10
-D08E: F8                           DFB     $F8
-D08F: A2                           DFB     $A2
-D090: 0C                           DFB     $0C
-D091: DD                           DFB     $DD
-D092: 18                           DFB     $18
-D093: D2                           DFB     $D2
-D094: F0                           DFB     $F0
-D095: 74                           DFB     $74
-D096: CA                           DFB     $CA
-D097: 10                           DFB     $10
-D098: F8                           DFB     $F8
-D099: FA                           DFB     $FA
-D09A: 68                           DFB     $68
-D09B: 48                           DFB     $48
-D09C: 29                           DFB     $29
-D09D: 7F                           DFB     $7F
-D09E: C9                           DFB     $C9
-D09F: 20                           DFB     $20
-D0A0: B0                           DFB     $B0
-D0A1: 03                           DFB     $03
-D0A2: 9D                           DFB     $9D
-D0A3: 38                           DFB     $38
-D0A4: 06                           DFB     $06
-D0A5: 49                           DFB     $49
-D0A6: 30                           DFB     $30
-D0A7: C9                           DFB     $C9
-D0A8: 0A                           DFB     $0A
-D0A9: B0                           DFB     $B0
-D0AA: 33                           DFB     $33
-D0AB: A0                           DFB     $A0
-D0AC: 0A 6D 7E 07                  ASC     $0A,‘m~’,$07
-D0B0: 88                           DFB     $88
-D0B1: D0                           DFB     $D0
-D0B2: FA                           DFB     $FA
-D0B3: 80                           DFB     $80
-D0B4: 0A                           DFB     $0A
-D0B5: BD                           DFB     $BD
-D0B6: B8                           DFB     $B8
-D0B7: 03                           DFB     $03
-D0B8: 29                           DFB     $29
-D0B9: C0                           DFB     $C0
-D0BA: 9D                           DFB     $9D
-D0BB: B8                           DFB     $B8
-D0BC: 03                           DFB     $03
-D0BD: A9                           DFB     $A9
-D0BE: 00                           DFB     $00
-D0BF: 8D                           DFB     $8D
-D0C0: 7E                           DFB     $7E
-D0C1: 07                           DFB     $07
-D0C2: 38                           DFB     $38
-D0C3: 80                           DFB     $80
-D0C4: 25                           DFB     $25
-D0C5: 38                           DFB     $38
-D0C6: 90                           DFB     $90
-D0C7: 18                           DFB     $18
-D0C8: 08                           DFB     $08
-D0C9: E0                           DFB     $E0
-D0CA: 00                           DFB     $00
-D0CB: F0                           DFB     $F0
-D0CC: 27                           DFB     $27
-D0CD: E0                           DFB     $E0
-D0CE: 04                           DFB     $04
-D0CF: F0                           DFB     $F0
-D0D0: 41                           DFB     $41
-D0D1: 8A                           DFB     $8A
-D0D2: 18                           DFB     $18
-D0D3: 0A                           DFB     $0A
-D0D4: 69                           DFB     $69
-D0D5: 03                           DFB     $03
-D0D6: AA                           DFB     $AA
-D0D7: 28                           DFB     $28
-D0D8: B0                           DFB     $B0
-D0D9: 01                           DFB     $01
-D0DA: E8                           DFB     $E8
-D0DB: 4C                           DFB     $4C
-D0DC: 39                           DFB     $39
-D0DD: D1                           DFB     $D1
-D0DE: BD                           DFB     $BD
-D0DF: B8                           DFB     $B8
-D0E0: 03                           DFB     $03
-D0E1: 4A                           DFB     $4A
-D0E2: B0                           DFB     $B0
-D0E3: D1                           DFB     $D1
-D0E4: AD                           DFB     $AD
-D0E5: 79                           DFB     $79
-D0E6: 06                           DFB     $06
-D0E7: 8D                           DFB     $8D
-D0E8: FB                           DFB     $FB
-D0E9: 07                           DFB     $07
-D0EA: 08                           DFB     $08
-D0EB: 1E                           DFB     $1E
-D0EC: B8                           DFB     $B8
-D0ED: 03                           DFB     $03
-D0EE: 28                           DFB     $28
-D0EF: 7E                           DFB     $7E
-D0F0: B8                           DFB     $B8
-D0F1: 03                           DFB     $03
-D0F2: 68                           DFB     $68
-D0F3: 60                           DFB     $60
-D0F4: A9                           DFB     $A9
-D0F5: 4C                           DFB     $4C
-D0F6: 28                           DFB     $28
-D0F7: B0                           DFB     $B0
-D0F8: 96                           DFB     $96
-D0F9: A9                           DFB     $A9
-D0FA: 4B                           DFB     $4B
-D0FB: 80                           DFB     $80
-D0FC: 92                           DFB     $92
-D0FD: 8A                           DFB     $8A
-D0FE: FA                           DFB     $FA
-D0FF: 1D                           DFB     $1D
-D100: B8                           DFB     $B8
-D101: 03                           DFB     $03
-D102: 09                           DFB     $09
-D103: 08                           DFB     $08
-D104: 9D                           DFB     $9D
-D105: B8                           DFB     $B8
-D106: 03                           DFB     $03
-D107: 38                           DFB     $38
-D108: 80                           DFB     $80
-D109: E0                           DFB     $E0
-D10A: A9                           DFB     $A9
-D10B: D1                           DFB     $D1
-D10C: 48                           DFB     $48
-D10D: BD                           DFB     $BD
-D10E: F5                           DFB     $F5
-D10F: D1                           DFB     $D1
-D110: 48                           DFB     $48
-D111: 60                           DFB     $60
-D112: 28                           DFB     $28
-D113: FA                           DFB     $FA
-D114: B0                           DFB     $B0
-D115: 05                           DFB     $05
-D116: 9E                           DFB     $9E
-D117: B8                           DFB     $B8
-D118: 04                           DFB     $04
-D119: 80                           DFB     $80
-D11A: C3                           DFB     $C3
-D11B: BC                           DFB     $BC
-D11C: 86                           DFB     $86
-D11D: D1                           DFB     $D1
-D11E: 20                           DFB     $20
-D11F: 2A                           DFB     $2A
-D120: D2                           DFB     $D2
-D121: 9D                           DFB     $9D
-D122: B8                           DFB     $B8
-D123: 04                           DFB     $04
-D124: 80                           DFB     $80
-D125: B8                           DFB     $B8
-D126: FA                           DFB     $FA
-D127: 9E                           DFB     $9E
-D128: B8                           DFB     $B8
-D129: 04                           DFB     $04
-D12A: A9                           DFB     $A9
-D12B: 00                           DFB     $00
-D12C: 4C                           DFB     $4C
-D12D: A2                           DFB     $A2
-D12E: D0                           DFB     $D0
+D000: 48           <span id="Symcommand">command</span>         pha                       ;shove character on stack
+D001: 3C B8 03                     bit     <a href="#Symsermode">sermode</a>,X         ;Already in command?
+D004: 30 1C                        bmi     <a href="#Symincmd">incmd</a>             ;If so, go do it
+D006: BC 38 06                     ldy     <a href="#Symeschar">eschar</a>,X          ;If eschar = 0 ignore commands
+D009: F0 14                        beq     <a href="#Symnocmd">nocmd</a>
+D00B: 5D 38 06                     eor     <a href="#Symeschar">eschar</a>,X          ;Is it the command char?
+D00E: 0A                           asl     A                 ;Ignore high bit
+D00F: D0 0E                        bne     <a href="#Symnocmd">nocmd</a>             ;char not command char
+D011: AC FB 07     <span id="Symcommand1">command1</span>        ldy     <a href="#Symcursor">cursor</a>            ;Save the cursor
+D014: 8C 79 06                     sty     <a href="#Symoldcur">oldcur</a>
+D017: A0 BF                        ldy     #<a href="#Symcmdcur">cmdcur</a>           ;Set command cursor
+D019: 8C FB 07                     sty     <a href="#Symcursor">cursor</a>
+D01C: 4C B5 D0                     jmp     <a href="#Symcominit1">cominit1</a>          ;initiate command mode
+
+D01F: 38           <span id="Symnocmd">nocmd</span>           sec                       ;Mark char not handled
+D020: 68           <span id="Symnocmd2">nocmd2</span>          pla                       ;Restore original char
+D021: 60                           rts
+
+D022: BC 42 C1     <span id="Symincmd">incmd</span>           ldy     <a href="#Symdevno2">devno2</a>,X          ;Get index for ACIA
+D025: 29 5F                        and     #$5F              ;no hi-bit and upshift lower case
+D027: 48                           pha                       ;save character
+D028: BD B8 03                     lda     <a href="#Symsermode">sermode</a>,X         ;need to see if in 2-chr command
+D02B: 89 08                        bit     #$08              ;bit 3 set if so
+D02D: D0 03                        bne     <a href="#Symincmd2">incmd2</a>            ;branch if so
+D02F: 68                           pla                       ;pull char back, not in 2-chr cmd
+D030: 80 52                        bra     <a href="#Symincmd1">incmd1</a>            ;go on with regular command mode
+
+                   ; handle 2nd chr of 2-char commands
+D032: 68           <span id="Symincmd2">incmd2</span>          pla                       ;pull char off stack
+D033: 48                           pha                       ; &amp; reshove it to keep stack neat
+D034: C9 00                        cmp     #<a href="#Symucspace">ucspace</a>          ;is it a space? (uppercased)
+D036: D0 04                        bne     <a href="#Symincmd3">incmd3</a>            ;no, go on with 2-chr cmd handling
+D038: 18                           clc                       ;yes, ignore spaces between characters
+                   ;                                        of 2-chr commands
+D039: 68                           pla                       ;pull uppercased char off stack
+D03A: 80 E4                        bra     <a href="#Symnocmd2">nocmd2</a>            ;ie mark them "handled" and don't do anything else
+
+D03C: BD B8 03     <span id="Symincmd3">incmd3</span>          lda     <a href="#Symsermode">sermode</a>,X         ;get sermode back
+D03F: 48                           pha                       ;save sermode for a minit
+D040: 29 07                        and     #7                ;throw out all but bits 0-2
+D042: 8D F8 06                     sta     <a href="#Symtemp">temp</a>              ;save - this is index of which cmd it is
+D045: 68                           pla                       ;get sermode back
+D046: 29 F0                        and     #$F0              ;now clear bits 0-3
+D048: 9D B8 03                     sta     <a href="#Symsermode">sermode</a>,X         ;since we're done with them now
+D04B: 68                           pla                       ;get character back
+D04C: DA                           phx                       ;shove x (Cn) on stack
+D04D: AE F8 06                     ldx     <a href="#Symtemp">temp</a>              ;get index to command's 1st chr
+D050: C9 45                        cmp     #$45              ;is it an E?
+D052: F0 71                        beq     <a href="#Symenable">enable</a>            ;yes
+D054: C9 44                        cmp     #$44              ;no, is it a D?
+D056: F0 6F                        beq     <a href="#Symdisable">disable</a>           ;yes
+D058: FA                           plx                       ;retriefve X=Cn (old X still in temp)
+D059: DA                           phx                       ;push it back to keep stack neat
+D05A: DD 38 06                     cmp     <a href="#Symeschar">eschar</a>,X          ;compare to the command character
+D05D: 08                           php                       ;save result of comparison for a bit
+D05E: AE F8 06                     ldx     <a href="#Symtemp">temp</a>              ;reload X= index to cmd's first chr
+D061: 28                           plp                       ;retrieve result of comparison of char
+                   ;                                        to command char
+D062: F0 13                        beq     <a href="#Symflagit">flagit</a>            ;yes tis 1-chr cmd followed by nother cmd
+D064: C9 0D                        cmp     #<a href="#SymcharCR">charCR</a>           ;is it a (guess what) CR?
+D066: F0 17                        beq     <a href="#Symoneletter">oneletter</a>         ;yes - a 1-chr command
+                   ; 
+                   ; come here for unimplemented byt legal 2-char commands
+                   ; 
+D068: FA           <span id="Symcmd2null">cmd2null</span>        plx                       ;pull x (Cn) off stack
+D069: AD 79 06                     lda     <a href="#Symoldcur">oldcur</a>            ;restore non-cmd-mode cursor
+D06C: 8D FB 07                     sta     <a href="#Symcursor">cursor</a>
+D06F: 1E B8 03                     asl     <a href="#Symsermode">sermode</a>,X         ;clear cmd-mode bit (bit 7 of sermode)
+D072: 5E B8 03                     lsr     <a href="#Symsermode">sermode</a>,X         ;by shifting out bit 7 &amp; shifting in a 0
+D075: 80 A8                        bra     <a href="#Symnocmd">nocmd</a>             ;return marking character not handled
+
+                   ;                                       ;come here if eschar after LXFM or T
+D077: FA           <span id="Symflagit">flagit</span>          plx                       ;next X=Cn to set bit 0 of sermode
+D078: DA                           phx                       ;but leave Cn on stack too
+D079: FE B8 03                     inc     <a href="#Symsermode">sermode</a>,X         ;bit 0 was 0, but is now 1
+                   ;                                        1 means new command mode
+D07C: AE F8 06                     ldx     <a href="#Symtemp">temp</a>              ;X= index to cmd's first chr
+                   ;                                       ;come here if 2-chr cmd turns out 1 chr
+D07F: BD 25 D2     <span id="Symoneletter">oneletter</span>       lda     <a href="#Symcmd2list">cmd2list</a>,X        ;get command chr
+D082: 80 0B                        bra     <a href="#Symbackto1">backto1</a>           ;treat it as if we jot got it
+
+                   ;                                       ;in command mode, not 2-chrs tho
+D084: DA           <span id="Symincmd1">incmd1</span>          phx                       ;Save slot
+D085: A2 04                        ldx     #4                ;check 5 possible 5-chr cmds
+D087: DD 25 D2     <span id="Symcmd2loop">cmd2loop</span>        cmp     <a href="#Symcmd2list">cmd2list</a>,X        ;is it there?
+D08A: F0 71                        beq     <a href="#Symcmd2found">cmd2found</a>         ;yes, need to flag it for next time
+D08C: CA                           dex                       ;nope
+D08D: 10 F8                        bpl     <a href="#Symcmd2loop">cmd2loop</a>          ;try next if there is one
+                   ;                                       ;come here to check for 1-chr cmds
+D08F: A2 0C        <span id="Symbackto1">backto1</span>         ldx     #12               ;Check 13 commands
+D091: DD 18 D2     <span id="Symcmdloop">cmdloop</span>         cmp     <a href="#Symcmdlist">cmdlist</a>,X
+D094: F0 74                        beq     <a href="#Symcmfound">cmfound</a>           ;Right char?
+D096: CA                           dex
+D097: 10 F8                        bpl     <a href="#Symcmdloop">cmdloop</a>
+D099: FA                           plx                       ;We didn't find it
+D09A: 68                           pla
+D09B: 48                           pha
+D09C: 29 7F                        and     #$7F              ;if char is cntl char
+D09E: C9 20                        cmp     #$20              ;it can be the new comd char
+D0A0: B0 03                        bcs     <a href="#Symckdig">ckdig</a>             ;branch if not cntrl character
+D0A2: 9D 38 06     <span id="Symcmdz2">cmdz2</span>           sta     <a href="#Symeschar">eschar</a>,X          ;save command char and
+                   ;                                        drop thur ckdig to cdone
+D0A5: 49 30        <span id="Symckdig">ckdig</span>           eor     #$30              ;zap it down to 0n if char was a digit
+D0A7: C9 0A                        cmp     #$0A              ;is it a digit?
+D0A9: B0 33                        bcs     <a href="#Symcdone">cdone</a>             ;skip if no, an unexpected intruder
+D0AB: A0 0A                        ldy     #10               ;A = A + 10 * current number
+D0AD: 6D 7E 07     <span id="Symdigloop">digloop</span>         adc     <a href="#Symnumber">number</a>            ;C=0 on first entry
+D0B0: 88                           dey
+D0B1: D0 FA                        bne     <a href="#Symdigloop">digloop</a>
+D0B3: 80 0A                        bra     <a href="#Symcominit">cominit</a>           ;not starting new cmd mode, just save #
+
+                   ;                                       ;start new cmd mode here
+D0B5: BD B8 03     <span id="Symcominit1">cominit1</span>        lda     <a href="#Symsermode">sermode</a>,X         ;get sermode
+D0B8: 29 C0                        and     #$C0              ;clear bits 0-5 (starting a new cmd seq--
+D0BA: 9D B8 03                     sta     <a href="#Symsermode">sermode</a>,X         ;they are used for misc during cmd mode)
+D0BD: A9 00                        lda     #0                ;load a 0 to stuff in NUMBER
+D0BF: 8D 7E 07     <span id="Symcominit">cominit</span>         sta     <a href="#Symnumber">number</a>
+D0C2: 38                           sec                       ;Mark in command mode
+D0C3: 80 25                        bra     <a href="#Symcmset">cmset</a>
+
+                   ;                                       ;got a 2-chr command aE
+D0C5: 38           <span id="Symenable">enable</span>          sec                       ;set charry
+D0C6: 90                           DFB     $90               ;bcc to skip next byte (the CLC)
+                   ;                                       ;got a 2-chr command aD
+D0C7: 18           <span id="Symdisable">disable</span>         clc                       ;clear carry
+D0C8: 08                           php                       ;push P to save carry
+D0C9: E0 00                        cpx     #0                ;if X=0 then command is LE or LD
+D0CB: F0 27                        beq     <a href="#Symcmd21">cmd21</a>             ;so just make it act like L or K
+D0CD: E0 04                        cpx     #4                ;if X=4 then command is CE or CD
+D0CF: F0 41                        beq     <a href="#Symcmd_c">cmd_c</a>             ;skip if so
+                   ********************************************************************************
+                   * for other 2-chr cmds, their FLAGS masks' indexes are 2X+3                    *
+                   * for an E or 2X+4 for a D                                                     *
+                   ********************************************************************************
+D0D1: 8A                           txa                       ;copy x to acc for arithmetic
+D0D2: 18                           clc                       ;clear carry for arithmetic
+D0D3: 0A                           asl     A                 ;multiply index by 2
+D0D4: 69 03                        adc     #3                ;add 3 to get mask index
+D0D6: AA                           tax                       ;put mask index in X
+D0D7: 28                           plp                       ;get carry back
+D0D8: B0 01                        bcs     <a href="#Symxready">xready</a>            ;carry set = Enable so X is ready
+D0DA: E8                           inx                       ;cmd was Disable so inc X to next mask
+D0DB: 4C 39 D1     <span id="Symxready">xready</span>          jmp     <a href="#Symcmdi">cmdi</a>              ;go do mask stuff to FLAGS
+
+                   ; ;$D0DE: ;sermode bit 0 tells whether to set or clear command mode
+D0DE: BD B8 03     <span id="Symcdone">cdone</span>           lda     <a href="#Symsermode">sermode</a>,X         ;so get it
+D0E1: 4A                           lsr     A                 ;shift bit 0 to carry
+D0E2: B0 D1                        bcs     <a href="#Symcominit1">cominit1</a>          ;if set, start new cmd mode
+D0E4: AD 79 06                     lda     <a href="#Symoldcur">oldcur</a>            ;Restore the cursor
+D0E7: 8D FB 07                     sta     <a href="#Symcursor">cursor</a>            ;&amp; fall through to cmset with carry clear
+D0EA: 08           <span id="Symcmset">cmset</span>           php
+D0EB: 1E B8 03                     asl     <a href="#Symsermode">sermode</a>,X         ;set command mode according to carry
+D0EE: 28                           plp
+D0EF: 7E B8 03                     ror     <a href="#Symsermode">sermode</a>,X         ;leaves carry clear
+D0F2: 68                           pla                       ;character handled
+D0F3: 60                           rts                       ;because carry clear...
+
+                   ;                                       ;come here to handle LE &amp; LD
+D0F4: A9 4C        <span id="Symcmd21">cmd21</span>           lda     #$4C              ;make LE look like L
+D0F6: 28                           plp                       ;get P back with carry indicating E or D
+D0F7: B0 96                        bcs     <a href="#Symbackto1">backto1</a>           ;carry set means it was an E
+D0F9: A9 4B                        lda     #$4B              ;make LD look like X
+D0FB: 80 92                        bra     <a href="#Symbackto1">backto1</a>
+
+D0FD: 8A           <span id="Symcmd2found">cmd2found</span>       txa                       ;copy index of cmd to acc
+D0FE: FA                           plx                       ;restore X to Cn
+D0FF: 1D B8 03                     ora     <a href="#Symsermode">sermode</a>,X         ;copy top 2 bits of sermode
+D102: 09 08                        ora     #$08              ;&amp; set bit 3 - 2-chr-command-mode flag
+D104: 9D B8 03                     sta     <a href="#Symsermode">sermode</a>,X         ;sermode = index to 2-chr cmds issued
+D107: 38                           sec                       ;set carry so we stay in command mode
+D108: 80 E0                        bra     <a href="#Symcmset">cmset</a>             ;for next time
+
+D10A: A9 D1        <span id="Symcmfound">cmfound</span>         lda     #&gt;<a href="#Symcmdcr">cmdcr</a>           ;get hi byte of where to go
+D10C: 48                           pha                       ;save it on stack
+D10D: BD F5 D1                     lda     <a href="#Symcmdtable">cmdtable</a>,X        ;get lo byte of where to go
+D110: 48                           pha                       ;save it on stack
+D111: 60                           rts                       ;go there by RTSing
+
+D112: 28           <span id="Symcmd_c">cmd_c</span>           plp                       ;restore status to check carry bit
+D113: FA                           plx                       ;restore slot number in x
+D114: B0 05                        bcs     <a href="#Symcmd_cl">cmd_cl</a>            ;skip if enable
+D116: 9E B8 04                     stz     <a href="#Sympwdth">pwdth</a>,X           ;CD is same as PWDTH=0, no CR
+D119: 80 C3                        bra     <a href="#Symcdone">cdone</a>             ;we're done here
+
+                   ; defidx2-$C1
+D11B: BC 86 D1     <span id="Symcmd_cl">cmd_cl</span>          ldy     <a href="#SymLD186">LD186</a>,X           ;get y index into aux screenholes
+D11E: 20 2A D2                     jsr     <a href="#Symr_getalt">r_getalt</a>          ;go get it from aux
+D121: 9D B8 04                     sta     <a href="#Sympwdth">pwdth</a>,X           ;restore default PWDTH
+D124: 80 B8                        bra     <a href="#Symcdone">cdone</a>             ;we're done here
+
+D126: FA           <span id="Symcmdz">cmdz</span>            plx                       ;Zero escape character
+D127: 9E B8 04                     stz     <a href="#Sympwdth">pwdth</a>,X           ;And the width
+D12A: A9 00                        lda     #0
+D12C: 4C A2 D0                     jmp     <a href="#Symcmdz2">cmdz2</a>
+
+                   NOTE: pickup
+                   pick up from here
+                   pdf page 488 (123)
+                   ; cmdcr equ D12F
+                   ; cmdn  equ D12F
 D12F: 7A                           DFB     $7A
 D130: AD                           DFB     $AD
 D131: 7E                           DFB     $7E
@@ -3269,191 +3201,144 @@ D135: 99                           DFB     $99
 D136: B8                           DFB     $B8
 D137: 04                           DFB     $04
 D138: F0                           DFB     $F0
-D139: 7A                           DFB     $7A
-D13A: B9                           DFB     $B9
-D13B: B8                           DFB     $B8
-D13C: 06                           DFB     $06
-D13D: 3D                           DFB     $3D
-D13E: 02                           DFB     $02
-D13F: D2                           DFB     $D2
-D140: 1D                           DFB     $1D
-D141: 0D                           DFB     $0D
-D142: D2                           DFB     $D2
-D143: 99                           DFB     $99
-D144: B8                           DFB     $B8
-D145: 06                           DFB     $06
-D146: 98                           DFB     $98
-D147: AA                           DFB     $AA
-D148: 4C                           DFB     $4C
-D149: DE                           DFB     $DE
-D14A: D0                           DFB     $D0
-D14B: 88                           DFB     $88
-D14C: A9                           DFB     $A9
-D14D: 1F                           DFB     $1F
-D14E: 38                           DFB     $38
+
+                   ; cmdi equ D139
+                   ; cmdk equ D139
+                   ; cmkl equ D139
+D139: 7A           <span id="Symcmdi">cmdi</span>            ply
+D13A: B9 B8 06     <span id="Symcmdi2">cmdi2</span>           lda     <a href="#Symflags">flags</a>,Y
+D13D: 3D 02 D2                     and     <a href="#SymLD202">LD202</a>,X
+D140: 1D 0D D2                     ora     <a href="#SymLD20D">LD20D</a>,X
+D143: 99 B8 06                     sta     <a href="#Symflags">flags</a>,Y
+D146: 98                           tya
+D147: AA                           tax
+D148: 4C DE D0     <span id="Symcdone2">cdone2</span>          jmp     <a href="#Symcdone">cdone</a>
+
+D14B: 88           <span id="Symcmdp">cmdp</span>            dey
+D14C: A9 1F        <span id="Symcmdd">cmdd</span>            lda     #$1F
+D14E: 38                           sec
 D14F: 90                           DFB     $90
-D150: A9                           DFB     $A9
-D151: F0                           DFB     $F0
-D152: 18                           DFB     $18
-D153: 39                           DFB     $39
-D154: FB BF 8D F8                  ASC     “{?”,$8D,“x”
-D158: 06                           DFB     $06
-D159: FA                           DFB     $FA
-D15A: AD                           DFB     $AD
-D15B: 7E                           DFB     $7E
-D15C: 07                           DFB     $07
-D15D: 29                           DFB     $29
-D15E: 0F                           DFB     $0F
-D15F: 90                           DFB     $90
-D160: 05                           DFB     $05
-D161: 0A 0A 0A 0A+                 ASC     $0A,$0A,$0A,$0A,$0A,$0D
-D167: F8                           DFB     $F8
-D168: 06                           DFB     $06
-D169: C8                           DFB     $C8
-D16A: 80                           DFB     $80
-D16B: 17                           DFB     $17
-D16C: B9                           DFB     $B9
-D16D: FA                           DFB     $FA
-D16E: BF                           DFB     $BF
-D16F: 48                           DFB     $48
-D170: 09                           DFB     $09
-D171: 0C                           DFB     $0C
-D172: 99                           DFB     $99
-D173: FA BF A9 E9+                 ASC     “z?)i"”
-D178: 53                           DFB     $53
-D179: 48                           DFB     $48
-D17A: 68                           DFB     $68
-D17B: CA                           DFB     $CA
-D17C: D0                           DFB     $D0
-D17D: FB                           DFB     $FB
-D17E: 3A                           DFB     $3A
-D17F: D0                           DFB     $D0
-D180: F6                           DFB     $F6
-D181: 68                           DFB     $68
-D182: FA                           DFB     $FA
-D183: 99                           DFB     $99
-D184: FA                           DFB     $FA
-D185: BF                           DFB     $BF
-D186: 80                           DFB     $80
-D187: C0                           DFB     $C0
-D188: 99                           DFB     $99
-D189: F9                           DFB     $F9
-D18A: BF                           DFB     $BF
-D18B: AD                           DFB     $AD
-D18C: 7B                           DFB     $7B
-D18D: 06                           DFB     $06
-D18E: 0A                           DFB     $0A
-D18F: 20                           DFB     $20
-D190: 97                           DFB     $97
-D191: C7                           DFB     $C7
-D192: 90                           DFB     $90
-D193: 03                           DFB     $03
-D194: 20                           DFB     $20
-D195: 9D                           DFB     $9D
-D196: C7                           DFB     $C7
-D197: 18                           DFB     $18
+D150: A9 F0        <span id="Symcmdb">cmdb</span>            lda     #$F0
+D152: 18                           clc
+D153: 39 FB BF                     and     <a href="#Symscntl">scntl</a>,Y
+D156: 8D F8 06                     sta     <a href="#Symtemp">temp</a>
+D159: FA                           plx
+D15A: AD 7E 07                     lda     <a href="#Symnumber">number</a>
+D15D: 29 0F                        and     #$0F
+D15F: 90 05                        bcc     <a href="#Symnoshift">noshift</a>
+
+D161: 0A 0A 0A 0A+                 ASC     $0A,$0A,$0A,$0A,$0A
+
+D166: 0D F8 06     <span id="Symnoshift">noshift</span>         ora     <a href="#Symtemp">temp</a>
+D169: C8                           iny
+D16A: 80 17                        bra     <a href="#Symcmdp2">cmdp2</a>
+
+D16C: B9 FA BF     <span id="Symcmds">cmds</span>            lda     <a href="#Symscomd">scomd</a>,Y
+D16F: 48                           pha
+D170: 09 0C                        ora     #$0C
+D172: 99 FA BF                     sta     <a href="#Symscomd">scomd</a>,Y
+D175: A9 E9                        lda     #$E9
+D177: A2 53        <span id="Symmswait">mswait</span>          ldx     #$53
+D179: 48           <span id="Symmsloop">msloop</span>          pha
+D17A: 68                           pla
+D17B: CA                           dex
+D17C: D0 FB                        bne     <a href="#Symmsloop">msloop</a>
+D17E: 3A                           dec     A
+D17F: D0 F6                        bne     <a href="#Symmswait">mswait</a>
+D181: 68                           pla
+D182: FA                           plx
+D183: 99 FA BF     <span id="Symcmdp2">cmdp2</span>           sta     <a href="#Symscomd">scomd</a>,Y
+D186: 80 C0        <span id="SymLD186">LD186</span>           bra     <a href="#Symcdone2">cdone2</a>
+
+D188: 99 F9 BF     <span id="Symcmdr">cmdr</span>            sta     <a href="#Symsstat">sstat</a>,Y
+D18B: AD 7B 06                     lda     <a href="#Symtrser">trser</a>-1
+D18E: 0A                           asl     A
+D18F: 20 97 C7                     jsr     <a href="#SymLC797">LC797</a>
+D192: 90 03                        bcc     <a href="#Symcmdq">cmdq</a>
+D194: 20 9D C7                     jsr     <a href="#SymLC79D">LC79D</a>
+D197: 18           <span id="Symcmdq">cmdq</span>            clc
 D198: B0                           DFB     $B0
-D199: 38                           DFB     $38
-D19A: FA                           DFB     $FA
-D19B: 20                           DFB     $20
-D19C: A0                           DFB     $A0
-D19D: D1                           DFB     $D1
-D19E: 80                           DFB     $80
-D19F: A8                           DFB     $A8
+D199: 38           <span id="Symcmdt">cmdt</span>            sec
+D19A: FA                           plx
+D19B: 20 A0 D1                     jsr     <a href="#Symsetterm">setterm</a>
+D19E: 80 A8                        bra     <a href="#Symcdone2">cdone2</a>
 
-D1A0: BD B8 03     <span id="SymLD1A0">LD1A0</span>           lda     $03B8,X
+D1A0: BD B8 03     <span id="Symsetterm">setterm</span>         lda     $03B8,X
 D1A3: 89 40                        bit     #$40
-D1A5: 90 12                        bcc     <a href="#SymLD1B9">LD1B9</a>
-D1A7: D0 20                        bne     <a href="#SymLD1C9">LD1C9</a>
+D1A5: 90 12                        bcc     <a href="#Symstclr">stclr</a>
+D1A7: D0 20                        bne     <a href="#Symstwasok">stwasok</a>
 D1A9: E4 39                        cpx     $39
-D1AB: D0 47                        bne     <a href="#SymLD1F4">LD1F4</a>
+D1AB: D0 47                        bne     <a href="#Symstrts">strts</a>
 D1AD: 09 40                        ora     #$40
-D1AF: AC 79 06                     ldy     $0679
-D1B2: 8C 7A 06                     sty     $067A
+D1AF: AC 79 06                     ldy     <a href="#Symoldcur">oldcur</a>
+D1B2: 8C 7A 06                     sty     <a href="#Symoldcur2">oldcur2</a>
 D1B5: A0 DF                        ldy     #$DF
-D1B7: 80 07                        bra     <a href="#SymLD1C0">LD1C0</a>
+D1B7: 80 07                        bra     <a href="#Symstset">stset</a>
 
-D1B9: F0 0E        <span id="SymLD1B9">LD1B9</span>           beq     <a href="#SymLD1C9">LD1C9</a>
+D1B9: F0 0E        <span id="Symstclr">stclr</span>           beq     <a href="#Symstwasok">stwasok</a>
 D1BB: 29 BF                        and     #$BF
-D1BD: AC 7A 06                     ldy     $067A
-D1C0: 9D B8 03     <span id="SymLD1C0">LD1C0</span>           sta     $03B8,X
-D1C3: 8C 79 06                     sty     $0679
-D1C6: 8C FB 07                     sty     $07FB
-D1C9: BC 42 C1     <span id="SymLD1C9">LD1C9</span>           ldy     <a href="#SymLC141">LC141</a>+1,X
+D1BD: AC 7A 06                     ldy     <a href="#Symoldcur2">oldcur2</a>
+D1C0: 9D B8 03     <span id="Symstset">stset</span>           sta     $03B8,X
+D1C3: 8C 79 06                     sty     <a href="#Symoldcur">oldcur</a>
+D1C6: 8C FB 07                     sty     <a href="#Symcursor">cursor</a>
+D1C9: BC 42 C1     <span id="Symstwasok">stwasok</span>         ldy     <a href="#SymLC141">LC141</a>+1,X
 D1CC: 58                           cli
 D1CD: 08                           php
 D1CE: 78                           sei
-D1CF: B9 FA BF                     lda     <a href="#Symaddrh">addrh</a>,Y
+D1CF: B9 FA BF                     lda     <a href="#Symscomd">scomd</a>,Y
 D1D2: 09 02                        ora     #$02
-D1D4: 90 02                        bcc     <a href="#SymLD1D8">LD1D8</a>
+D1D4: 90 02                        bcc     <a href="#Symcmdt2">cmdt2</a>
 D1D6: 29 FD                        and     #$FD
-D1D8: 99 FA BF     <span id="SymLD1D8">LD1D8</span>           sta     <a href="#Symaddrh">addrh</a>,Y
+D1D8: 99 FA BF     <span id="Symcmdt2">cmdt2</span>           sta     <a href="#Symscomd">scomd</a>,Y
 D1DB: A9 00                        lda     #$00
 D1DD: 6A                           ror     A
-D1DE: 8D FA 05                     sta     $05FA
-D1E1: 10 07                        bpl     <a href="#SymLD1EA">LD1EA</a>
-D1E3: 9C 7C 05                     stz     $057C
-D1E6: 9C 7C 06                     stz     $067C
+D1DE: 8D FA 05                     sta     <a href="#Symtyphed">typhed</a>
+D1E1: 10 07                        bpl     <a href="#Symcmdt3">cmdt3</a>
+D1E3: 9C 7C 05                     stz     <a href="#Symtwser">twser</a>
+D1E6: 9C 7C 06                     stz     <a href="#Symtrser">trser</a>
 D1E9: 8A                           txa
-D1EA: 8D FC 04     <span id="SymLD1EA">LD1EA</span>           sta     $04FC
+D1EA: 8D FC 04     <span id="Symcmdt3">cmdt3</span>           sta     <a href="#Symaciabuf">aciabuf</a>
 D1ED: 28                           plp
-D1EE: 8E FC 05                     stx     $05FC
-D1F1: 8E FF 06                     stx     $06FF
-D1F4: 60           <span id="SymLD1F4">LD1F4</span>           rts
+D1EE: 8E FC 05     <span id="Symflush">flush</span>           stx     <a href="#Symtwkey">twkey</a>
+D1F1: 8E FF 06                     stx     <a href="#Symtrkey">trkey</a>
+D1F4: 60           <span id="Symstrts">strts</span>           rts
 
-D1F5: 38 38 38 2E+                 ASC     ‘888..OKJ’
+D1F5: 38           <span id="Symcmdtable">cmdtable</span>        DFB     $38
+D1F6: 38                           DFB     $38
+D1F7: 38                           DFB     $38
+D1F8: 2E                           DFB     $2E
+D1F9: 2E                           DFB     $2E
+D1FA: 4F                           DFB     $4F
+D1FB: 4B                           DFB     $4B
+D1FC: 4A                           DFB     $4A
 D1FD: 96                           DFB     $96
 D1FE: 87                           DFB     $87
 D1FF: 6B                           DFB     $6B
 D200: 98                           DFB     $98
 D201: 25                           DFB     $25
-D202: 7F                           DFB     $7F
-D203: BF                           DFB     $BF
-D204: BF                           DFB     $BF
-D205: 7F                           DFB     $7F
-D206: FF                           DFB     $FF
-D207: DF DF EF EF+                 ASC     “__ooww”
-D20D: 80                           DFB     $80
-D20E: 00                           DFB     $00
-D20F: 40                           DFB     $40
-D210: 00                           DFB     $00
-D211: 00                           DFB     $00
-D212: 20                           DFB     $20
-D213: 00                           DFB     $00
-D214: 00                           DFB     $00
-D215: 10                           DFB     $10
-D216: 00                           DFB     $00
-D217: 08                           DFB     $08
-D218: 49 4B 4C 4E+                 ASC     ‘IKLN’,$0D,‘BDPQRSTZLXFMC’
-D22A: AD                           DFB     $AD
-D22B: 13                           DFB     $13
-D22C: C0                           DFB     $C0
-D22D: 0A                           DFB     $0A
-D22E: AD                           DFB     $AD
-D22F: 18                           DFB     $18
-D230: C0                           DFB     $C0
-D231: 08                           DFB     $08
-D232: 8D                           DFB     $8D
-D233: 00                           DFB     $00
-D234: C0                           DFB     $C0
-D235: 8D                           DFB     $8D
-D236: 03                           DFB     $03
-D237: C0                           DFB     $C0
-D238: B9                           DFB     $B9
-D239: 78                           DFB     $78
-D23A: 04                           DFB     $04
-D23B: 28                           DFB     $28
-D23C: B0                           DFB     $B0
-D23D: 03                           DFB     $03
-D23E: 8D                           DFB     $8D
-D23F: 02                           DFB     $02
-D240: C0                           DFB     $C0
-D241: 10                           DFB     $10
-D242: 03                           DFB     $03
-D243: 8D                           DFB     $8D
-D244: 01                           DFB     $01
-D245: C0                           DFB     $C0
-D246: 60                           DFB     $60
+D202: 7F BF BF 7F+ <span id="SymLD202">LD202</span>           HEX     $7F,$BF,$BF,$7F,$FF,$DF,$DF,$EF
+                                    +      $EF,$F7,$F7
+D20D: 80 00 40 00+ <span id="SymLD20D">LD20D</span>           HEX     $80,$00,$40,$00,$00,$20,$00,$00
+                                    +      $10,$00,$08
+D218: 49 4B 4C 4E  <span id="Symcmdlist">cmdlist</span>         ASC     ‘IKLN’
+D21C: 0D                           DFB     $0D
+D21D: 42 44 50 51+                 ASC     ‘BDPQRSTZ’
+D225: 4C 58 46 4D+ <span id="Symcmd2list">cmd2list</span>        ASC     ‘LXFMC’
+
+D22A: AD 13 C0     <span id="Symr_getalt">r_getalt</span>        lda     <a href="#SymLC000">LC000</a>+19
+D22D: 0A                           asl     A
+D22E: AD 18 C0                     lda     <a href="#Symvblint">vblint</a>-1
+D231: 08                           php
+D232: 8D 00 C0                     sta     <a href="#SymLC000">LC000</a>
+D235: 8D 03 C0                     sta     <a href="#SymLC000">LC000</a>+3
+D238: B9 78 04                     lda     <a href="#Symnumbanks">numbanks</a>,Y
+D23B: 28                           plp
+D23C: B0 03                        bcs     <a href="#SymLD241">LD241</a>
+D23E: 8D 02 C0                     sta     <a href="#SymLC000">LC000</a>+2
+D241: 10 03        <span id="SymLD241">LD241</span>           bpl     <a href="#SymLD246">LD246</a>
+D243: 8D 01 C0                     sta     <a href="#SymLC000">LC000</a>+1
+D246: 60           <span id="SymLD246">LD246</span>           rts
+
 D247: 03                           DFB     $03
 D248: 07                           DFB     $07
 D249: 00 00 00 00+                 DS      439,$00
@@ -3695,7 +3580,7 @@ D60A: 9E 7D 05                     stz     $057D,X
 D60D: A9 FF                        lda     #$FF
 D60F: 9D 7D 06                     sta     $067D,X
 D612: A9 03                        lda     #$03
-D614: 9D 7D 07                     sta     $077D,X
+D614: 9D 7D 07                     sta     <a href="#Symnumber">number</a>-1,X
 D617: A2 00                        ldx     #$00
 D619: 88                           dey
 D61A: 10 EB                        bpl     <a href="#Symxrloop">xrloop</a>
@@ -3718,7 +3603,7 @@ D635: 58                           cli
 D636: 69 55        <span id="Symxsoff">xsoff</span>           adc     #$55
 D638: 08           <span id="Symsetiou">setiou</span>          php
 D639: 78                           sei
-D63A: 8E FF 07                     stx     <a href="#Symbootbuf">bootbuf</a>-1
+D63A: 8E FF 07                     stx     <a href="#Symthbuf">thbuf</a>-1
 D63D: 8D 79 C0                     sta     <a href="#Symmoubut">moubut</a>+22
 D640: A2 08                        ldx     #$08
 D642: CA           <span id="SymLD642">LD642</span>           dex
@@ -3764,7 +3649,7 @@ D679: A9 20        <span id="SymLD679">LD679</span>           lda     #$20
 D67B: 1C 7F 07                     trb     $077F
 D67E: 2D 7F 06                     and     $067F
 D681: 1C 7F 06                     trb     $067F
-D684: 2C FF 07                     bit     <a href="#Symbootbuf">bootbuf</a>-1
+D684: 2C FF 07                     bit     <a href="#Symthbuf">thbuf</a>-1
 D687: 30 13                        bmi     <a href="#SymLD69C">LD69C</a>
 D689: 2C 63 C0                     bit     <a href="#Symmoubut">moubut</a>
 D68C: 30 02                        bmi     <a href="#SymLD690">LD690</a>
@@ -4010,7 +3895,7 @@ D901: F0 04                        beq     <a href="#Symbtnodos">btnodos</a>
 D903: C9 4C                        cmp     #$4C
 D905: D0 20                        bne     <a href="#Symdospatch">dospatch</a>
 D907: 9C 01 08     <span id="Symbtnodos">btnodos</span>         stz     $0801
-D90A: B9 B8 06                     lda     $06B8,Y
+D90A: B9 B8 06                     lda     <a href="#Symflags">flags</a>,Y
 D90D: C9 A5                        cmp     #$A5
 D90F: D0 11                        bne     <a href="#Symbtfail">btfail</a>
 D911: A0 03                        ldy     #$03
@@ -4101,24 +3986,24 @@ D992: 4C 1F D8                     jmp     <a href="#Symexec2">exec2</a>
                    * Inputs: Y = mslot X = devno                                                  *
                    ********************************************************************************
 D995: A9 00        <span id="Symtestsize">testsize</span>        lda     #$00
-D997: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X
-D99A: 9D F9 BF                     sta     <a href="#Symaddrm">addrm</a>,X
+D997: 9D F8 BF                     sta     <a href="#Symsdata">sdata</a>,X
+D99A: 9D F9 BF                     sta     <a href="#Symsstat">sstat</a>,X
 D99D: A9 10                        lda     #$10
 D99F: 38                           sec
 D9A0: E9 01        <span id="Symtsloop">tsloop</span>          sbc     #$01
-D9A2: 9D FA BF                     sta     <a href="#Symaddrh">addrh</a>,X
-D9A5: BD FB BF                     lda     <a href="#Symdata">data</a>,X
+D9A2: 9D FA BF                     sta     <a href="#Symscomd">scomd</a>,X
+D9A5: BD FB BF                     lda     <a href="#Symscntl">scntl</a>,X
 D9A8: 48                           pha
-D9A9: DE F8 BF                     dec     <a href="#Symaddrl">addrl</a>,X
+D9A9: DE F8 BF                     dec     <a href="#Symsdata">sdata</a>,X
 D9AC: A9 A5                        lda     #$A5
-D9AE: 9D FB BF                     sta     <a href="#Symdata">data</a>,X
-D9B1: DE F8 BF                     dec     <a href="#Symaddrl">addrl</a>,X
-D9B4: 5D FB BF                     eor     <a href="#Symdata">data</a>,X
-D9B7: DE F8 BF                     dec     <a href="#Symaddrl">addrl</a>,X
+D9AE: 9D FB BF                     sta     <a href="#Symscntl">scntl</a>,X
+D9B1: DE F8 BF                     dec     <a href="#Symsdata">sdata</a>,X
+D9B4: 5D FB BF                     eor     <a href="#Symscntl">scntl</a>,X
+D9B7: DE F8 BF                     dec     <a href="#Symsdata">sdata</a>,X
 D9BA: C9 01                        cmp     #$01
 D9BC: 68                           pla
-D9BD: 9D FB BF                     sta     <a href="#Symdata">data</a>,X
-D9C0: BD FA BF                     lda     <a href="#Symaddrh">addrh</a>,X
+D9BD: 9D FB BF                     sta     <a href="#Symscntl">scntl</a>,X
+D9C0: BD FA BF                     lda     <a href="#Symscomd">scomd</a>,X
 D9C3: 29 0F                        and     #$0F
 D9C5: F0 04                        beq     <a href="#Symtsnoram">tsnoram</a>
 D9C7: B0 D7                        bcs     <a href="#Symtsloop">tsloop</a>
@@ -4142,9 +4027,9 @@ D9D3: AC F8 07     <span id="Symsl_format">sl_format</span>       ldy     <a hre
                    ; beq fmtdone
                    ; sta powerup, y
 D9D6: A9 A5                        lda     #$A5
-D9D8: D9 B8 06                     cmp     $06B8,Y
+D9D8: D9 B8 06                     cmp     <a href="#Symflags">flags</a>,Y
 D9DB: F0 2B                        beq     <a href="#Symfmtdone">fmtdone</a>
-D9DD: 99 B8 06                     sta     $06B8,Y
+D9DD: 99 B8 06                     sta     <a href="#Symflags">flags</a>,Y
                    ; If all screen holes spaces, someone might have cleared
                    ; the screen wrong so we won't reformat
 D9E0: C9 05        <span id="Symfmnosp">fmnosp</span>          cmp     #$05
@@ -4160,7 +4045,7 @@ D9F2: A0 FF                        ldy     #$FF
 D9F4: 20 39 DA                     jsr     <a href="#Symmakecat">makecat</a>
 D9F7: A9 01                        lda     #$01
 D9F9: A0 20        <span id="Symfmpmap1">fmpmap1</span>         ldy     #$20
-D9FB: 9D FB BF     <span id="Symfmpmap2">fmpmap2</span>         sta     <a href="#Symdata">data</a>,X
+D9FB: 9D FB BF     <span id="Symfmpmap2">fmpmap2</span>         sta     <a href="#Symscntl">scntl</a>,X
 D9FE: 09 FF                        ora     #$FF
 DA00: 88                           dey
 DA01: D0 F8                        bne     <a href="#Symfmpmap2">fmpmap2</a>
@@ -4177,19 +4062,19 @@ DA0E: 60                           rts
 DA0F: A0 2C        <span id="Symfmdos">fmdos</span>           ldy     #$2C
 DA11: 20 39 DA                     jsr     <a href="#Symmakecat">makecat</a>
 DA14: A9 44                        lda     #$44
-DA16: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X
+DA16: 9D F8 BF                     sta     <a href="#Symsdata">sdata</a>,X
 DA19: AD 78 04                     lda     <a href="#Symnumbanks">numbanks</a>
 DA1C: A0 72                        ldy     #$72
 DA1E: C9 04                        cmp     #$04
 DA20: 90 02                        bcc     <a href="#Symfmddmap">fmddmap</a>
 DA22: A0 BA                        ldy     #$BA
-DA24: BD F8 BF     <span id="Symfmddmap">fmddmap</span>         lda     <a href="#Symaddrl">addrl</a>,X
+DA24: BD F8 BF     <span id="Symfmddmap">fmddmap</span>         lda     <a href="#Symsdata">sdata</a>,X
 DA27: C9 7C                        cmp     #$7C
 DA29: D0 05                        bne     <a href="#Symfmdok">fmdok</a>
 DA2B: A9 7E                        lda     #$7E
-DA2D: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X
+DA2D: 9D F8 BF                     sta     <a href="#Symsdata">sdata</a>,X
 DA30: A9 FF        <span id="Symfmdok">fmdok</span>           lda     #$FF
-DA32: 9D FB BF                     sta     <a href="#Symdata">data</a>,X
+DA32: 9D FB BF                     sta     <a href="#Symscntl">scntl</a>,X
 DA35: 88                           dey
 DA36: D0 EC                        bne     <a href="#Symfmddmap">fmddmap</a>
 DA38: 60                           rts
@@ -4200,15 +4085,15 @@ DA38: 60                           rts
                    *                                                                              *
                    ********************************************************************************
 DA39: A9 00        <span id="Symmakecat">makecat</span>         lda     #$00
-DA3B: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X
-DA3E: 9D F9 BF                     sta     <a href="#Symaddrm">addrm</a>,X
-DA41: 9D FA BF                     sta     <a href="#Symaddrh">addrh</a>,X
-DA44: 9D FB BF     <span id="Symmcboot">mcboot</span>          sta     <a href="#Symdata">data</a>,X
-DA47: BD F9 BF                     lda     <a href="#Symaddrm">addrm</a>,X
+DA3B: 9D F8 BF                     sta     <a href="#Symsdata">sdata</a>,X
+DA3E: 9D F9 BF                     sta     <a href="#Symsstat">sstat</a>,X
+DA41: 9D FA BF                     sta     <a href="#Symscomd">scomd</a>,X
+DA44: 9D FB BF     <span id="Symmcboot">mcboot</span>          sta     <a href="#Symscntl">scntl</a>,X
+DA47: BD F9 BF                     lda     <a href="#Symsstat">sstat</a>,X
 DA4A: 29 F0                        and     #$F0
 DA4C: F0 F6                        beq     <a href="#Symmcboot">mcboot</a>
 DA4E: A9 04                        lda     #$04
-DA50: 9D F9 BF                     sta     <a href="#Symaddrm">addrm</a>,X
+DA50: 9D F9 BF                     sta     <a href="#Symsstat">sstat</a>,X
 DA53: C8           <span id="Symmcbyte">mcbyte</span>          iny
 DA54: B9 A7 DA                     lda     <a href="#Symprocat">procat</a>,Y
 DA57: C9 FD                        cmp     #$FD
@@ -4223,7 +4108,7 @@ DA68: C9 AA        <span id="Symmcntsz">mcntsz</span>          cmp     #$AA
 DA6A: D0 05                        bne     <a href="#Symmcntnm">mcntnm</a>
 DA6C: AD F8 07                     lda     <a href="#SymMSlot">MSlot</a>
 DA6F: 49 F0                        eor     #$F0
-DA71: 9D FB BF     <span id="Symmcntnm">mcntnm</span>          sta     <a href="#Symdata">data</a>,X
+DA71: 9D FB BF     <span id="Symmcntnm">mcntnm</span>          sta     <a href="#Symscntl">scntl</a>,X
 DA74: 4C 53 DA                     jmp     <a href="#Symmcbyte">mcbyte</a>
 
 DA77: C8           <span id="Symmc0">mc0</span>             iny
@@ -4231,23 +4116,23 @@ DA78: B9 A7 DA                     lda     <a href="#Symprocat">procat</a>,Y
 DA7B: F0 11                        beq     <a href="#Symmcadd">mcadd</a>
 DA7D: 48           <span id="Symmcfe">mcfe</span>            pha
 DA7E: A9 00                        lda     #$00
-DA80: 9D FB BF                     sta     <a href="#Symdata">data</a>,X
+DA80: 9D FB BF                     sta     <a href="#Symscntl">scntl</a>,X
 DA83: 68                           pla
 DA84: 38                           sec
 DA85: E9 01                        sbc     #$01
 DA87: D0 F4                        bne     <a href="#Symmcfe">mcfe</a>
 DA89: F0 C8                        beq     <a href="#Symmcbyte">mcbyte</a>
 
-DA8B: 9D FB BF     <span id="Symmcadd2">mcadd2</span>          sta     <a href="#Symdata">data</a>,X
-DA8E: DD F8 BF     <span id="Symmcadd">mcadd</span>           cmp     <a href="#Symaddrl">addrl</a>,X
+DA8B: 9D FB BF     <span id="Symmcadd2">mcadd2</span>          sta     <a href="#Symscntl">scntl</a>,X
+DA8E: DD F8 BF     <span id="Symmcadd">mcadd</span>           cmp     <a href="#Symsdata">sdata</a>,X
 DA91: D0 F8                        bne     <a href="#Symmcadd2">mcadd2</a>
 DA93: C8                           iny
 DA94: B9 A7 DA                     lda     <a href="#Symprocat">procat</a>,Y
 DA97: F0 0D                        beq     <a href="#Symmcdone">mcdone</a>
-DA99: 9D F9 BF                     sta     <a href="#Symaddrm">addrm</a>,X
+DA99: 9D F9 BF                     sta     <a href="#Symsstat">sstat</a>,X
 DA9C: C8                           iny
 DA9D: B9 A7 DA                     lda     <a href="#Symprocat">procat</a>,Y
-DAA0: 9D FA BF                     sta     <a href="#Symaddrh">addrh</a>,X
+DAA0: 9D FA BF                     sta     <a href="#Symscomd">scomd</a>,X
 DAA3: 4C 53 DA                     jmp     <a href="#Symmcbyte">mcbyte</a>
 
 DAA6: 60           <span id="Symmcdone">mcdone</span>          rts
@@ -4986,7 +4871,7 @@ FFFF: C7                           DFB     $C7
 <div id="footer">
     <hr/>
     <p>HTML generated by <a href="https://6502bench.com/">6502bench SourceGen</a> v1.8.4
-    on 2023/03/05 <!--21:32:43 -06:00--></p>
+    on 2023/03/08 <!--14:22:51 -06:00--></p>
     <p>Expression style: Merlin</p>
     <!-- parameters: cols=16,8,18,100;extraCols=Address,Bytes;byteSpc=True;commaBulk=True;nonuPfx=':';varPfx=']';labelBrk=False;notes=True;gfx=True;opWrap=32 -->
 </div>
