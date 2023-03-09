@@ -18,11 +18,30 @@
 "SmartPlpHandling":false,
 "SmartPlbHandling":true},
 
-"PlatformSymbolFileIdentifiers":["PROJ:slinky equates.sym65",
-"PROJ:slinky protocol converter equates.sym65",
-"PROJ:slinky serial equates.sym65"],
+"PlatformSymbolFileIdentifiers":["PROJ:slinky protocol converter equates.sym65",
+"PROJ:slinky serial equates.sym65",
+"PROJ:slinky equates.sym65",
+"RT:Apple/Cxxx-IO.sym65",
+"PROJ:mouse equates.sym65"],
 "ExtensionScriptFileIdentifiers":[],
 "ProjectSyms":{
+"basl":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"basl",
+"Value":40,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "cmdcr":{
 "DataDescriptor":{
 "Length":1,
@@ -142,6 +161,57 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"inent":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"inent",
+"Value":5,
+"Source":"Project",
+"Type":"Constant",
+"LabelAnno":"None"},
+
+"kswh":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"kswh",
+"Value":57,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"kswl":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"kswl",
+"Value":56,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "start25":{
 "DataDescriptor":{
 "Length":1,
@@ -155,6 +225,23 @@
 "MultiMask":null,
 "Label":"start25",
 "Value":52339,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"vfactv":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"vfactv",
+"Value":1659,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"}}},
@@ -286,6 +373,16 @@
 "Hint":"Code"},
 
 {
+"Low":4399,
+"High":4399,
+"Hint":"Code"},
+
+{
+"Low":4408,
+"High":4408,
+"Hint":"InlineData"},
+
+{
 "Low":4409,
 "High":4409,
 "Hint":"Code"},
@@ -303,6 +400,11 @@
 {
 "Low":4432,
 "High":4432,
+"Hint":"Code"},
+
+{
+"Low":4449,
+"High":4449,
 "Hint":"Code"},
 
 {
@@ -943,6 +1045,95 @@
 "4388":"we\u0027re done here",
 "4390":"Zero escape character",
 "4391":"And the width",
+"4400":"Get number inputted",
+"4403":"skip if 0",
+"4405":"Update printer width",
+"4408":"BEQ opcode to skip next byte (the PLY)",
+"4413":"Mask off bit we\u0027ll change",
+"4416":"Change it",
+"4419":"Back it goes",
+"4422":"Put slot back in x",
+"4423":"(via acc)",
+"4424":"Good byte",
+"4427":"Make y point to command reg",
+"4428":"Mask off high three bits",
+"4430":"C=1 means high 3 bits",
+"4431":"BCC opcode to skip next byte",
+"4432":"mask off lower 4 bits F0 = BNE",
+"4434":"F= will skip this if cmdp or cmdd",
+"4435":"mask off bits being changed",
+"4438":"Save it",
+"4442":"Get inputed number",
+"4445":"Only lower nibble valid",
+"4447":"If C=1 shift tto upper 3 bits",
+"4454":"Get the rest of the bits",
+"4457":"Put them in the ACIA",
+"4458":"increment puts em away where they go.",
+"4460":"Transmit a break",
+"4463":"Save current ACIA state",
+"4464":"Do the break",
+"4469":"For 233 ms",
+"4471":"Wait 1 ms",
+"4473":"((12*82)+11)+2+3=1000us",
+"4488":"Reset the ACIA",
+"4491":"Check if video firmware active",
+"4494":"Save it in C",
+"4495":"assume video firmware active",
+"4498":"branch if good guesser...",
+"4500":"Reset the hooks",
+"4503":"Quit terminal mode",
+"4504":"BCS to skip next byte",
+"4505":"Into terminal mode",
+"4506":"Recover X",
+"4512":"Get terminal mode status",
+"4515":"Z=1 if not in terminal mode",
+"4517":"Branch if clearing terminal mode",
+"4519":"Was already set",
+"4521":"Are we in the input hooks",
+"4523":"Leaves C=1 if =",
+"4525":"Set term mode bit",
+"4527":"Save what was in oldcur",
+"4533":"Get new cursor value",
+"4537":"Branch if already clear",
+"4539":"Clear the bit",
+"4541":"Restore the cursor",
+"4547":"Save cursor to be restored after command",
+"4556":"want to leave with interrupts active",
+"4558":"but off while we twittle bits",
+"4562":"disable receiver interrupts if",
+"4564":" not in terminal mode",
+"4566":"enable when in terminal mode",
+"4573":"set kbd interrupts according to t-mode",
+"4577":"branch if leaving terminal mode",
+"4579":" and ser buf...",
+"4585":"use x to enable serial buffering",
+"4589":"restore carry, enable interrupts.",
+"4590":"Flush the type ahead buffer",
+"4636":"cr (part of cmdlist)",
+"4645":"2-chr commands\u0027 first char",
+"4650":"save state of aux memory",
+"4654":"and the 80STORE switch",
+"4658":"no 80STORE to get page 1",
+"4661":"pop in the other half of RAM",
+"4664":"read the desired byte",
+"4667":"and restore memory",
+"5120":"fix flashing char",
+"5122":"fix input entry",
+"5126":"test the keyboard",
+"5130":"save kbd and int stat for later",
+"5131":"no interrupts while getting position",
+"5135":"move x position into the buffer",
+"5143":"convert it",
+"5168":"restore int \u0026 kbd status",
+"5171":"x=0 from last div10",
+"5175":"x = eol",
+"5177":"cr",
+"5182":"goback",
+"5185":"is it a negative number?",
+"5189":"form two\u0027s complement",
+"5191":"c = 1 from compare",
+"5193":"save it",
+"5220":"16 bits and first time to do nothing",
 "6475":"switch rom bank and return",
 "6962":"move the code"},
 
@@ -1056,7 +1247,7 @@
 "BackgroundColor":0},
 
 "5220":{
-"Text":"divide BINH,L by 10 and leave remainder in a",
+"Text":"\r\ndivide BINH,L by 10 and leave remainder in a\r\n                     ;#16+1",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -2562,8 +2753,32 @@
 "BackgroundColor":0},
 
 "4379":{
-"Text":"defidx2-$C1",
+"Text":"                      ;defidx2-$C1",
 "BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4512":{
+"Text":"                                      ;set/clear terminal mode",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4597":{
+"Text":"                      ;command routines\u0027  lo bytes",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4610":{
+"Text":"masks for:              I   K   L   N   CR  XE  XD  FE  FD  ME  MD",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"4650":{
+"Text":"R_GETALT is the same as GETALT in main rom.  Only the\r\nlocation is different.",
+"BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0}},
 
@@ -2634,8 +2849,32 @@
 "MaxWidth":80,
 "BackgroundColor":0},
 
-"4399":{
-"Text":"pickup\r\npick up from here\r\npdf page 488 (123)",
+"5122":{
+"Text":"not sure where this was defined!",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5132":{
+"Text":"TODO, make sure this got resolved",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5202":{
+"Text":"binl? I have it as $2020",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5205":{
+"Text":"binh? I have it as $2021",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5220":{
+"Text":"pickup here\r\npdf pg 490 (547)",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -5353,6 +5592,48 @@
 "Value":53802,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4610":{
+"Label":"mask1",
+"Value":53762,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4621":{
+"Label":"mask2",
+"Value":53773,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1943":{
+"Label":"swsthk2",
+"Value":51095,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1949":{
+"Label":"swzzqt2",
+"Value":51101,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4673":{
+"Label":"r_getalt1",
+"Value":53825,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"4678":{
+"Label":"r_getalt2",
+"Value":53830,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -7992,6 +8273,182 @@
 "SubFormat":"Decimal",
 "SymbolRef":null},
 
+"4469":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4471":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4491":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"vfactv",
+"Part":"Low"}},
+
+"4512":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4521":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"kswh",
+"Part":"Low"}},
+
+"4533":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"termcur",
+"Part":"Low"}},
+
+"4544":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sermode",
+"Part":"Low"}},
+
+"4553":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"devno2",
+"Part":"Low"}},
+
+"4562":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4571":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"4597":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdi",
+"Part":"Low"}},
+
+"4598":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdk",
+"Part":"Low"}},
+
+"4599":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdl",
+"Part":"Low"}},
+
+"4600":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdn",
+"Part":"Low"}},
+
+"4601":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdcr",
+"Part":"Low"}},
+
+"4602":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdb",
+"Part":"Low"}},
+
+"4603":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdd",
+"Part":"Low"}},
+
+"4604":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdp",
+"Part":"Low"}},
+
+"4605":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdq",
+"Part":"Low"}},
+
+"4606":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdr",
+"Part":"Low"}},
+
+"4607":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmds",
+"Part":"Low"}},
+
+"4608":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdt",
+"Part":"Low"}},
+
+"4609":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cmdz",
+"Part":"Low"}},
+
 "4610":{
 "Length":11,
 "Format":"Dense",
@@ -8014,6 +8471,186 @@
 "Length":8,
 "Format":"StringGeneric",
 "SubFormat":"Ascii",
+"SymbolRef":null},
+
+"4650":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDRAMRD",
+"Part":"Low"}},
+
+"4654":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RD80COL",
+"Part":"Low"}},
+
+"4658":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"CLR80COL",
+"Part":"Low"}},
+
+"4661":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDCARDRAM",
+"Part":"Low"}},
+
+"4664":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"4670":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDMAINRAM",
+"Part":"Low"}},
+
+"4675":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SET80COL",
+"Part":"Low"}},
+
+"5120":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"basl",
+"Part":"Low"}},
+
+"5122":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"inent",
+"Part":"Low"}},
+
+"5124":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"kswl",
+"Part":"Low"}},
+
+"5126":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"KBD",
+"Part":"Low"}},
+
+"5132":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"x_mread",
+"Part":"Low"}},
+
+"5135":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5146":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5163":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5165":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5169":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5175":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5191":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5197":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5208":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Ascii",
+"SymbolRef":null},
+
+"5212":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Ascii",
+"SymbolRef":null},
+
+"5215":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Ascii",
+"SymbolRef":null},
+
+"5217":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"inbuf",
+"Part":"Low"}},
+
+"5220":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5222":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
 "SymbolRef":null},
 
 "6823":{
