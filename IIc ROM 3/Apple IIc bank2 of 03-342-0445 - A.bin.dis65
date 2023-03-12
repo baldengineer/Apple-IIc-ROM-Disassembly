@@ -424,6 +424,20 @@
 "IsRelative":false},
 
 {
+"Offset":256,
+"Addr":49408,
+"Length":590,
+"PreLabel":"mouse_ser_ints",
+"IsRelative":true},
+
+{
+"Offset":846,
+"Addr":49998,
+"Length":120,
+"PreLabel":"aux_ram_support",
+"IsRelative":true},
+
+{
 "Offset":966,
 "Addr":50118,
 "Length":5178,
@@ -740,6 +754,36 @@
 "256":"Entry point if X \u0026 Y set up",
 "258":"Clear status bits",
 "261":"Assume interrupt not handled",
+"262":"VBL interrupt?",
+"267":"Enable iou access \u0026 clear VBL interrupt",
+"270":"Should we leave vbl active?",
+"277":"Disable VBL",
+"285":"VBL bit in arm isn\u0027t used",
+"290":"Didn\u0027t move",
+"292":"Button pressed?",
+"297":"Clear the button bit",
+"299":"Which bits were set in the mode",
+"308":"C=1 if int passes to user",
+"310":"If D7 = 1, user better handle it",
+"315":"Mouser interrupt?",
+"321":"If not return with C from vbl",
+"323":"Get X1 in A",
+"326":"X movement?",
+"331":"Get Y1 into A",
+"332":"Complement direction",
+"342":"A = current low byte",
+"345":"which way?",
+"347":"Move left",
+"363":"Borrow from high byte?",
+"373":"At high bound?",
+"386":"Move right",
+"401":"Should we enable VBL?",
+"406":"Branch if not",
+"411":"Enable VBL int",
+"417":"Mark that we moved",
+"427":"C=1 iff any bits were 1",
+"429":"If not handled, try acia",
+"431":"Back we go",
 "753":"Get data and check xon, etc.",
 "1261":"branch forever",
 "1263":"MMUIDX",
@@ -1583,8 +1627,8 @@
 "BackgroundColor":0},
 
 "256":{
-"Text":"Mouse \u0026 acia interrupt handler\r\n\r\nMOUSERINT - Montior\u0027s interrupt handler\r\n\r\nReturns C = 0 if interrupt handled\r\nIf not mouse interrupt, goes to aciaint\r\nNew in this rom:\r\nIf D7 of moumode = 1, mouse X and Y interrupts are not processed\r\nand are passed on to the user.\r\n",
-"BoxMode":false,
+"Text":"\r\nMouse interrupt handler\r\n\r\nMOUSERINT - Montior\u0027s interrupt handler\r\n\r\nReturns C = 0 if interrupt handled\r\nIf not mouse interrupt, goes to aciaint\r\nNew in this rom:\r\nIf D7 of moumode = 1, mouse X and Y interrupts are not processed\r\nand are passed on to the user.\r\n\r\n\r\n",
+"BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
 
@@ -3326,6 +3370,30 @@
 "Text":"\r\n",
 "BoxMode":false,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"261":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"310":{
+"Text":"Check \u0026 update mouse movement",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"411":{
+"Text":"                      ;iou+3",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"434":{
+"Text":"pickup here, pdf 474/96\r\nmassive blog of text. so many texts.",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -3337,6 +3405,12 @@
 
 "1315":{
 "Text":"jumps from c880 if not a boot\r\nTHIS IS NOT THE BOOTCODE WE ARE LOOKING FOR!",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-5383962},
+
+"1716":{
+"Text":"pickup pdf 484/115.\r\nmay need to start higher, but definitely need to do this block.",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-5383962},
@@ -3427,12 +3501,6 @@
 
 "5235":{
 "Text":"binh? I have it as $2021",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":0},
-
-"5262":{
-"Text":"pickup here, ugh\r\npick-up\r\npick up\r\npdf pager 490 (128)",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -6646,12 +6714,136 @@
 "Label":"moustat",
 "Part":"Low"}},
 
+"267":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"iouenbl",
+"Part":"Low"}},
+
 "270":{
 "Length":2,
 "Format":"NumericLE",
 "SubFormat":"Symbol",
 "SymbolRef":{
 "Label":"vblmode",
+"Part":"Low"}},
+
+"280":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"movmode",
+"Part":"Low"}},
+
+"282":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ioudsbl",
+"Part":"Low"}},
+
+"290":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"vblmode",
+"Part":"Low"}},
+
+"297":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"butmode",
+"Part":"Low"}},
+
+"315":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"mouxint",
+"Part":"Low"}},
+
+"318":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"mouyint",
+"Part":"Low"}},
+
+"324":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"326":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"mouxint",
+"Part":"Low"}},
+
+"336":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"mouyint",
+"Part":"Low"}},
+
+"394":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"398":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"mouclr",
+"Part":"Low"}},
+
+"401":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"movmode",
+"Part":"Low"}},
+
+"408":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"iouenbl",
+"Part":"Low"}},
+
+"414":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ioudsbl",
+"Part":"Low"}},
+
+"417":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"movarm",
 "Part":"Low"}},
 
 "2185":{

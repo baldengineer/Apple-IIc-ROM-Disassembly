@@ -208,8 +208,11 @@
                    <span id="SymRDCARDRAM">RDCARDRAM</span>       EQU     $C003             ;W if 80STORE off: read aux mem $0200-BFFF
                    <span id="SymRDRAMRD">RDRAMRD</span>         EQU     $C013             ;R bit 7: reading from aux/alt 48K?
                    <span id="SymRDRAMWRT">RDRAMWRT</span>        EQU     $C014             ;R bit 7: writing to aux/alt 48K?
+                   <span id="Symmouxint">mouxint</span>         EQU     $C015             ;D7 = x interrupt
+                   <span id="Symmouyint">mouyint</span>         EQU     $C017             ;D7 = y interrupt
                    <span id="SymRD80COL">RD80COL</span>         EQU     $C018             ;R bit 7: 80STORE is on?
                    <span id="Symrdvblbar">rdvblbar</span>        EQU     $C019
+                   <span id="Symmouclr">mouclr</span>          EQU     $C048             ;Clear mouse interrupt
                    <span id="SymTXTCLR">TXTCLR</span>          EQU     $C050             ;RW display graphics
                    <span id="Symiou">iou</span>             EQU     $C058             ;IOU interrupt switches
                    <span id="SymSETAN3">SETAN3</span>          EQU     $C05E             ;RW annunciator 3 off
@@ -244,91 +247,103 @@ C08C: 00           <span id="Syml6clr">l6clr</span>           DS      1
 C08D: 00           <span id="Syml6set">l6set</span>           DS      1
 C08E: 00           <span id="Syml7clr">l7clr</span>           DS      1
 C08F: 00 00 00 00+ <span id="Syml7set">l7set</span>           DS      113
-                   ; Mouse &amp; acia interrupt handler
-                   ; 
-                   ; MOUSERINT - Montior's interrupt handler
-                   ; 
-                   ; Returns C = 0 if interrupt handled
-                   ; If not mouse interrupt, goes to aciaint
-                   ; New in this rom:
-                   ; If D7 of moumode = 1, mouse X and Y interrupts are not processed
-                   ; and are passed on to the user.
+                   ********************************************************************************
+                   *                                                                              *
+                   * Mouse interrupt handler                                                      *
+                   *                                                                              *
+                   * MOUSERINT - Montior's interrupt handler                                      *
+                   *                                                                              *
+                   * Returns C = 0 if interrupt handled                                           *
+                   * If not mouse interrupt, goes to aciaint                                      *
+                   * New in this rom:                                                             *
+                   * If D7 of moumode = 1, mouse X and Y interrupts are not processed             *
+                   * and are passed on to the user.                                               *
+                   *                                                                              *
+                   *                                                                              *
+                   ********************************************************************************
+C100:              mouse_ser_ints
+                                   ORG     *+$0000
 C100: A9 0E        <span id="Symmouseint">mouseint</span>        lda     #$0E              ;Entry point if X &amp; Y set up
 C102: 1C 7F 07                     trb     <a href="#Symmoustat">moustat</a>           ;Clear status bits
+                   ; 
 C105: 38                           sec                       ;Assume interrupt not handled
                    ; Check for vertical blanking interrupt
-C106: AD 19 C0                     lda     <a href="#Symvblint">vblint</a>
+C106: AD 19 C0                     lda     <a href="#Symvblint">vblint</a>            ;VBL interrupt?
 C109: 10 2B                        bpl     <a href="#Symchkmou">chkmou</a>
-C10B: 8D 79 C0                     sta     <a href="#Symmoubut">moubut</a>+22
-C10E: A9 0C                        lda     #<a href="#Symvblmode">vblmode</a>
+C10B: 8D 79 C0                     sta     <a href="#Symiouenbl">iouenbl</a>           ;Enable iou access &amp; clear VBL interrupt
+C10E: A9 0C                        lda     #<a href="#Symvblmode">vblmode</a>          ;Should we leave vbl active?
 C110: 2C FF 07                     bit     <a href="#Symmoumode">moumode</a>
 C113: D0 03                        bne     <a href="#Symcvnovbl">cvnovbl</a>
-C115: 8D 5A C0                     sta     <a href="#Symiou_p_2">iou_p_2</a>
-C118: 09 02        <span id="Symcvnovbl">cvnovbl</span>         ora     #$02
-C11A: 8D 78 C0                     sta     <a href="#Symmoubut">moubut</a>+21
-C11D: 2C 7F 06                     bit     <a href="#Symmouarm">mouarm</a>
+C115: 8D 5A C0                     sta     <a href="#Symiou_p_2">iou_p_2</a>           ;Disable VBL
+C118: 09 02        <span id="Symcvnovbl">cvnovbl</span>         ora     #<a href="#Symmovmode">movmode</a>
+C11A: 8D 78 C0                     sta     <a href="#Symioudsbl">ioudsbl</a>
+C11D: 2C 7F 06                     bit     <a href="#Symmouarm">mouarm</a>            ;VBL bit in arm isn't used
 C120: D0 02                        bne     <a href="#Symcvmoved">cvmoved</a>
-C122: A9 0C                        lda     #$0C
-C124: 2C 63 C0     <span id="Symcvmoved">cvmoved</span>         bit     <a href="#Symmoubut">moubut</a>
+C122: A9 0C                        lda     #<a href="#Symvblmode">vblmode</a>          ;Didn't move
+C124: 2C 63 C0     <span id="Symcvmoved">cvmoved</span>         bit     <a href="#Symmoubut">moubut</a>            ;Button pressed?
 C127: 10 02                        bpl     <a href="#Symcvbut">cvbut</a>
-C129: 49 04                        eor     #$04
-C12B: 2D FF 07     <span id="Symcvbut">cvbut</span>           and     <a href="#Symmoumode">moumode</a>
+C129: 49 04                        eor     #<a href="#Symbutmode">butmode</a>          ;Clear the button bit
+C12B: 2D FF 07     <span id="Symcvbut">cvbut</span>           and     <a href="#Symmoumode">moumode</a>           ;Which bits were set in the mode
 C12E: 0C 7F 07                     tsb     <a href="#Symmoustat">moustat</a>
 C131: 1C 7F 06                     trb     <a href="#Symmouarm">mouarm</a>
-C134: 69 FE                        adc     #$FE
-C136: AD FF 07     <span id="Symchkmou">chkmou</span>          lda     <a href="#Symmoumode">moumode</a>
+C134: 69 FE                        adc     #$FE              ;C=1 if int passes to user
+                   ; Check &amp; update mouse movement
+C136: AD FF 07     <span id="Symchkmou">chkmou</span>          lda     <a href="#Symmoumode">moumode</a>           ;If D7 = 1, user better handle it
 C139: 30 72                        bmi     <a href="#Symxmdone">xmdone</a>
-C13B: AD 15 C0                     lda     <a href="#SymLC000">LC000</a>+21
-C13E: 0D 17 C0                     ora     <a href="#SymLC000">LC000</a>+23
-C141: 10 6A        <span id="SymLC141">LC141</span>           bpl     <a href="#Symxmdone">xmdone</a>
-C143: 8A                           txa
-C144: A2 00                        ldx     #$00
-C146: 2C 15 C0                     bit     <a href="#SymLC000">LC000</a>+21
+C13B: AD 15 C0                     lda     <a href="#Symmouxint">mouxint</a>           ;Mouser interrupt?
+C13E: 0D 17 C0                     ora     <a href="#Symmouyint">mouyint</a>
+C141: 10 6A        <span id="SymLC141">LC141</span>           bpl     <a href="#Symxmdone">xmdone</a>            ;If not return with C from vbl
+C143: 8A                           txa                       ;Get X1 in A
+C144: A2 00                        ldx     #0
+C146: 2C 15 C0                     bit     <a href="#Symmouxint">mouxint</a>           ;X movement?
 C149: 30 0A                        bmi     <a href="#Symcmxmov">cmxmov</a>
-C14B: 98           <span id="Symcmloop">cmloop</span>          tya
-C14C: 49 80                        eor     #$80
+C14B: 98           <span id="Symcmloop">cmloop</span>          tya                       ;Get Y1 into A
+C14C: 49 80                        eor     #$80              ;Complement direction
 C14E: A2 80                        ldx     #$80
-C150: 2C 17 C0                     bit     <a href="#SymLC000">LC000</a>+23
+C150: 2C 17 C0                     bit     <a href="#Symmouyint">mouyint</a>
 C153: 10 39                        bpl     <a href="#Symcmnoy">cmnoy</a>
 C155: 0A           <span id="Symcmxmov">cmxmov</span>          asl     A
-C156: BD 7F 04                     lda     <a href="#Symmouxl">mouxl</a>,X
-C159: B0 1A                        bcs     <a href="#Symcmrght">cmrght</a>
-C15B: DD 7D 04                     cmp     <a href="#Symminxl">minxl</a>,X
+C156: BD 7F 04                     lda     <a href="#Symmouxl">mouxl</a>,X           ;A = current low byte
+C159: B0 1A                        bcs     <a href="#Symcmrght">cmrght</a>            ;which way?
+C15B: DD 7D 04                     cmp     <a href="#Symminxl">minxl</a>,X           ;Move left
 C15E: D0 08                        bne     <a href="#Symcmlok">cmlok</a>
 C160: BD 7F 05                     lda     <a href="#Symmouxh">mouxh</a>,X
 C163: DD 7D 05                     cmp     <a href="#Symminxh">minxh</a>,X
 C166: F0 22                        beq     <a href="#Symcmnoint">cmnoint</a>
 C168: BD 7F 04     <span id="Symcmlok">cmlok</span>           lda     <a href="#Symmouxl">mouxl</a>,X
-C16B: D0 03                        bne     <a href="#Symcmnt0">cmnt0</a>
+C16B: D0 03                        bne     <a href="#Symcmnt0">cmnt0</a>             ;Borrow from high byte?
 C16D: DE 7F 05                     dec     <a href="#Symmouxh">mouxh</a>,X
 C170: DE 7F 04     <span id="Symcmnt0">cmnt0</span>           dec     <a href="#Symmouxl">mouxl</a>,X
 C173: 80 15                        bra     <a href="#Symcmnoint">cmnoint</a>
 
-C175: DD 7D 06     <span id="Symcmrght">cmrght</span>          cmp     <a href="#Symmaxxl">maxxl</a>,X
+C175: DD 7D 06     <span id="Symcmrght">cmrght</span>          cmp     <a href="#Symmaxxl">maxxl</a>,X           ;At high bound?
 C178: D0 08                        bne     <a href="#Symcmrok">cmrok</a>
 C17A: BD 7F 05                     lda     <a href="#Symmouxh">mouxh</a>,X
 C17D: DD 7D 07                     cmp     <a href="#Symmaxxh">maxxh</a>,X
 C180: F0 08                        beq     <a href="#Symcmnoint">cmnoint</a>
-C182: FE 7F 04     <span id="Symcmrok">cmrok</span>           inc     <a href="#Symmouxl">mouxl</a>,X
+C182: FE 7F 04     <span id="Symcmrok">cmrok</span>           inc     <a href="#Symmouxl">mouxl</a>,X           ;Move right
 C185: D0 03                        bne     <a href="#Symcmnoint">cmnoint</a>
 C187: FE 7F 05                     inc     <a href="#Symmouxh">mouxh</a>,X
-C18A: E0 00        <span id="Symcmnoint">cmnoint</span>         cpx     #$00
+C18A: E0 00        <span id="Symcmnoint">cmnoint</span>         cpx     #0
 C18C: F0 BD                        beq     <a href="#Symcmloop">cmloop</a>
-C18E: 8D 48 C0     <span id="Symcmnoy">cmnoy</span>           sta     <a href="#Symvblint">vblint</a>+47
-C191: A9 02                        lda     #$02
+C18E: 8D 48 C0     <span id="Symcmnoy">cmnoy</span>           sta     <a href="#Symmouclr">mouclr</a>
+C191: A9 02                        lda     #<a href="#Symmovmode">movmode</a>          ;Should we enable VBL?
 C193: 2D FF 07                     and     <a href="#Symmoumode">moumode</a>
-C196: F0 09                        beq     <a href="#Symcmnovbl">cmnovbl</a>
-C198: 8D 79 C0                     sta     <a href="#Symmoubut">moubut</a>+22
-C19B: 8D 5B C0                     sta     <a href="#Symiou_p_2">iou_p_2</a>+1
-C19E: 8D 78 C0                     sta     <a href="#Symmoubut">moubut</a>+21
-C1A1: 09 20        <span id="Symcmnovbl">cmnovbl</span>         ora     #$20
+C196: F0 09                        beq     <a href="#Symcmnovbl">cmnovbl</a>           ;Branch if not
+C198: 8D 79 C0                     sta     <a href="#Symiouenbl">iouenbl</a>
+                   ;                       ;iou+3
+C19B: 8D 5B C0                     sta     <a href="#Symiou_p_2">iou_p_2</a>+1         ;Enable VBL int
+C19E: 8D 78 C0                     sta     <a href="#Symioudsbl">ioudsbl</a>
+C1A1: 09 20        <span id="Symcmnovbl">cmnovbl</span>         ora     #<a href="#Symmovarm">movarm</a>           ;Mark that we moved
 C1A3: 0C 7F 06                     tsb     <a href="#Symmouarm">mouarm</a>
 C1A6: A9 0E                        lda     #$0E
 C1A8: 2D 7F 07                     and     <a href="#Symmoustat">moustat</a>
-C1AB: 69 FE                        adc     #$FE
-C1AD: B0 05        <span id="Symxmdone">xmdone</span>          bcs     <a href="#Symaciaint">aciaint</a>
-C1AF: 4C 84 C7                     jmp     <a href="#Symswrts2">swrts2</a>
+C1AB: 69 FE                        adc     #$FE              ;C=1 iff any bits were 1
+C1AD: B0 05        <span id="Symxmdone">xmdone</span>          bcs     <a href="#Symaciaint">aciaint</a>           ;If not handled, try acia
+C1AF: 4C 84 C7                     jmp     <a href="#Symswrts2">swrts2</a>            ;Back we go
 
+                   ; pickup here, pdf 474/96
+                   ; massive blog of text. so many texts.
 C1B2: 38           <span id="Symnotacia">notacia</span>         sec
 C1B3: 60           <span id="Symacdone">acdone</span>          rts
 
@@ -571,6 +586,7 @@ C348: 38           <span id="Symgdok">gdok</span>            sec
 C349: 9D B8 06                     sta     <a href="#Symflags">flags</a>,X
 C34C: 68                           pla
 C34D: 60                           rts
+                                   ADREND  ↑ $C100
 
                    ********************************************************************************
                    * Name    : MOVEAUX                                                            *
@@ -585,6 +601,8 @@ C34D: 60                           rts
                    * Volatile: Nothing                                                            *
                    * Calls   : Nothing                                                            *
                    ********************************************************************************
+C34E:              aux_ram_support
+                                   ORG     *+$0000
 C34E: 48           <span id="Symmoveaux">moveaux</span>         pha
 C34F: AD 13 C0                     lda     <a href="#SymLC000">LC000</a>+19
 C352: 48                           pha
@@ -673,6 +691,7 @@ C3C2: C0                           DFB     $C0
 C3C3: 4C                           DFB     $4C
 C3C4: EB                           DFB     $EB
 C3C5: C7                           DFB     $C7
+                                   ADREND  ↑ $C34E
 
                    ********************************************************************************
                    * banger                                                                       *
@@ -1056,6 +1075,8 @@ C6B1: 38                           DFB     $38
 C6B2: 3F                           DFB     $3F
 C6B3: 42                           DFB     $42
 
+                   <span style="background-color: #89acb7">NOTE: pickup pdf 484/115.</span>
+                   <span style="background-color: #89acb7">may need to start higher, but definitely need to do this block.</span>
                    ********************************************************************************
                    *                                                                              *
                    * Start of //c diagnostics                                                     *
@@ -3510,10 +3531,6 @@ D489: 68           <span id="Symhddone">hddone</span>          pla              
 D48A: 99 00 02                     sta     <a href="#Syminbuf">inbuf</a>,Y
 D48D: 60                           rts
 
-                   NOTE: pickup here, ugh
-                   pick-up
-                   pick up
-                   pdf pager 490 (128)
                    ********************************************************************************
                    * These routines test all 128K ram.  All combinations of                       *
                    * switches applicable to the //c are tested and verified.                      *
@@ -4897,7 +4914,7 @@ FFFE: 8E C7                        DW      <a href="#Symswirq2">swirq2</a>      
 <div id="footer">
     <hr/>
     <p>HTML generated by <a href="https://6502bench.com/">6502bench SourceGen</a> v1.8.4
-    on 2023/03/12 <!--17:20:40 -05:00--></p>
+    on 2023/03/12 <!--18:21:44 -05:00--></p>
     <p>Expression style: Merlin</p>
     <!-- parameters: cols=16,8,18,100;extraCols=Address,Bytes;byteSpc=True;commaBulk=True;nonuPfx=':';varPfx=']';labelBrk=False;notes=True;gfx=True;opWrap=32 -->
 </div>
