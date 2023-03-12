@@ -81,6 +81,7 @@
                    <span id="Symbasl">basl</span>            EQU     $28
                    <span id="SymNoDrive">NoDrive</span>         EQU     $28
                    <span id="SymWriteProt">WriteProt</span>       EQU     $2B
+                   <span id="Symdoscat">doscat</span>          EQU     $2C               ;$DAD4-DAA7-7
                    <span id="SymOffline">Offline</span>         EQU     $2F
                    <span id="Symkswl">kswl</span>            EQU     $38
                    <span id="Symkswh">kswh</span>            EQU     $39
@@ -130,12 +131,17 @@
                    <span id="Symtbodd">tbodd</span>           EQU     $59
                    <span id="SymUnit">Unit</span>            EQU     $5A
                    <span id="SymWpacketType">WpacketType</span>     EQU     $5B
+                   <span id="Sympascat">pascat</span>          EQU     $78               ;$DB20-cattbl-1
                    <span id="Symcmdmark">cmdmark</span>         EQU     $80               ;Command packet identifier
                    <span id="SymCommReset">CommReset</span>       EQU     $80
                    <span id="Symdoserr">doserr</span>          EQU     $80               ;DOS I/O error
                    <span id="Symdatamark">datamark</span>        EQU     $82               ;Data packet identifier
+                   <span id="Symnameflag">nameflag</span>        EQU     $AA               ;value unused in any catalog
                    <span id="Sympacketbeg">packetbeg</span>       EQU     $C3               ;Mark at beginning of packet
                    <span id="Sympacketend">packetend</span>       EQU     $C8               ;End of packet mark
+                   <span id="Symsizeflg">sizeflg</span>         EQU     $FC               ;block size flag
+                   <span id="Symzers">zers</span>            EQU     $FD               ;catalog skip flag
+                   <span id="Symskpfe">skpfe</span>           EQU     $FE               ;skip FE bytes in catalog
                    <span id="SymPBCValue">PBCValue</span>        EQU     $FF               ;Powerup Byte Complement Value
                    <span id="Syminbuf">inbuf</span>           EQU     $0200             ;Input buffer
                    <span id="Symastat">astat</span>           EQU     $0438             ;Acia status from int AF9 &amp; 4FA
@@ -181,12 +187,12 @@
                    <span id="Symsl_devno">sl_devno</span>        EQU     $0778             ;slot * 16 ($n0) + $88
                    <span id="Symmaxxh">maxxh</span>           EQU     $077D
                    <span id="Symmoustat">moustat</span>         EQU     $077F             ;Mouse status
-                   <span id="SymACTV_PERIP_SLOT">ACTV_PERIP_SLOT</span> EQU     $07F8             ;slot num ($Cn) of active peripheral card
                    <span id="Symsl_mslot">sl_mslot</span>        EQU     $07F8             ;$C0 + slot ($Cn)
                    <span id="Symcursor">cursor</span>          EQU     $07FB
                    <span id="Symmoumode">moumode</span>         EQU     $07FF             ;Mouse mode
                    <span id="Symbootbuf">bootbuf</span>         EQU     $0800             ;into $800
                    <span id="SymRC1">RC1</span>             EQU     $0BB8             ;Send a command pack 3000 times (3 sec)
+                   <span id="Symdiagstart">diagstart</span>       EQU     $1FFF             ;diagtest-1 ;start location of diagnostics
                    <span id="Symdiagdest">diagdest</span>        EQU     $2000             ;location of diagnostics in ram
                    <span id="Symdosinit">dosinit</span>         EQU     $9D1E             ;DOS init vector use addr-1
                    <span id="Symrwts">rwts</span>            EQU     $BD00             ;RWTS entry point
@@ -209,10 +215,13 @@
                    <span id="SymSETAN3">SETAN3</span>          EQU     $C05E             ;RW annunciator 3 off
                    <span id="Symioudsbl">ioudsbl</span>         EQU     $C078             ;Disable iou access
                    <span id="Symiouenbl">iouenbl</span>         EQU     $C079             ;Enable iou access
+                   <span id="Symswreset2">swreset2</span>        EQU     $C788             ;NMI and RESET
+                   <span id="Symswirq2">swirq2</span>          EQU     $C78E             ;INT
                    <span id="Symcmdcr">cmdcr</span>           EQU     $D12F             ;same as cmdn
                    <span id="Symcmdn">cmdn</span>            EQU     $D12F             ;same as cmdcr
                    <span id="Symcmdk">cmdk</span>            EQU     $D139             ;same as cmdi and cmdl
                    <span id="Symcmdl">cmdl</span>            EQU     $D139             ;same as cmdi and cmdk
+                   <span id="Symdiagcode">diagcode</span>        EQU     $DC00             ;location of diagnostic code
 
                                    ORG     $C000
 C000: 00 00 00 00+ <span id="SymLC000">LC000</span>           DS      25
@@ -4048,10 +4057,6 @@ D9CE: 4A                           lsr     A                 ;Sizetemp = &lt; bl
 D9CF: 8D 78 04                     sta     <a href="#Symsizetemp">sizetemp</a>
 D9D2: 60                           rts
 
-                   NOTE: pick-up
-                   pickup
-                   somewhere around here
-                   pdf 497 / 139 (review previous blocks)
                    ********************************************************************************
                    * Routines for making a directory on the disk                                  *
                    * *******************************************                                  *
@@ -4082,7 +4087,8 @@ D9E9: AD 00 BF                     lda     <a href="#Symproflag">proflag</a>    
 D9EC: F0 1B                        beq     <a href="#Symfmpas">fmpas</a>
 D9EE: C9 4C                        cmp     #$4C              ;JMP if ProDOS
 D9F0: D0 1D                        bne     <a href="#Symfmdos">fmdos</a>
-D9F2: A0 FF                        ldy     #&lt;<a href="#Symprocat">procat</a>+88       ;Do a ProDOS catalog
+                   NOTE: Why isn't procat $FF?
+D9F2: A0 FF                        ldy     #&lt;<a href="#Symcattbl">cattbl</a>+88       ;Do a ProDOS catalog
 D9F4: 20 39 DA                     jsr     <a href="#Symmakecat">makecat</a>           ;Put in all but bit map
 D9F7: A9 01                        lda     #$01              ;Blocks 0-6 busy
 D9F9: A0 20        <span id="Symfmpmap1">fmpmap1</span>         ldy     #32               ;32 FFs for each $100 blocks
@@ -4090,30 +4096,31 @@ D9FB: 9D FB BF     <span id="Symfmpmap2">fmpmap2</span>         sta     <a href=
 D9FE: 09 FF                        ora     #$FF              ;Rest are FFs
 DA00: 88                           dey
 DA01: D0 F8                        bne     <a href="#Symfmpmap2">fmpmap2</a>
-DA03: CE 78 04                     dec     <a href="#Symminl">minl</a>
+DA03: CE 78 04                     dec     <a href="#Symsizetemp">sizetemp</a>
 DA06: D0 F1                        bne     <a href="#Symfmpmap1">fmpmap1</a>
 DA08: 60           <span id="Symfmtdone">fmtdone</span>         rts
 
+                   NOTE: why is pascat wrong?
                    ; Do a pascal catalog
-DA09: A0 78        <span id="Symfmpas">fmpas</span>           ldy     #$78
+DA09: A0 78        <span id="Symfmpas">fmpas</span>           ldy     #<a href="#Sympascat">pascat</a>
 DA0B: 20 39 DA                     jsr     <a href="#Symmakecat">makecat</a>
 DA0E: 60                           rts
 
                    ; Do a DOS catalog
-DA0F: A0 2C        <span id="Symfmdos">fmdos</span>           ldy     #$2C
+DA0F: A0 2C        <span id="Symfmdos">fmdos</span>           ldy     #<a href="#Symdoscat">doscat</a>
 DA11: 20 39 DA                     jsr     <a href="#Symmakecat">makecat</a>
-DA14: A9 44                        lda     #$44
-DA16: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X
-DA19: AD 78 04                     lda     <a href="#Symminl">minl</a>
-DA1C: A0 72                        ldy     #$72
-DA1E: C9 04                        cmp     #$04
+DA14: A9 44                        lda     #$44              ;Point to track 3 bitmap
+DA16: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X           ;Addrl = 0 from makecat
+DA19: AD 78 04                     lda     <a href="#Symsizetemp">sizetemp</a>          ;Check if at least 512K
+DA1C: A0 72                        ldy     #114              ;Assume 256K
+DA1E: C9 04                        cmp     #4                ;At leaste $400 blocks
 DA20: 90 02                        bcc     <a href="#Symfmddmap">fmddmap</a>
-DA22: A0 BA                        ldy     #$BA
-DA24: BD F8 BF     <span id="Symfmddmap">fmddmap</span>         lda     <a href="#Symaddrl">addrl</a>,X
-DA27: C9 7C                        cmp     #$7C
+DA22: A0 BA                        ldy     #186              ;Make 400K volume
+DA24: BD F8 BF     <span id="Symfmddmap">fmddmap</span>         lda     <a href="#Symaddrl">addrl</a>,X           ;Don't free catalog
+DA27: C9 7C                        cmp     #$7C              ;Track $11?
 DA29: D0 05                        bne     <a href="#Symfmdok">fmdok</a>
-DA2B: A9 7E                        lda     #$7E
-DA2D: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X
+DA2B: A9 7E                        lda     #$7E              ;Skip first 16 sectors
+DA2D: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X           ;7C -&gt; 7E so no false carry
 DA30: A9 FF        <span id="Symfmdok">fmdok</span>           lda     #$FF
 DA32: 9D FB BF                     sta     <a href="#Symdata">data</a>,X
 DA35: 88                           dey
@@ -4125,60 +4132,61 @@ DA38: 60                           rts
                    *  Inputs: X = index into catalog tables                                       *
                    *                                                                              *
                    ********************************************************************************
-DA39: A9 00        <span id="Symmakecat">makecat</span>         lda     #$00
-DA3B: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X
+DA39: A9 00        <span id="Symmakecat">makecat</span>         lda     #0                ;First bank is 0
+DA3B: 9D F8 BF                     sta     <a href="#Symaddrl">addrl</a>,X           ;Start at 0
 DA3E: 9D F9 BF                     sta     <a href="#Symaddrm">addrm</a>,X
 DA41: 9D FA BF                     sta     <a href="#Symaddrh">addrh</a>,X
-DA44: 9D FB BF     <span id="Symmcboot">mcboot</span>          sta     <a href="#Symdata">data</a>,X
-DA47: BD F9 BF                     lda     <a href="#Symaddrm">addrm</a>,X
-DA4A: 29 F0                        and     #$F0
-DA4C: F0 F6                        beq     <a href="#Symmcboot">mcboot</a>
-DA4E: A9 04                        lda     #$04
+DA44: 9D FB BF     <span id="Symmcboot">mcboot</span>          sta     <a href="#Symdata">data</a>,X            ;Zero out first 8 blocks
+DA47: BD F9 BF                     lda     <a href="#Symaddrm">addrm</a>,X           ;Loop until $400
+DA4A: 29 F0                        and     #$F0              ;A = 0 if &lt; $1000
+DA4C: F0 F6                        beq     <a href="#Symmcboot">mcboot</a>            ;Leaves us pointing at $1000 (block 8)
+DA4E: A9 04                        lda     #4                ;Point to $400 (block 2)
 DA50: 9D F9 BF                     sta     <a href="#Symaddrm">addrm</a>,X
 DA53: C8           <span id="Symmcbyte">mcbyte</span>          iny
-DA54: B9 A7 DA                     lda     <a href="#Symprocat">procat</a>,Y
-DA57: C9 FD                        cmp     #$FD
+DA54: B9 A7 DA                     lda     <a href="#Symcattbl">cattbl</a>,Y          ;Get next byte from the table
+DA57: C9 FD                        cmp     #<a href="#Symzers">zers</a>             ;Zeros flag?
 DA59: F0 1C                        beq     <a href="#Symmc0">mc0</a>
-DA5B: C9 FE                        cmp     #$FE
+DA5B: C9 FE                        cmp     #<a href="#Symskpfe">skpfe</a>            ;$FE zeros?
 DA5D: F0 1E                        beq     <a href="#Symmcfe">mcfe</a>
-DA5F: C9 FC                        cmp     #$FC
+DA5F: C9 FC                        cmp     #<a href="#Symsizeflg">sizeflg</a>          ;Block size?
 DA61: D0 05                        bne     <a href="#Symmcntsz">mcntsz</a>
-DA63: AD 78 04                     lda     <a href="#Symminl">minl</a>
-DA66: D0 09                        bne     <a href="#Symmcntnm">mcntnm</a>
-DA68: C9 AA        <span id="Symmcntsz">mcntsz</span>          cmp     #$AA
+DA63: AD 78 04                     lda     <a href="#Symsizetemp">sizetemp</a>          ;Get &lt;# blocks
+DA66: D0 09                        bne     <a href="#Symmcntnm">mcntnm</a>            ;better not be 0
+DA68: C9 AA        <span id="Symmcntsz">mcntsz</span>          cmp     #<a href="#Symnameflag">nameflag</a>         ;Slot # for name?
 DA6A: D0 05                        bne     <a href="#Symmcntnm">mcntnm</a>
-DA6C: AD F8 07                     lda     <a href="#SymACTV_PERIP_SLOT">ACTV_PERIP_SLOT</a>
-DA6F: 49 F0                        eor     #$F0
-DA71: 9D FB BF     <span id="Symmcntnm">mcntnm</span>          sta     <a href="#Symdata">data</a>,X
-DA74: 4C 53 DA                     jmp     <a href="#Symmcbyte">mcbyte</a>
+DA6C: AD F8 07                     lda     <a href="#Symsl_mslot">sl_mslot</a>          ;Get $Cn
+DA6F: 49 F0                        eor     #$F0              ;$Cn -&gt; $3n
+DA71: 9D FB BF     <span id="Symmcntnm">mcntnm</span>          sta     <a href="#Symdata">data</a>,X            ;Stick byte in catalog
+DA74: 4C 53 DA                     jmp     <a href="#Symmcbyte">mcbyte</a>            ;Go to next byte
 
 DA77: C8           <span id="Symmc0">mc0</span>             iny
-DA78: B9 A7 DA                     lda     <a href="#Symprocat">procat</a>,Y
-DA7B: F0 11                        beq     <a href="#Symmcadd">mcadd</a>
-DA7D: 48           <span id="Symmcfe">mcfe</span>            pha
-DA7E: A9 00                        lda     #$00
+DA78: B9 A7 DA                     lda     <a href="#Symcattbl">cattbl</a>,Y          ;Get # zeros
+DA7B: F0 11                        beq     <a href="#Symmcadd">mcadd</a>             ;If 0, it's an address
+DA7D: 48           <span id="Symmcfe">mcfe</span>            pha                       ;Save count
+DA7E: A9 00                        lda     #0
 DA80: 9D FB BF                     sta     <a href="#Symdata">data</a>,X
 DA83: 68                           pla
 DA84: 38                           sec
-DA85: E9 01                        sbc     #$01
+DA85: E9 01                        sbc     #1
 DA87: D0 F4                        bne     <a href="#Symmcfe">mcfe</a>
-DA89: F0 C8                        beq     <a href="#Symmcbyte">mcbyte</a>
+DA89: F0 C8                        beq     <a href="#Symmcbyte">mcbyte</a>            ;Always taken
 
-DA8B: 9D FB BF     <span id="Symmcadd2">mcadd2</span>          sta     <a href="#Symdata">data</a>,X
-DA8E: DD F8 BF     <span id="Symmcadd">mcadd</span>           cmp     <a href="#Symaddrl">addrl</a>,X
+DA8B: 9D FB BF     <span id="Symmcadd2">mcadd2</span>          sta     <a href="#Symdata">data</a>,X            ;Store a 0
+DA8E: DD F8 BF     <span id="Symmcadd">mcadd</span>           cmp     <a href="#Symaddrl">addrl</a>,X           ;Finish off current page
 DA91: D0 F8                        bne     <a href="#Symmcadd2">mcadd2</a>
 DA93: C8                           iny
-DA94: B9 A7 DA                     lda     <a href="#Symprocat">procat</a>,Y
-DA97: F0 0D                        beq     <a href="#Symmcdone">mcdone</a>
+DA94: B9 A7 DA                     lda     <a href="#Symcattbl">cattbl</a>,Y          ;Get new address
+DA97: F0 0D                        beq     <a href="#Symmcdone">mcdone</a>            ;If 0, all done
 DA99: 9D F9 BF                     sta     <a href="#Symaddrm">addrm</a>,X
 DA9C: C8                           iny
-DA9D: B9 A7 DA                     lda     <a href="#Symprocat">procat</a>,Y
+DA9D: B9 A7 DA                     lda     <a href="#Symcattbl">cattbl</a>,Y
 DAA0: 9D FA BF                     sta     <a href="#Symaddrh">addrh</a>,X
 DAA3: 4C 53 DA                     jmp     <a href="#Symmcbyte">mcbyte</a>
 
 DAA6: 60           <span id="Symmcdone">mcdone</span>          rts
 
-                   NOTE: this section as boat load of dfb, dw, and stuff
+                   NOTE: Original listing formats this table slightly different. But cases it is
+                   "zeros, &lt;value&gt;" or "skpfe,&lt;value&gt;,&lt;value&gt;"
                    ********************************************************************************
                    * The catalog tables                                                           *
                    * These tables contain the catalog info compacted                              *
@@ -4193,155 +4201,136 @@ DAA6: 60           <span id="Symmcdone">mcdone</span>          rts
                    *  nameflg = replace with ascii slot #                                         *
                    *  sizeflg = replace with &lt; block size                                         *
                    ********************************************************************************
-DAA7: 00 00        <span id="Symprocat">procat</span>          DW      $0000
-DAA9: 03 00                        DW      $0003
-DAAB: F4                           DFB     $F4
+DAA7: 00 00        <span id="Symcattbl">cattbl</span>          DW      0                 ;Previous pointer
+DAA9: 03 00                        DW      3                 ;Next block
+DAAB: F4                           DFB     $F4               ;Storage type
                    ; daac, daad, daaf, form asc 'RAM'
-DAAC: 52                           DFB     $52
-DAAD: 41                           DFB     $41
-DAAE: 4D                           DFB     $4D
-DAAF: AA                           DFB     $AA
-DAB0: FD                           DFB     $FD
+DAAC: 52 41 4D                     ASC     ‘RAM’
+DAAF: AA                           DFB     <a href="#Symnameflag">nameflag</a>
+DAB0: FD                           DFB     <a href="#Symzers">zers</a>
 DAB1: 19                           DFB     $19
-DAB2: C3                           DFB     $C3
-DAB3: 27                           DFB     $27
-DAB4: 0D                           DFB     $0D
-DAB5: 00                           DFB     $00
-DAB6: 00                           DFB     $00
-DAB7: 06                           DFB     $06
-DAB8: 00                           DFB     $00
-DAB9: 00                           DFB     $00
-DABA: FC FD D7 FE                  ASC     “|}W~”
-DABE: 02                           DFB     $02
-DABF: 00                           DFB     $00
-DAC0: 04                           DFB     $04
-DAC1: 00                           DFB     $00
-DAC2: FE                           DFB     $FE
-DAC3: FE                           DFB     $FE
-DAC4: 03                           DFB     $03
-DAC5: 00                           DFB     $00
-DAC6: 05                           DFB     $05
-DAC7: 00                           DFB     $00
-DAC8: FE                           DFB     $FE
-DAC9: FE                           DFB     $FE
-DACA: 04                           DFB     $04
-DACB: 00                           DFB     $00
-DACC: 00                           DFB     $00
-DACD: FE                           DFB     $FE
-DACE: FD                           DFB     $FD
-DACF: 00 00 00 00+                 DS      5,$00
-DAD4: FD           <span id="Symdoscat">doscat</span>          DFB     $FD
-DAD5: 00                           DFB     $00
-DAD6: 20                           DFB     $20
-DAD7: 02                           DFB     $02
-DAD8: 02                           DFB     $02
-DAD9: 11                           DFB     $11
-DADA: 0F                           DFB     $0F
-DADB: 04                           DFB     $04
-DADC: 00                           DFB     $00
-DADD: 00                           DFB     $00
-DADE: FB                           DFB     $FB
-DADF: FD                           DFB     $FD
+DAB2: C3 27 0D                     HEX     $C3,$27,$0D
+DAB5: 00 00                        DW      0
+DAB7: 06 00                        DW      6                 ;Bitmap pointer
+DAB9: 00                           DFB     0                 ;Number of blocks
+DABA: FC                           DFB     <a href="#Symsizeflg">sizeflg</a>
+DABB: FD                           DFB     <a href="#Symzers">zers</a>
+DABC: D7                           DFB     $D7
+DABD: FE                           DFB     <a href="#Symskpfe">skpfe</a>
+DABE: 02 00                        DW      2                 ;Block 3 $600
+DAC0: 04 00                        DW      4
+DAC2: FE                           DFB     <a href="#Symskpfe">skpfe</a>
+DAC3: FE                           DFB     <a href="#Symskpfe">skpfe</a>
+DAC4: 03 00                        DW      3                 ;Block 4 $800
+DAC6: 05 00                        DW      5
+DAC8: FE                           DFB     <a href="#Symskpfe">skpfe</a>
+DAC9: FE                           DFB     <a href="#Symskpfe">skpfe</a>
+DACA: 04 00                        DW      4                 ;Block 5 $A00
+DACC: 00                           DFB     $00               ;Get into second page
+DACD: FE                           DFB     <a href="#Symskpfe">skpfe</a>
+DACE: FD                           DFB     <a href="#Symzers">zers</a>              ;All done left at block 6
+DACF: 00 00 00 00+                 HEX     $00,$00,$00,$00,$00
+                   ; 
+DAD4: FD                           DFB     <a href="#Symzers">zers</a>              ;Trk $11 Sec 0 = $022000
+DAD5: 00 20 02                     HEX     $00,$20,$02
+DAD8: 02                           DFB     2                 ;Sec 0 = VTOC
+DAD9: 11 0F                        HEX     $11,$0F           ;Pointer to catalog
+DADB: 04                           DFB     $04               ;Dos release
+DADC: 00 00                        HEX     $00,$00           ;Unused
+DADE: FB                           DFB     $FB               ;Volume number
+DADF: FD                           DFB     <a href="#Symzers">zers</a>
 DAE0: 20                           DFB     $20
-DAE1: 7A                           DFB     $7A
-DAE2: FD                           DFB     $FD
-DAE3: 08                           DFB     $08
-DAE4: FF                           DFB     $FF
-DAE5: FF                           DFB     $FF
-DAE6: FF                           DFB     $FF
-DAE7: FF                           DFB     $FF
-DAE8: 32                           DFB     $32
-DAE9: 20                           DFB     $20
-DAEA: 00                           DFB     $00
-DAEB: 01                           DFB     $01
-DAEC: FD                           DFB     $FD
+DAE1: 7A                           DFB     $7A               ;TS pairs in TS list
+DAE2: FD                           DFB     <a href="#Symzers">zers</a>
+DAE3: 08                           DFB     8
+DAE4: FF FF FF FF                  HEX     $FF,$FF,$FF,$FF   ;Allocation mask
+DAE8: 32                           DFB     $32               ;# Tracks
+DAE9: 20                           DFB     $20               ;# Sectors
+DAEA: 00 01                        DW      $0100             ;# Bytes per sector
+DAEC: FD                           DFB     <a href="#Symzers">zers</a>
 DAED: CB                           DFB     $CB
-DAEE: FE                           DFB     $FE
+                   NOTE: Section down to $DB20 is formatted as:
+                   &lt;byte&gt;,&lt;byte&gt;,skpfe
+DAEE: FE                           DFB     <a href="#Symskpfe">skpfe</a>             ;Next cat sector pointer
 DAEF: 11                           DFB     $11
 DAF0: 01                           DFB     $01
-DAF1: FE                           DFB     $FE
+DAF1: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DAF2: 11                           DFB     $11
 DAF3: 02                           DFB     $02
-DAF4: FE                           DFB     $FE
+DAF4: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DAF5: 11                           DFB     $11
 DAF6: 03                           DFB     $03
-DAF7: FE                           DFB     $FE
+DAF7: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DAF8: 11                           DFB     $11
 DAF9: 04                           DFB     $04
-DAFA: FE                           DFB     $FE
+DAFA: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DAFB: 11                           DFB     $11
 DAFC: 05                           DFB     $05
-DAFD: FE                           DFB     $FE
+DAFD: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DAFE: 11                           DFB     $11
 DAFF: 06                           DFB     $06
-DB00: FE                           DFB     $FE
+DB00: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DB01: 11                           DFB     $11
 DB02: 07                           DFB     $07
-DB03: FE                           DFB     $FE
+DB03: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DB04: 11                           DFB     $11
 DB05: 08                           DFB     $08
-DB06: FE                           DFB     $FE
+DB06: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DB07: 11                           DFB     $11
 DB08: 09                           DFB     $09
-DB09: FE                           DFB     $FE
+DB09: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DB0A: 11                           DFB     $11
 DB0B: 0A                           DFB     $0A
-DB0C: FE                           DFB     $FE
+DB0C: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DB0D: 11                           DFB     $11
 DB0E: 0B                           DFB     $0B
-DB0F: FE                           DFB     $FE
+DB0F: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DB10: 11                           DFB     $11
 DB11: 0C                           DFB     $0C
-DB12: FE                           DFB     $FE
+DB12: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DB13: 11                           DFB     $11
 DB14: 0D                           DFB     $0D
-DB15: FE                           DFB     $FE
+DB15: FE                           DFB     <a href="#Symskpfe">skpfe</a>
 DB16: 11                           DFB     $11
 DB17: 0E                           DFB     $0E
-DB18: FE                           DFB     $FE
-DB19: FD                           DFB     $FD
-DB1A: 00                           DFB     $00
-DB1B: 20                           DFB     $20
-DB1C: 02                           DFB     $02
-DB1D: FD                           DFB     $FD
-DB1E: 00                           DFB     $00
-DB1F: 00                           DFB     $00
-DB20: 00           <span id="Sympascat">pascat</span>          DFB     $00
-DB21: 00                           DFB     $00
+DB18: FE                           DFB     <a href="#Symskpfe">skpfe</a>
+DB19: FD                           DFB     <a href="#Symzers">zers</a>              ;Leave pointing at VTOC
+DB1A: 00 20 02                     HEX     $00,$20,$02
+DB1D: FD                           DFB     <a href="#Symzers">zers</a>              ;All done
+DB1E: 00 00                        HEX     $00,$00
+                   ; 
+DB20: 00 00                        HEX     $00,$00
 DB22: 06                           DFB     $06
-DB23: FD                           DFB     $FD
+DB23: FD                           DFB     <a href="#Symzers">zers</a>
 DB24: 03                           DFB     $03
 DB25: 04                           DFB     $04
-DB26: 52                           DFB     $52
-DB27: 41                           DFB     $41
-DB28: 4D                           DFB     $4D
-DB29: AA                           DFB     $AA
-DB2A: FD                           DFB     $FD
+DB26: 52 41 4D                     ASC     ‘RAM’
+DB29: AA                           DFB     <a href="#Symnameflag">nameflag</a>
+DB2A: FD                           DFB     <a href="#Symzers">zers</a>
 DB2B: 04                           DFB     $04
-DB2C: FC                           DFB     $FC
-DB2D: FD                           DFB     $FD
-DB2E: 00                           DFB     $00
-DB2F: 00                           DFB     $00
+DB2C: FC                           DFB     <a href="#Symsizeflg">sizeflg</a>
+DB2D: FD                           DFB     <a href="#Symzers">zers</a>
+DB2E: 00 00                        HEX     $00,$00
 
                    ********************************************************************************
                    * XDIAGZ - Moves the slinky diagnostic code from $DC00 - $DFFF to              *
                    * main ram starting at $2000 and jumps to $2000                                *
                    ********************************************************************************
-DB30: A2 00        <span id="Symxdiagz">xdiagz</span>          ldx     #$00
-DB32: BD 00 DC     <span id="Symxdloop">xdloop</span>          lda     <a href="#SymLDC00">LDC00</a>,X           ;move the code
+DB30: A2 00        <span id="Symxdiagz">xdiagz</span>          ldx     #0
+DB32: BD 00 DC     <span id="Symxdloop">xdloop</span>          lda     <a href="#Symdiagcode">diagcode</a>,X        ;move the code
 DB35: 9D 00 20                     sta     <a href="#Symdiagdest">diagdest</a>,X
-DB38: BD 00 DD                     lda     <a href="#SymLDD00">LDD00</a>,X
-DB3B: 9D 00 21                     sta     $2100,X
-DB3E: BD 00 DE                     lda     <a href="#SymLDE00">LDE00</a>,X
-DB41: 9D 00 22                     sta     $2200,X
-DB44: BD 00 DF                     lda     <a href="#SymLDF00">LDF00</a>,X
-DB47: 9D 00 23                     sta     $2300,X
+DB38: BD 00 DD                     lda     <a href="#Symdiagcode">diagcode</a>+$100,X
+DB3B: 9D 00 21                     sta     <a href="#Symdiagdest">diagdest</a>+$100,X
+DB3E: BD 00 DE                     lda     <a href="#Symdiagcode">diagcode</a>+$200,X
+DB41: 9D 00 22                     sta     <a href="#Symdiagdest">diagdest</a>+$200,X
+DB44: BD 00 DF                     lda     <a href="#Symdiagcode">diagcode</a>+$300,X
+DB47: 9D 00 23                     sta     <a href="#Symdiagdest">diagdest</a>+$300,X
 DB4A: E8                           inx
 DB4B: D0 E5                        bne     <a href="#Symxdloop">xdloop</a>
-DB4D: AE 78 07                     ldx     <a href="#SymSCRNHOLE6">SCRNHOLE6</a>
-DB50: A9 1F                        lda     #$1F
+DB4D: AE 78 07                     ldx     <a href="#Symsl_devno">sl_devno</a>          ;get device number
+DB50: A9 1F                        lda     #&gt;<a href="#Symdiagstart">diagstart</a>       ;put start address on stack
 DB52: 48                           pha
-DB53: A9 FF                        lda     #$FF
+DB53: A9 FF                        lda     #&lt;<a href="#Symdiagstart">diagstart</a>
 DB55: 48                           pha
                    ********************************************************************************
                    * switch the main rom back in and go to the diagnostics via return             *
@@ -4349,10 +4338,12 @@ DB55: 48                           pha
 DB56: 4C 84 C7                     jmp     <a href="#Symswrts2">swrts2</a>
 
 DB59: 00 00 00 00+                 DS      167,$00
+                   NOTE: DC00: 23FA ds $FFFA-*,$60
+                   lol wut? Vectors at the end, maybe this is unit data from DC00 to FFFA?
                    ********************************************************************************
                    * VECTORS                                                                      *
                    ********************************************************************************
-DC00: A9           <span id="SymLDC00">LDC00</span>           DFB     $A9
+DC00: A9                           DFB     $A9
 DC01: 00                           DFB     $00
 DC02: 85                           DFB     $85
 DC03: 49                           DFB     $49
@@ -4580,10 +4571,7 @@ DCF9: 9D                           DFB     $9D
 DCFA: FB                           DFB     $FB
 DCFB: BF                           DFB     $BF
 DCFC: 9D                           DFB     $9D
-DCFD: FB                           DFB     $FB
-DCFE: BF                           DFB     $BF
-DCFF: BD                           DFB     $BD
-DD00: F8 BF D0 ED  <span id="SymLDD00">LDD00</span>           ASC     “x?Pm”
+DCFD: FB BF BD F8+                 ASC     “{?=x?Pm”
 DD04: 1D                           DFB     $1D
 DD05: F9 BF D0 E8                  ASC     “y?Ph”
 DD09: 20                           DFB     $20
@@ -4771,7 +4759,7 @@ DDFC: 60                           DFB     $60
 DDFD: 18                           DFB     $18
 DDFE: BD                           DFB     $BD
 DDFF: F9                           DFB     $F9
-DE00: BF           <span id="SymLDE00">LDE00</span>           DFB     $BF
+DE00: BF                           DFB     $BF
 DE01: 7D                           DFB     $7D
 DE02: FA                           DFB     $FA
 DE03: BF                           DFB     $BF
@@ -4884,16 +4872,13 @@ DEF6: AA                           DFB     $AA
 DEF7: 55                           DFB     $55
 DEF8: 33                           DFB     $33
 DEF9: 00                           DFB     $00
-DEFA: 52 69 63 68+                 ASC     ‘Rich W’
-DF00: 69 6C 6C 69+ <span id="SymLDF00">LDF00</span>           ASC     ‘illiamscopyright 1986 Apple Co’
-                                    +      ‘mputer Inc.all rights reserved’
+DEFA: 52 69 63 68+                 ASC     ‘Rich Williamscopyright 1986 Ap’
+                                    +      ‘ple Computer Inc.all rights re’
+                                    +      ‘served’
 DF3C: 00 00 00 00+                 DS      8382,$00
-FFFA: 88                           DFB     $88
-FFFB: C7                           DFB     $C7
-FFFC: 88                           DFB     $88
-FFFD: C7                           DFB     $C7
-FFFE: 8E                           DFB     $8E
-FFFF: C7                           DFB     $C7
+FFFA: 88 C7                        DW      <a href="#Symswreset2">swreset2</a>          ;NMI
+FFFC: 88 C7                        DW      <a href="#Symswreset2">swreset2</a>          ;RESET
+FFFE: 8E C7                        DW      <a href="#Symswirq2">swirq2</a>            ;INT
                                    ADREND  ↑ $C000
 </pre>
 
@@ -4912,7 +4897,7 @@ FFFF: C7                           DFB     $C7
 <div id="footer">
     <hr/>
     <p>HTML generated by <a href="https://6502bench.com/">6502bench SourceGen</a> v1.8.4
-    on 2023/03/12 <!--12:22:41 -05:00--></p>
+    on 2023/03/12 <!--17:20:40 -05:00--></p>
     <p>Expression style: Merlin</p>
     <!-- parameters: cols=16,8,18,100;extraCols=Address,Bytes;byteSpc=True;commaBulk=True;nonuPfx=':';varPfx=']';labelBrk=False;notes=True;gfx=True;opWrap=32 -->
 </div>
