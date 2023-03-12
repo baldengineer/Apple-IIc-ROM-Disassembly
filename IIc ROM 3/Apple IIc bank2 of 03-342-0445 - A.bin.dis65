@@ -161,6 +161,23 @@
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
 
+"GLUIDX":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"GLUIDX",
+"Value":17,
+"Source":"Project",
+"Type":"Constant",
+"LabelAnno":"None"},
+
 "inent":{
 "DataDescriptor":{
 "Length":1,
@@ -174,6 +191,23 @@
 "MultiMask":null,
 "Label":"inent",
 "Value":5,
+"Source":"Project",
+"Type":"Constant",
+"LabelAnno":"None"},
+
+"IOUIDX":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"IOUIDX",
+"Value":9,
 "Source":"Project",
 "Type":"Constant",
 "LabelAnno":"None"},
@@ -208,6 +242,57 @@
 "MultiMask":null,
 "Label":"kswl",
 "Value":56,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"MMUIDX":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"MMUIDX",
+"Value":1,
+"Source":"Project",
+"Type":"Constant",
+"LabelAnno":"None"},
+
+"rdvblbar":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"rdvblbar",
+"Value":49177,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"SCREEN":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"SCREEN",
+"Value":1464,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -251,7 +336,14 @@
 "Addr":49152,
 "Length":16384,
 "PreLabel":"",
-"IsRelative":false}],
+"IsRelative":false},
+
+{
+"Offset":966,
+"Addr":50118,
+"Length":5178,
+"PreLabel":"banger_diags",
+"IsRelative":true}],
 "TypeHints":[{
 "Low":0,
 "High":255,
@@ -453,8 +545,28 @@
 "Hint":"Code"},
 
 {
+"Low":5317,
+"High":5317,
+"Hint":"Code"},
+
+{
 "Low":5632,
 "High":5632,
+"Hint":"Code"},
+
+{
+"Low":5736,
+"High":5736,
+"Hint":"Code"},
+
+{
+"Low":5795,
+"High":5795,
+"Hint":"Code"},
+
+{
+"Low":5826,
+"High":5826,
 "Hint":"Code"},
 
 {
@@ -493,6 +605,11 @@
 "Hint":"Code"},
 
 {
+"Low":6250,
+"High":6250,
+"Hint":"Code"},
+
+{
 "Low":6260,
 "High":6260,
 "Hint":"Code"},
@@ -520,6 +637,11 @@
 {
 "Low":6333,
 "High":6333,
+"Hint":"Code"},
+
+{
+"Low":6380,
+"High":6380,
 "Hint":"Code"}],
 "StatusFlagOverrides":{
 },
@@ -1133,8 +1255,169 @@
 "5189":"form two\u0027s complement",
 "5191":"c = 1 from compare",
 "5193":"save it",
+"5202":"store the number to convert",
+"5208":"store the sign in the buffer",
+"5214":"save the sign",
+"5215":"store a comma after the number",
 "5220":"16 bits and first time to do nothing",
+"5224":"c=0 so first ROL leaves a=0",
+"5226":"a \u003e= 10?",
+"5228":"branch if \u003c",
+"5230":"c = 1 from compare and is left set",
+"5241":"make a ascii char",
+"5247":"stop on 0,6,12",
+"5257":"get the sign",
+"5262":"text mode off",
+"5265":"Disable IOU",
+"5268":"Double hires off",
+"5275":"fill zero page with a pattern",
+"5282":"after all bytes filled,",
+"5284":" ACC has original value again.",
+"5285":"so valuescan be tested",
+"5290":"branched if memory failed",
+"5293":"loop until all 256 bytes tested",
+"5295":"change ACC so locations $FF will change",
+"5296":" use RDVBL for a little randomness...",
+"5303":"use a different pattern now",
+"5304":"branch to retest with other value",
+"5306":"branch always",
+"5308":"which bits are bad?",
+"5310":"indicate zero page failure",
+"5314":"Off to the rest",
+"5317":"Get out of the hooks",
+"5320":"get junk off of stack",
+"5632":"Clear status",
+"5639":"Minimum = $0000",
+"5645":"Maximum = $03FF",
+"5660":"Clear the mouse holes",
+"5663":"Faill into SETMOU",
+"5666":"Make sure interrupt vector is right",
+"5669":"Only x preserved by moveirq",
+"5673":"D0 = 1 if mouse active",
+"5674":"D2 = 1 if vbl active",
+"5677":"If \u003e=$10 then invalid mode",
+"5681":"Extract VBL \u0026 Mouse",
+"5683":"Turning it off?",
+"5685":"If not, ints active",
+"5686":"Make iou byte C=0",
+"5689":"Don\u0027t allow ints while iou enabled",
+"5693":"Enable iou access",
+"5699":"Get a bit to check",
+"5700":"No change if C=0",
+"5702":"Set it",
+"5705":"Any bits left in A?",
+"5707":"Turn off iou access",
+"5717":"Point mouse to upper left",
+"5753":"Has mouse moved?",
+"5755":"Clear moved bit in stat",
+"5761":"Clear arm bit",
+"5764":"If D7 = 1 leave butttons alone",
+"5769":"Button pressed?",
+"5776":"Pressed last time?",
+"5791":"Button bits",
+"5795":"1 -\u003e 80",
+"5824":"No error",
+"6153":"save command and hardware index",
+"6156":"clear error flag",
+"6161":"do we need to format?",
+"6164":"get command",
+"6166":"check parameter count",
+"6169":"if negative, no parm check",
+"6175":"all entry points on same page",
+"6177":"skip around the basic patch",
+"6179":"break handler will correct for this",
+"6192":"invalid command",
+"6202":"entry point in this page",
+"6205":"entry point in this page",
+"6208":"entry point in this page",
+"6211":"entry point in this page",
+"6214":"size = # 64K banks / 2",
+"6227":"must be call 0",
+"6229":"branch if bad",
+"6231":"set bytes read count",
+"6240":"save out the 0s",
+"6250":"call 0?",
+"6254":"oops! bad status/control number",
+"6260":"number bytes for call 0",
+"6266":"is it #3?",
+"6268":"branch if bad call",
+"6270":"# bytes for call 3",
+"6282":"move the status info",
+"6290":"get the size",
+"6302":"V = 1 for read",
+"6305":"VNC never taken",
+"6306":"V = 0 for write",
+"6307":"move block \u0026 buffer pointer",
+"6311":"be careful not to step",
+"6313":"on our own toes",
+"6327":"skip past other sev \u0026 clv",
+"6329":"V = 1 for read",
+"6332":"BVC never taken",
+"6334":"convert block into 512 bytes",
+"6344":"if C=1 then bad address",
+"6346":"third byte must b 0",
+"6350":"low byte of address is 0",
+"6352":"count = $200",
+"6358":"fix aux bit in address",
+"6366":"D7 = 1 if aux",
+"6372":"go do read",
+"6383":"#4+$C0",
+"6393":"is it a IN#",
+"6398":"are we in DOS?",
+"6401":"0 = Pascal",
+"6403":"JMP = ProDOS",
+"6405":"go patch DOS",
+"6407":"assume fail",
+"6431":"go read the block and return",
+"6437":"read in block 0 @ $800",
+"6439":"JMP opcode",
+"6446":"make page 3 vector point to us",
+"6449":"Y = Cn",
+"6452":"patch out init command",
+"6462":"pop off return address",
+"6465":"restore language card",
+"6468":"restore real x",
+"6473":"return a control-X",
 "6475":"switch rom bank and return",
+"6479":"get drive 1 or 2",
+"6483":"only 1 valid",
+"6487":"bad drive number",
+"6490":"get track \u0026 sector",
+"6492":"addr = 00000TTT TTTSSSSS 00000000",
+"6509":"or in sector",
+"6513":"get pointer to user\u0027s buffer",
+"6524":"get command",
+"6528":"0 = null = do nothing",
+"6532":"4 = format is an error",
+"6534":"1 -\u003e 17, 2-\u003e 19",
+"6536":"Y = command",
+"6539":"count = $100 bytes",
+"6549":"Set address reg",
+"6557":"Start at 1 meg and go down",
+"6560":"Move down a bank",
+"6565":"Save the data that is there",
+"6569":"Fix address",
+"6572":"Store something there",
+"6580":"0 if the data is there",
+"6586":"C = 0 if data ok",
+"6589":"Restore what was there",
+"6595":"Only lower 4 bits valid",
+"6597":"No ram somehow!!!",
+"6599":"Loop until we find a bank",
+"6601":"C = 0 from compare",
+"6606":"Sizetemp = \u003c block count",
+"6614":"get power up value",
+"6616":"is it = to the slinky power up byte?",
+"6619":"skip if yes",
+"6621":"it\u0027s not, but it\u0027s set now",
+"6624":";Space eor $A5?",
+"6633":"What type of catalog?",
+"6638":"JMP if ProDOS",
+"6642":"Do a ProDOS catalog",
+"6644":"Put in all but bit map",
+"6647":"Blocks 0-6 busy",
+"6649":"32 FFs for each $100 blocks",
+"6654":"Rest are FFs",
 "6962":"move the code"},
 
 "LongComments":{
@@ -1271,8 +1554,8 @@
 "BackgroundColor":0},
 
 "6144":{
-"Text":"execution routines. these routines must begin in the same page\r\n\r\nEXECUTE - does command in command\r\n          inputs: a = command",
-"BoxMode":false,
+"Text":"execution routines. these routines must begin in the same page\r\n****************************************************************************\r\n\r\n****************************************************************************\r\nEXECUTE - does command in command\r\n          inputs: a = command",
+"BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
 
@@ -1337,19 +1620,19 @@
 "BackgroundColor":0},
 
 "6611":{
-"Text":"Routines for making a directory on the disk\r\n*******************************************\r\nFormat - Tests for powerup and puts catalog on the disk if needed\r\nInputs: Y = mslot X = devno",
+"Text":"Routines for making a directory on the disk\r\n*******************************************\r\n\r\nFormat - Tests for powerup and puts catalog on the disk if needed\r\nInputs: Y = mslot X = devno",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
 
 "6614":{
-"Text":"Commented out code:\r\nlda power2,y ; Is power2 eor powerup = A5\r\nero #$A5\r\ncmp powerup, y\r\nbeq fmtdone\r\nsta powerup, y",
+"Text":"lda power2,y ; Is power2 eor powerup = A5\r\nero #$A5\r\ncmp powerup, y\r\nbeq fmtdone\r\nsta powerup, y",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
 
 "6624":{
-"Text":"If all screen holes spaces, someone might have cleared\r\nthe screen wrong so we won\u0027t reformat",
+"Text":"\r\nIf all screen holes spaces, someone might have cleared\r\nthe screen wrong so we won\u0027t reformat",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -2780,6 +3063,102 @@
 "Text":"R_GETALT is the same as GETALT in main rom.  Only the\r\nlocation is different.",
 "BoxMode":true,
 "MaxWidth":80,
+"BackgroundColor":0},
+
+"5271":{
+"Text":"\r\nTest Zero-page, then all of memory.  Report errors when\r\nencountered.  Accumulator can be anything on entry.  All\r\nregisters used, but no stack.  Addresses between $C000\r\nand $CFFFF are mapped to main $D000 bank.  Addresses\r\nbetween $C000 and $CFFF are mapped to main $D000 bank.\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5688":{
+"Text":"\r\nSETIOU - Sets the IOU interrupt modes to A\r\n Inputs: A = bits to change\r\n D7 = Y int on falling edge\r\n D6 = Y int on rising edge\r\n D5 = X int on falling edge\r\n D4 = X int on rising edge\r\n D3 = Enable VBL int\r\n D2 = Disable VBL int\r\n D1 = Enable mouse int\r\n D0 = Disable mount int\r\n\r\n",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5713":{
+"Text":"XMHOME - Clears mouse position \u0026 status",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5736":{
+"Text":"XMCLEAR - Sets the mouse to 0,0",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5753":{
+"Text":"XMREAD - Updates the screen holes",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5788":{
+"Text":"                      ;Leave button bits alone",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5795":{
+"Text":"XMCLAMP - Store new bounds\r\n Inputs A = 1 for Y, 0 for X axis\r\n   minl, minh, maxl, maxh = new bounds",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5826":{
+"Text":"XMTSTINT - Checks mouse status bits\r\nUsed for user mouser interrupt",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6146":{
+"Text":"                      ;#4+$C0",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6151":{
+"Text":"                      ;#4+$10+$88",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6307":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6388":{
+"Text":"                      ;#4+$10+$88",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6407":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6410":{
+"Text":"lda power2,y ;if power up bytes not set, don\u0027t boot\r\neor #$A5\r\ncmp powerup,y",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6464":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6626":{
+"Text":"                      ;Z = 1 if all spaces",
+"BoxMode":false,
+"MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
@@ -2873,14 +3252,44 @@
 "MaxWidth":80,
 "BackgroundColor":0},
 
-"5220":{
-"Text":"pickup here\r\npdf pg 490 (547)",
+"5232":{
+"Text":"binl? I have it as $2020",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
 
-"6305":{
-"Text":"D8A1: 50  is a dfb ...",
+"5235":{
+"Text":"binh? I have it as $2021",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"5262":{
+"Text":"pickup here, ugh\r\npick-up\r\npick up\r\npdf pager 490 (128)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6214":{
+"Text":"is numbanks $3b8 or $478?",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6410":{
+"Text":"Is powerup $778 or $6B8?",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"6444":{
+"Text":"TODO: did these symbols get resolved?",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-256},
+
+"6611":{
+"Text":"pick-up\r\npickup\r\nsomewhere around here\r\npdf 497 / 139 (review previous blocks)",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -3753,9 +4162,9 @@
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
 
-"6624":{
+"6626":{
 "Label":"fmnosp",
-"Value":55776,
+"Value":55778,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"},
@@ -5632,6 +6041,307 @@
 "4678":{
 "Label":"r_getalt2",
 "Value":53830,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5271":{
+"Label":"TSTZPG",
+"Value":54423,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5275":{
+"Label":"zp1",
+"Value":54427,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5284":{
+"Label":"zp2",
+"Value":54436,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5303":{
+"Label":"zp3",
+"Value":54455,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2090":{
+"Label":"ntbl",
+"Value":51242,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5308":{
+"Label":"ZPERROR",
+"Value":54460,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5314":{
+"Label":"TSTMEM2",
+"Value":54466,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1139":{
+"Label":"BADBITS",
+"Value":50291,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5317":{
+"Label":"zznm",
+"Value":54469,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5326":{
+"Label":"zzloop",
+"Value":54478,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5338":{
+"Label":"qtbl",
+"Value":54490,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5698":{
+"Label":"siloop",
+"Value":54850,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5705":{
+"Label":"sinoch",
+"Value":54857,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5712":{
+"Label":"sminvalid",
+"Value":54864,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5713":{
+"Label":"x_mhome",
+"Value":54865,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5717":{
+"Label":"xmhloop",
+"Value":54869,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5719":{
+"Label":"xmh2",
+"Value":54871,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5736":{
+"Label":"x_mclear",
+"Value":54888,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5748":{
+"Label":"xmcdone",
+"Value":54900,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5753":{
+"Label":"x_mread",
+"Value":54905,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5776":{
+"Label":"xrbut",
+"Value":54928,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5783":{
+"Label":"xrbut2",
+"Value":54935,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5788":{
+"Label":"xmrd2",
+"Value":54940,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5795":{
+"Label":"x_mclamp",
+"Value":54947,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5826":{
+"Label":"x_mtstint",
+"Value":54978,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"5836":{
+"Label":"nostat2",
+"Value":54988,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1862":{
+"Label":"m__oveirq",
+"Value":51014,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1664":{
+"Label":"parmtbl",
+"Value":50816,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6196":{
+"Label":"pzcnt",
+"Value":55348,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1690":{
+"Label":"cmdtbl",
+"Value":50842,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6198":{
+"Label":"pzcnt2",
+"Value":55350,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6201":{
+"Label":"iorts",
+"Value":55353,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6202":{
+"Label":"pread2_z",
+"Value":55354,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6205":{
+"Label":"pwrite2",
+"Value":55357,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6208":{
+"Label":"dosconv2",
+"Value":55360,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6211":{
+"Label":"xdiag",
+"Value":55363,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6214":{
+"Label":"xstatus",
+"Value":55366,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6259":{
+"Label":"pcntok",
+"Value":55411,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1408":{
+"Label":"sl_pread",
+"Value":50560,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1527":{
+"Label":"sl_pwrite",
+"Value":50679,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1639":{
+"Label":"stattbl",
+"Value":50791,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1518":{
+"Label":"prbad",
+"Value":50670,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"6944":{
+"Label":"pascat",
+"Value":56096,
 "Source":"User",
 "Type":"GlobalAddr",
 "LabelAnno":"None"}},
@@ -8648,6 +9358,966 @@
 "SymbolRef":null},
 
 "5222":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5226":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5230":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5241":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Ascii",
+"SymbolRef":null},
+
+"5249":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5253":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5262":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTCLR",
+"Part":"Low"}},
+
+"5265":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ioudsbl",
+"Part":"Low"}},
+
+"5268":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETAN3",
+"Part":"Low"}},
+
+"5271":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5273":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5276":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ntbl",
+"Part":"Low"}},
+
+"5279":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"5288":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"5296":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"rdvblbar",
+"Part":"Low"}},
+
+"5306":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TSTMEM2",
+"Part":"Low"}},
+
+"5308":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"5338":{
+"Length":8,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5346":{
+"Length":8,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5354":{
+"Length":8,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5362":{
+"Length":8,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5370":{
+"Length":8,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5378":{
+"Length":8,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5386":{
+"Length":6,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"5637":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5655":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5660":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"x_mhome",
+"Part":"Low"}},
+
+"5663":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5670":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"moutemp",
+"Part":"Low"}},
+
+"5674":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"moutemp",
+"Part":"Low"}},
+
+"5681":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5693":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"iouenbl",
+"Part":"Low"}},
+
+"5696":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5702":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"iou",
+"Part":"Low"}},
+
+"5707":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ioudsbl",
+"Part":"Low"}},
+
+"5717":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"5753":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"movarm",
+"Part":"Low"}},
+
+"6148":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sl_mslot",
+"Part":"Low"}},
+
+"6153":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sl_devno",
+"Part":"Low"}},
+
+"6156":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6158":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"error",
+"Part":"Low"}},
+
+"6161":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sl_format",
+"Part":"Low"}},
+
+"6166":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"parmtbl",
+"Part":"Low"}},
+
+"6175":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"xstatus",
+"Part":"High"}},
+
+"6185":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sl_mslot",
+"Part":"Low"}},
+
+"6188":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sl_devno",
+"Part":"Low"}},
+
+"6192":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"badcmd",
+"Part":"Low"}},
+
+"6196":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"badpcnt",
+"Part":"Low"}},
+
+"6198":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"error",
+"Part":"Low"}},
+
+"6214":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"numbanks",
+"Part":"Low"}},
+
+"6218":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"yval",
+"Part":"Low"}},
+
+"6221":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6223":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"xval",
+"Part":"Low"}},
+
+"6227":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pstat",
+"Part":"Low"}},
+
+"6234":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6236":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"xval",
+"Part":"Low"}},
+
+"6245":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6250":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pstat",
+"Part":"Low"}},
+
+"6254":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"badctl",
+"Part":"Low"}},
+
+"6256":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"error",
+"Part":"Low"}},
+
+"6260":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6262":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pstat",
+"Part":"Low"}},
+
+"6266":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6270":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6272":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"xval",
+"Part":"Low"}},
+
+"6275":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6277":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"yval",
+"Part":"Low"}},
+
+"6290":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sl_mslot",
+"Part":"Low"}},
+
+"6293":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"numbanks",
+"Part":"Low"}},
+
+"6297":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6307":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"block",
+"Part":"Low"}},
+
+"6309":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pblock",
+"Part":"Low"}},
+
+"6315":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"buffer",
+"Part":"Low"}},
+
+"6317":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pbuff",
+"Part":"Low"}},
+
+"6323":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6325":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pblock",
+"Part":"Low"}},
+
+"6337":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"paddr",
+"Part":"Low"}},
+
+"6339":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pblock",
+"Part":"Low"}},
+
+"6342":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"paddr",
+"Part":"Low"}},
+
+"6346":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pblock",
+"Part":"Low"}},
+
+"6350":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"paddr",
+"Part":"Low"}},
+
+"6352":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pcount",
+"Part":"Low"}},
+
+"6354":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6356":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pcount",
+"Part":"Low"}},
+
+"6358":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDRAMWRT",
+"Part":"Low"}},
+
+"6363":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDRAMRD",
+"Part":"Low"}},
+
+"6368":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"paddr",
+"Part":"Low"}},
+
+"6370":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"paddr",
+"Part":"Low"}},
+
+"6385":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sl_mslot",
+"Part":"Low"}},
+
+"6390":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sl_devno",
+"Part":"Low"}},
+
+"6393":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sl_mslot",
+"Part":"Low"}},
+
+"6407":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"bootbuf",
+"Part":"Low"}},
+
+"6410":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"powerup",
+"Part":"Low"}},
+
+"6417":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6428":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sl_mslot",
+"Part":"Low"}},
+
+"6435":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"6437":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"6444":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"dosent4",
+"Part":"Low"}},
+
+"6446":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"rwts",
+"Part":"Low"}},
+
+"6449":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"rwts",
+"Part":"Low"}},
+
+"6454":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"dosinit",
+"Part":"Low"}},
+
+"6457":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"dossyn",
+"Part":"Low"}},
+
+"6459":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"dosinit",
+"Part":"Low"}},
+
+"6465":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"6471":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6479":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ibdrvn",
+"Part":"Low"}},
+
+"6483":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6490":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ibtrk",
+"Part":"Low"}},
+
+"6495":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"paddr",
+"Part":"Low"}},
+
+"6498":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"paddr",
+"Part":"Low"}},
+
+"6501":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"paddr",
+"Part":"Low"}},
+
+"6503":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"paddr",
+"Part":"Low"}},
+
+"6511":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"paddr",
+"Part":"Low"}},
+
+"6513":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ibbufp",
+"Part":"Low"}},
+
+"6522":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pbuff",
+"Part":"Low"}},
+
+"6524":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ibcmd",
+"Part":"Low"}},
+
+"6530":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6534":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6537":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6539":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pcount",
+"Part":"Low"}},
+
+"6541":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"paddr",
+"Part":"Low"}},
+
+"6544":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"pcount",
+"Part":"Low"}},
+
+"6549":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6560":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6586":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6601":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"6603":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"numbanks",
+"Part":"Low"}},
+
+"6607":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sizetemp",
+"Part":"Low"}},
+
+"6611":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sl_mslot",
+"Part":"Low"}},
+
+"6616":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"powerup",
+"Part":"Low"}},
+
+"6621":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"powerup",
+"Part":"Low"}},
+
+"6642":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"procat",
+"Part":"Low"}},
+
+"6649":{
 "Length":2,
 "Format":"NumericLE",
 "SubFormat":"Decimal",

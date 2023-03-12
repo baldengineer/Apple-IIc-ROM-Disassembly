@@ -107,3 +107,9 @@ diagstart	@ $1FFF		;diagtest-1 ;start location of diagnostics
 ; Command processor for serial & Comm ($D000, bank 2)
 charCR		@ $0D
 ucspace		@ $00
+
+; //c Diagnostics ($D48E, bank2, pdf 490/128)
+GLUIDX	= $11
+IOUIDX	= $09
+MMUIDX	= $01
+SCREEN	@ $5B8
