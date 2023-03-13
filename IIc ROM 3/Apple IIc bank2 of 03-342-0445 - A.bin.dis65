@@ -25,6 +25,108 @@
 "PROJ:mouse equates.sym65"],
 "ExtensionScriptFileIdentifiers":[],
 "ProjectSyms":{
+"A1H":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"A1H",
+"Value":61,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"A1L":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"A1L",
+"Value":60,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"A2H":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"A2H",
+"Value":63,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"A2L":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"A2L",
+"Value":62,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"A4H":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"A4H",
+"Value":67,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"A4L":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"A4L",
+"Value":66,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "basl":{
 "DataDescriptor":{
 "Length":1,
@@ -40,6 +142,23 @@
 "Value":40,
 "Source":"Project",
 "Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"charptr":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"$C2F5-$C1 ;Pointer to character buffers",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"charptr",
+"Value":49716,
+"Source":"Project",
+"Type":"Constant",
 "LabelAnno":"None"},
 
 "cmdcr":{
@@ -134,7 +253,7 @@
 "SubFormat":"Hex",
 "SymbolRef":null},
 
-"Comment":"",
+"Comment":"$C203-sltdmy",
 "HasWidth":false,
 "Direction":"ReadWrite",
 "MultiMask":null,
@@ -280,6 +399,23 @@
 "Type":"Constant",
 "LabelAnno":"None"},
 
+"MOVESTRT":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"MOVESTRT",
+"Value":50023,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "pascat":{
 "DataDescriptor":{
 "Length":1,
@@ -327,6 +463,23 @@
 "MultiMask":null,
 "Label":"rdvblbar",
 "Value":49177,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"scmod":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"scmod",
+"Value":49146,
 "Source":"Project",
 "Type":"ExternalAddr",
 "LabelAnno":"None"},
@@ -454,6 +607,16 @@
 "Hint":"Code"},
 
 {
+"Low":551,
+"High":551,
+"Hint":"InlineData"},
+
+{
+"Low":552,
+"High":552,
+"Hint":"Code"},
+
+{
 "Low":591,
 "High":591,
 "Hint":"Code"},
@@ -474,8 +637,23 @@
 "Hint":"Code"},
 
 {
+"Low":839,
+"High":839,
+"Hint":"InlineData"},
+
+{
+"Low":840,
+"High":840,
+"Hint":"Code"},
+
+{
 "Low":846,
 "High":846,
+"Hint":"Code"},
+
+{
+"Low":919,
+"High":919,
 "Hint":"Code"},
 
 {
@@ -784,7 +962,172 @@
 "427":"C=1 iff any bits were 1",
 "429":"If not handled, try acia",
 "431":"Back we go",
+"434":"Not acia int",
+"436":"Extra jsr since rest needs RTS",
+"442":"Test port 2 first",
+"444":"Check for interrupt",
+"447":"Return if interrupt done",
+"449":"Try port 1",
+"450":"Get index for acia",
+"453":"If xmit ints enabled pass to user",
+"455":"Check if D\u003c3\u003e, D\u003c2\u003e = 01",
+"458":" ",
+"460":"User better take it!",
+"462":"Get status",
+"465":"Save it away",
+"468":"No interrupt",
+"470":"C=1 if com port. Called from serout3",
+"472":"Invert DSR if port1",
+"476":"Is DSR enabled?",
+"479":"Yes, user wants it",
+"481":"No, eat it",
+"483":"Yes, but I don\u0027t want it for port 1",
+"485":"Is DSR 1?",
+"487":"If not, skip it",
+"489":"Get the key",
+"494":"Put it in the buffer",
+"497":"Is it a ^x?",
+"501":"And the closed apple?",
+"506":"Flush the type ahead buffer",
+"512":"Clear the keyboard",
+"515":"Restore y",
+"517":"Read status to clear int",
+"520":"Clear the DSR bit",
+"522":"Shift DSR into C",
+"524":"Is the receiver full?",
+"526":"If not, we\u0027re done",
+"528":"Are received interrupts, enabled?",
+"531":"Check for D\u003c1\u003e,D\u003c0\u003e = 01",
+"535":"If not, were done",
+"537":" Is this acia buffered?",
+"541":"The user better handle it!",
+"543":" Save DSR status",
+"544":"Get char \u0026 check xon, etc",
+"547":"Don\u0027t put in buffer if eaten",
+"551":"BNE opcode to skip PHP",
+"555":"Get buffer pointer",
+"558":" Save it for later",
+"559":"Bump it to next free byte",
+"560":"Overflow?",
+"564":" Wrap pointer",
+"565":"Buffer full?",
+"570":"Save the new pointer",
+"573":" Get the data",
+"577":"It goes to aux ram",
+"583":"Branch if we want aux",
+"589":"Get DSR status back",
+"597":" Save the char",
+"598":"Control char?",
+"601":"Don\u0027t inc column if so",
+"606":"Get acia status",
+"609":"Y set by getstat",
+"615":"Is XON/XOFF enabled?",
+"620":"Branch if not",
+"622":"Is port interrupt driven?",
+"627":"Get a char from the acia",
+"630":"Branch if no char",
+"632":"Get pointer to charbuf",
+"635":"Save the character",
+"638":"Set bit for char in buffer",
+"646":"Check if in xoff",
+"651":"Loop if not ready",
+"657":" Get char to XMIT",
+"658":"Out it goes",
+"661":"V=1 if LF after CR",
+"664":"check for CR.",
+"666":"preserve bit 7",
+"667":"branch if not CR.",
+"669":"branch if no LF after CR",
+"671":"Get LF*2",
+"673":"no shift in high bit",
+"674":"Output the LF but don\u0027t echo it",
+"677":"0 position \u0026 column",
+"682":"Get the char back",
+"687":"Return to other side",
+"690":" Save interrupt status",
+"692":"Get index into hardware",
+"695":"Get the status",
+"698":"D7 = 1 if interrupt",
+"700":"Go service the interrupt",
+"703":"Interrupt may have changed status",
+"705":" Restore interrupt status",
+"713":"is serial input buffered?",
+"716":"(in english \"NO SERIAL BUFFER\")",
+"718":"Y=0 for serial buffer",
+"720":"Any data in buffer?",
+"725":"Is there a char in the onr byte buffer?",
+"730":"Branch if not",
+"732":"Clear the bit",
+"745":"Get ACIA status",
+"750":"indicate no data",
+"751":"Branch if no data!",
 "753":"Get data and check xon, etc.",
+"765":"Test for data in buffer",
+"768":"If = then no data",
+"772":"Branch if empty",
+"774":"Save current value",
+"775":"Update the pointer",
+"776":"Overflow",
+"781":"Store the updated pointer",
+"784":"Get the old value of the pointer",
+"785":"Are we in main ram",
+"788":"C=1 for Aux ram",
+"789":"Force Aux ram",
+"792":"Get byte from buffer",
+"795":"Branch if we were in aux bank",
+"797":"Set back to main",
+"800":"Mark data there",
+"805":"Save the data",
+"806":"Set D7 for compares",
+"809":"Get options byte",
+"812":"Eat linefeeds?",
+"816":"Is it a LF?",
+"818":"Eat it if it is",
+"820":"Xon/XOFF enabled?",
+"824":"Is it an XON?",
+"828":"Clear xoff bit",
+"830":"And eat it",
+"836":"Set xoff bit",
+"839":"BCS opcode",
+"846":"SAVE AC",
+"847":"SAVE STATE OF",
+"850":" MEMORY FLAGS",
+"855":"=\u003eCARD--\u003eMAIN",
+"857":"SET FOR MAIN",
+"860":" TO CARD",
+"863":"=\u003e (ALWAYS TAKEN)",
+"865":"SET FOR CARD",
+"868":" TO MAIN",
+"871":"get a byte",
+"873":"move it",
+"895":"=\u003emore to move",
+"897":"CLEAR FLAG2",
+"900":"GET ORIGINAL STATE",
+"901":"=\u003eIT WAS OFF",
+"906":"CLEAR FLAG1",
+"909":"GET ORIGINAL STATE",
+"910":"=\u003eIT WAS OFF",
+"915":"Restore AC",
+"919":"SAVE AC ON CURRENT STACK",
+"920":"GET XFERADDR LO",
+"923":"SAVE ON CURRENT STACK",
+"924":"GET XFERADDR HI",
+"927":"SAVE IT TOO",
+"928":"=\u003eCARD--\u003eMAIN",
+"930":"SET FOR RUNNING",
+"933":" IN CARD RAM",
+"936":"=\u003e always taken",
+"938":"SET FOR RUNNING",
+"941":" IN MAIN RAM",
+"944":"STUFF XFERADDR",
+"945":" HI AND",
+"949":"   LO",
+"952":"RESTORE AC",
+"953":"=\u003eswitch in alternate zp",
+"955":"else force standard zp",
+"958":"=\u003ealways perform transfer",
+"960":"switch in alternate zp",
+"963":"Back we go",
 "1261":"branch forever",
 "1263":"MMUIDX",
 "2179":"Does a bunch of stuff",
@@ -1645,19 +1988,19 @@
 "BackgroundColor":0},
 
 "591":{
-"Text":"SEROUT3 - Outputs a character to a acia\r\nInputs: A = char, X = Cn",
+"Text":"\r\nSEROUT3 - Outputs a character to a acia\r\nInputs: A = char, X = Cn\r\n\r\n",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
 
 "684":{
-"Text":"GETSTAT - Gets the status from a acia\r\nGETSTAT2 - Call from this side\r\nIf interrupt, aciatst is called\r\nnote: external interrupts are lost\r\ninputs: X = Cn\r\noutputs: A = status, X = Cn, Y = devno",
-"BoxMode":false,
+"Text":"\r\nGETSTAT - Gets the status from a acia\r\nGETSTAT2 - Call from this side\r\nIf interrupt, aciatst is called\r\nnote: external interrupts are lost\r\ninputs: X = Cn\r\noutputs: A = status, X = Cn, Y = devno\r\n\r\n",
+"BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
 
 "707":{
-"Text":"This is the serial input routine. Carry\r\nflag set indicates that returned data is \r\nvalid.",
+"Text":"This is the serial input routine. Carry\r\nflag set indicates that returned data is \r\nvalid.\r\n\r\n",
 "BoxMode":true,
 "MaxWidth":80,
 "BackgroundColor":0},
@@ -3391,12 +3734,60 @@
 "BackgroundColor":0},
 
 "434":{
-"Text":"pickup here, pdf 474/96\r\nmassive blog of text. so many texts.",
+"Text":"  This routine will determine if the source of\r\nis either of the built in ACIAs.  If neither port\r\ngenerated the interrupt, or the interrupt was due\r\nto a transmit buffer empty, protocol converter, or\r\n\u0027unbuffered\u0027 receiver full, the carry is set indi-\r\ncating an externally serviced interrupt.\r\n  If the interrupt source was keyboard, \u0027buffer\u0027\r\nserial input, or the DCD, the interrupt is serviced\r\nand the carry is cleared indicating interrupt was\r\nserviced.  (DCD handshake replaces CTS.)\r\n  Location \"ACIABUF\" specifies which (if either) re-\r\nreceiver data is buffered.  For port 1 it must contain\r\n$C1, for port 2 a $C2.  Any other values are cause\r\ninterrupts to pass to external (RAM based) routines.\r\n  Location \"TYEHED\" specifies whether Keyboard in-\r\nput should be buffered, ignored, or processed by \r\nRAM based rountines.  If bit 7=1 and bit 6=0, key-\r\nboard data is placed in the type-ahead buffer.  If\r\nbit 6 is set the interrupt is cleared, but must\r\nbe recognized and serviced by a RAM routine.  If\r\nboth bits = 0, the interrupt is serviced, but the\r\nkeyboard data is ignored.\r\n  While used type-ahead, Open-Apple CTRL-X will\r\nflush the buffer.  No other code is recognized.\r\n  If the source was an ACIA that has the transmit\r\ninterrupt enabled, the original value of the ACIAs\r\nstatus registers is preserved. Automatic serial input\r\nbuffering is not serviced from a port so configured.\r\nInterrupts originating from the protocol converter or\r\nkeyboard (RAM serviced) do not inhibit serial buffering\r\nand are passed true.  The RAM service routine can rec-\r\nognize the interrupt source by a 1 state in bit 6 of\r\nthe ACIAs status register.  The RAM service routine must\r\ncause the clearing of DSR (bit 6) AND make a second ac-\r\ncess to the status register before returning.\r\n\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"515":{
+"Text":"* $A0 $B0 table needed by serial firmware",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"597":{
+"Text":"                                      ;Entry point with rts",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"725":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"919":{
+"Text":"NAME    : XFER\r\nFUNCTION: TRANSFER CONTROL CROSSBANK\r\nINPUT   : $03ED=TRANSFER ADDR\r\n        : CARRY SET=XFER TO CARD\r\n                CLR=XFER TO MAIN\r\n        : VFLAG CLR=USE STD ZP/STK\r\n        :       SET=USE ALT ZP/STK\r\nOUTPUT  : NONE\r\nVOLATILE: $03ED/03EE IN DEST BANK\r\nCALLS   : NOTHING\r\nNOTE    : ENTERED VIA JMP, NOT JSR",
+"BoxMode":true,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"920":{
+"Text":"\r\nCOPY DESTINATION ADDRESS TO THE\r\n OTHER BANK SO THAT WE HAVE IT\r\n IN CASE WE DO A SWAP:\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"928":{
+"Text":"\r\nSWITCH TO APPROPRIATE BANK:\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"944":{
+"Text":"\r\n                                      ;SWITCH TO ALT ZP/STK",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
 
 "Notes":{
+"966":{
+"Text":"pick-up\r\npickup\r\npdf 479 / 105",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":-5383962},
+
 "1263":{
 "Text":"pdf pg 480 (diags listing)",
 "BoxMode":false,
@@ -6583,6 +6974,48 @@
 "Value":50670,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"919":{
+"Label":"XFER",
+"Value":50071,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"938":{
+"Label":"XFERC2M",
+"Value":50090,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"944":{
+"Label":"XFERZP",
+"Value":50096,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"960":{
+"Label":"XFERAZP",
+"Value":50112,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"963":{
+"Label":"JMPDEST",
+"Value":50115,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2027":{
+"Label":"SWXFGO2",
+"Value":51179,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -6844,6 +7277,554 @@
 "SubFormat":"Symbol",
 "SymbolRef":{
 "Label":"movarm",
+"Part":"Low"}},
+
+"442":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"comslot",
+"Part":"High"}},
+
+"450":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"devno2",
+"Part":"Low"}},
+
+"453":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"455":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"scomd",
+"Part":"Low"}},
+
+"462":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sstat",
+"Part":"Low"}},
+
+"470":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"comslot",
+"Part":"High"}},
+
+"489":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"KBD",
+"Part":"Low"}},
+
+"501":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"BUTN1",
+"Part":"Low"}},
+
+"506":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"twkey",
+"Part":"Low"}},
+
+"509":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"trkey",
+"Part":"Low"}},
+
+"512":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"KBDSTRB",
+"Part":"Low"}},
+
+"517":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sstat",
+"Part":"Low"}},
+
+"531":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"533":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"538":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"aciabuf",
+"Part":"Low"}},
+
+"549":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"555":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"twser",
+"Part":"Low"}},
+
+"565":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"trser",
+"Part":"Low"}},
+
+"570":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"twser",
+"Part":"Low"}},
+
+"574":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDRAMWRT",
+"Part":"Low"}},
+
+"577":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"WRCARDRAM",
+"Part":"Low"}},
+
+"580":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"thbuf",
+"Part":"Low"}},
+
+"585":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"WRMAINRAM",
+"Part":"Low"}},
+
+"622":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"aciabuf",
+"Part":"Low"}},
+
+"635":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"charbuf",
+"Part":"Low"}},
+
+"653":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"devno2",
+"Part":"Low"}},
+
+"658":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sdata",
+"Part":"Low"}},
+
+"692":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"devno2",
+"Part":"Low"}},
+
+"695":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sstat",
+"Part":"Low"}},
+
+"713":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"aciabuf",
+"Part":"Low"}},
+
+"718":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"740":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"charbuf",
+"Part":"Low"}},
+
+"757":{
+"Length":2,
+"Format":"Dense",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"765":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"trser",
+"Part":"Low"}},
+
+"768":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"twser",
+"Part":"Low"}},
+
+"781":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"trser",
+"Part":"Low"}},
+
+"785":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDRAMRD",
+"Part":"Low"}},
+
+"789":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDCARDRAM",
+"Part":"Low"}},
+
+"792":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"thbuf",
+"Part":"Low"}},
+
+"797":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDMAINRAM",
+"Part":"Low"}},
+
+"802":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"sdata",
+"Part":"Low"}},
+
+"816":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"lfeed",
+"Part":"Low"}},
+
+"824":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"xon",
+"Part":"Low"}},
+
+"832":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"xoff",
+"Part":"Low"}},
+
+"847":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDRAMRD",
+"Part":"Low"}},
+
+"851":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDRAMWRT",
+"Part":"Low"}},
+
+"857":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDMAINRAM",
+"Part":"Low"}},
+
+"860":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"WRCARDRAM",
+"Part":"Low"}},
+
+"865":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"WRMAINRAM",
+"Part":"Low"}},
+
+"868":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDCARDRAM",
+"Part":"Low"}},
+
+"871":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"873":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A4L",
+"Part":"Low"}},
+
+"875":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A4L",
+"Part":"Low"}},
+
+"879":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A4H",
+"Part":"Low"}},
+
+"881":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"883":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A2L",
+"Part":"Low"}},
+
+"885":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1H",
+"Part":"Low"}},
+
+"887":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A2H",
+"Part":"Low"}},
+
+"889":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1L",
+"Part":"Low"}},
+
+"893":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"A1H",
+"Part":"Low"}},
+
+"897":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"WRMAINRAM",
+"Part":"Low"}},
+
+"903":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"WRCARDRAM",
+"Part":"Low"}},
+
+"906":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDMAINRAM",
+"Part":"Low"}},
+
+"912":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDCARDRAM",
+"Part":"Low"}},
+
+"930":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDCARDRAM",
+"Part":"Low"}},
+
+"933":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"WRCARDRAM",
+"Part":"Low"}},
+
+"938":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDMAINRAM",
+"Part":"Low"}},
+
+"941":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"WRMAINRAM",
+"Part":"Low"}},
+
+"955":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETSTDZP",
+"Part":"Low"}},
+
+"960":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETALTZP",
 "Part":"Low"}},
 
 "2185":{
