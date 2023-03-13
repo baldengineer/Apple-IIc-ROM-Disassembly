@@ -331,6 +331,23 @@
 "Type":"Constant",
 "LabelAnno":"None"},
 
+"ioadr":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"ioadr",
+"Value":49152,
+"Source":"Project",
+"Type":"ExternalAddr",
+"LabelAnno":"None"},
+
 "IOUIDX":{
 "DataDescriptor":{
 "Length":1,
@@ -499,6 +516,23 @@
 "Value":1464,
 "Source":"Project",
 "Type":"ExternalAddr",
+"LabelAnno":"None"},
+
+"setv":{
+"DataDescriptor":{
+"Length":1,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"Comment":"",
+"HasWidth":false,
+"Direction":"ReadWrite",
+"MultiMask":null,
+"Label":"setv",
+"Value":51242,
+"Source":"Project",
+"Type":"Constant",
 "LabelAnno":"None"},
 
 "start25":{
@@ -1128,8 +1162,111 @@
 "958":"=\u003ealways perform transfer",
 "960":"switch in alternate zp",
 "963":"Back we go",
+"972":"do RAM $100-$FFFF five times",
+"976":"keep acc in a safe place",
+"982":"point to page 1 first",
+"984":"save ACC in Y for now",
+"985":"anticipate not $C000 range...",
+"991":"get page address",
+"993":"test for $C0-$CF range",
+"997":"branch if not...",
+"1002":"select primary $D000 space",
+"1007":"Plus carry =+$10",
+"1009":"branch always taken",
+"1015":"restore pattern to ACC",
+"1016":"fill this page with the pattern",
+"1024":"keep x in the range 0-4",
+"1029":"all 256 filled yet?",
+"1030":"branch if not",
+"1032":"bump page #",
+"1034":"loop through $0100 to $FF00",
+"1036":"point to page 1 again",
+"1042":"save ACC in Y for now",
+"1043":"anticipate not $C000 range...",
+"1049":"get page address",
+"1051":"test for $C0-$CF range",
+"1055":"branch if not...",
+"1057":"select primary $D000 space",
+"1062":"Plus carry =+$10",
+"1064":"branch always taken",
+"1070":"restore pattern to ACC",
+"1071":"fill this page with the pattern",
+"1079":"if any bits are different, give up!!!",
+"1081":"restore correct pattern",
+"1083":"keep x in range 0-4",
+"1088":"all 256 filled yet?",
+"1089":"branch if not",
+"1091":"bump page #",
+"1093":"loop through $0100 to $FF00",
+"1095":"change ACC for next pass",
+"1096":" use RDVBL for a little randomness...",
+"1103":"have 5 passes been done yet?",
+"1105":"skip if yes",
+"1107":"start next pass",
+"1110":"save acc",
+"1111":"main or aux ram ?",
+"1114":"skip if aux ram",
+"1117":"enable aux mem write",
+"1120":"enable aux mem read",
+"1123":"swap in alt zero page",
+"1126":"Force rom enable",
+"1129":" and test it!",
+"1132":"swap in main zero page",
+"1138":"indicate main ram failure",
+"1139":"save bit battern in x for now",
+"1140":"main or aux mem?",
+"1143":"with V-FLG",
+"1144":"branch if primary bank",
+"1149":"try to clear video screen",
+"1184":"test for switch test failure",
+"1185":"branch if it was a switch",
+"1189":"branch if ZP ok",
+"1193":"mark aux report with an asterisks",
+"1207":"message is either \"RAM\" or \"RAM ZP\"",
+"1209":"print bits",
+"1214":"bits are printed as ascii 0 or 1",
+"1224":"hang forever and ever",
+"1230":"anticipate MMU error",
+"1235":"branch if not IOU error",
+"1237":"anticipate IOU error",
+"1240":"compare with where we left off",
+"1242":"skip if MMU",
+"1246":"skip if GLU (ioudis or dhires failure)",
+"1250":"skip if IOU",
+"1252":"GLU error (ioudis failure)",
+"1259":"print \"MMU\",\"IOU\" or \"GLU\"",
 "1261":"branch forever",
 "1263":"MMUIDX",
+"1267":"set IOU/MMU switches to match A",
+"1271":"branch if done setting switches",
+"1273":"branch if setting switch to 0-state",
+"1275":"else get index to set switch to 1",
+"1278":"set switch",
+"1282":"branch always taken...",
+"1289":"now verify the settings just made",
+"1292":"branch if done this pass",
+"1294":"branch if this switch no to be verified.",
+"1304":"branch always",
+"1311":"branch always",
+"1313":"restore original value",
+"1314":" and IOU/MMU index",
+"1316":"try next pattern",
+"1320":"was MMU just tested?",
+"1321":"yes, go to IOU",
+"1323":"was IOU just tested?",
+"1325":"no, go loop again",
+"1327":"yes, go test IOUDIS switch",
+"1329":"branch always",
+"1333":"branch always",
+"1335":"save y to distinguish from MMU or GLU",
+"1336":"indicate switch error",
+"1338":"set carry if IOU was cause",
+"1351":"clear screen for susccess message",
+"1366":"test for both Open and Closed Apple",
+"1369":" pressed",
+"1372":"put result in carry",
+"1382":"put success message on the screen",
+"1396":"loop forever",
 "2179":"Does a bunch of stuff",
 "2182":"This set X reg",
 "2185":"This is the mode value",
@@ -3779,26 +3916,26 @@
 "Text":"\r\n                                      ;SWITCH TO ALT ZP/STK",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":0}},
+"BackgroundColor":0},
 
-"Notes":{
-"966":{
-"Text":"pick-up\r\npickup\r\npdf 479 / 105",
-"BoxMode":false,
-"MaxWidth":80,
-"BackgroundColor":-5383962},
-
-"1263":{
-"Text":"pdf pg 480 (diags listing)",
+"1036":{
+"Text":"\r\n",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
 
-"1315":{
-"Text":"jumps from c880 if not a boot\r\nTHIS IS NOT THE BOOTCODE WE ARE LOOKING FOR!",
+"1336":{
+"Text":"                                      ;failure",
 "BoxMode":false,
 "MaxWidth":80,
-"BackgroundColor":-5383962},
+"BackgroundColor":0}},
+
+"Notes":{
+"1408":{
+"Text":"pickup here\r\npick up\r\nrw.slinky",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
 
 "1716":{
 "Text":"pickup pdf 484/115.\r\nmay need to start higher, but definitely need to do this block.",
@@ -7016,6 +7153,223 @@
 "Value":51179,
 "Source":"User",
 "Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1029":{
+"Label":"mem6",
+"Value":50181,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1042":{
+"Label":"mem7",
+"Value":50194,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1066":{
+"Label":"mem8",
+"Value":50218,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1068":{
+"Label":"mem9",
+"Value":50220,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1073":{
+"Label":"memA",
+"Value":50225,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1088":{
+"Label":"memB",
+"Value":50240,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1103":{
+"Label":"memC",
+"Value":50255,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1110":{
+"Label":"memD",
+"Value":50262,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1132":{
+"Label":"MEMF",
+"Value":50284,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1138":{
+"Label":"MEMERROR",
+"Value":50290,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1149":{
+"Label":"bbits1",
+"Value":50301,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1153":{
+"Label":"clrsts",
+"Value":50305,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1169":{
+"Label":"clrs",
+"Value":50321,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1193":{
+"Label":"badmain",
+"Value":50345,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1200":{
+"Label":"badprim",
+"Value":50352,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1211":{
+"Label":"bbits2",
+"Value":50363,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1224":{
+"Label":"hangx",
+"Value":50376,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1226":{
+"Label":"BADSWTCH",
+"Value":50378,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1230":{
+"Label":"bswtch1",
+"Value":50382,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1240":{
+"Label":"bswtch2",
+"Value":50392,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1252":{
+"Label":"bswtch2a",
+"Value":50404,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1255":{
+"Label":"bswtch3",
+"Value":50407,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2150":{
+"Label":"rmess",
+"Value":51302,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2156":{
+"Label":"smess",
+"Value":51308,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1306":{
+"Label":"swtst5",
+"Value":50458,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1351":{
+"Label":"blp3",
+"Value":50503,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1347":{
+"Label":"blp2",
+"Value":50499,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1382":{
+"Label":"dquit",
+"Value":50534,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1387":{
+"Label":"suc2",
+"Value":50539,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"1366":{
+"Label":"blp4",
+"Value":50518,
+"Source":"User",
+"Type":"GlobalAddr",
+"LabelAnno":"None"},
+
+"2165":{
+"Label":"success",
+"Value":51317,
+"Source":"User",
+"Type":"GlobalAddr",
 "LabelAnno":"None"}},
 
 "OperandFormats":{
@@ -7826,6 +8180,534 @@
 "SymbolRef":{
 "Label":"SETALTZP",
 "Part":"Low"}},
+
+"966":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"968":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"970":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"972":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"974":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"976":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"978":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"980":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"982":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"985":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LCBANK2",
+"Part":"Low"}},
+
+"988":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LCBANK2",
+"Part":"Low"}},
+
+"991":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"999":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LCBANK1",
+"Part":"Low"}},
+
+"1002":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LCBANK1",
+"Part":"Low"}},
+
+"1005":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1011":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1013":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1022":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1027":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1032":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1036":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1038":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1040":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1043":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LCBANK2",
+"Part":"Low"}},
+
+"1046":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LCBANK2",
+"Part":"Low"}},
+
+"1049":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1057":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"LCBANK1",
+"Part":"Low"}},
+
+"1060":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1066":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1068":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1077":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1081":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1086":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1091":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1096":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDVBLBAR",
+"Part":"Low"}},
+
+"1103":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1111":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDRAMRD",
+"Part":"Low"}},
+
+"1117":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"WRCARDRAM",
+"Part":"Low"}},
+
+"1120":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDCARDRAM",
+"Part":"Low"}},
+
+"1123":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETALTZP",
+"Part":"Low"}},
+
+"1126":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ROMIN",
+"Part":"Low"}},
+
+"1132":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SETSTDZP",
+"Part":"Low"}},
+
+"1140":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"RDRAMRD",
+"Part":"Low"}},
+
+"1146":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"setv",
+"Part":"Low"}},
+
+"1153":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ioadr",
+"Part":"Low"}},
+
+"1156":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ioadr",
+"Part":"Low"}},
+
+"1163":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTSET",
+"Part":"Low"}},
+
+"1166":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTPAGE1",
+"Part":"Low"}},
+
+"1187":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1191":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1197":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SCREEN",
+"Part":"Low"}},
+
+"1203":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SCREEN",
+"Part":"Low"}},
+
+"1217":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SCREEN",
+"Part":"Low"}},
+
+"1226":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1240":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1244":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1252":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"smess",
+"Part":"Low"}},
+
+"1263":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"MMUIDX",
+"Part":"Low"}},
+
+"1278":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ioadr",
+"Part":"Low"}},
+
+"1284":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"SPKR",
+"Part":"Low"}},
+
+"1299":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ioadr",
+"Part":"Low"}},
+
+"1306":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"ioadr",
+"Part":"Low"}},
+
+"1316":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1323":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"IOUIDX",
+"Part":"Low"}},
+
+"1327":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"GLUIDX",
+"Part":"Low"}},
+
+"1331":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"IOUIDX",
+"Part":"Low"}},
+
+"1336":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1338":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"IOUIDX",
+"Part":"Low"}},
+
+"1343":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1349":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"1366":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"BUTN0",
+"Part":"Low"}},
+
+"1369":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"BUTN1",
+"Part":"Low"}},
+
+"1373":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1375":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Hex",
+"SymbolRef":null},
+
+"1382":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"TXTSET",
+"Part":"Low"}},
+
+"1385":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
 
 "2185":{
 "Length":2,

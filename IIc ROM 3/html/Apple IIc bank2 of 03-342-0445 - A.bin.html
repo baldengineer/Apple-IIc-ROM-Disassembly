@@ -38,7 +38,10 @@
                    * *****                                                                        *
                    * pdf page 508 has the equates                                                 *
                    ********************************************************************************
+                   <span id="SymMMUIDX">MMUIDX</span>          EQU     $01    {const}
                    <span id="Syminent">inent</span>           EQU     $05    {const}
+                   <span id="SymIOUIDX">IOUIDX</span>          EQU     $09    {const}
+                   <span id="SymGLUIDX">GLUIDX</span>          EQU     $11    {const}
                    <span id="Symlfeed">lfeed</span>           EQU     $8A    {const}    ;Linefeed
                    <span id="Symxon">xon</span>             EQU     $91    {const}    ;XON character
                    <span id="Symxoff">xoff</span>            EQU     $93    {const}    ;XOFF character
@@ -46,6 +49,7 @@
                    <span id="Symtermcur">termcur</span>         EQU     223    {const}    ;'_' ;95+128 ;Cursor while in terminal mode
                    <span id="Symsermode">sermode</span>         EQU     $03B8  {const}    ;D7=1 if in command D6=1 if terminal
                    <span id="Symdevno2">devno2</span>          EQU     $C142  {const}    ;$C203-sltdmy
+                   <span id="Symsetv">setv</span>            EQU     $C82A  {const}
                    <span id="SymPowerReset">PowerReset</span>      EQU     $00
                    <span id="Symucspace">ucspace</span>         EQU     $00
                    <span id="Symbadcmd">badcmd</span>          EQU     $01               ;bad command
@@ -54,13 +58,11 @@
                    <span id="Symibdrvn">ibdrvn</span>          EQU     $02               ;drive 1 or 2
                    <span id="Symmovmode">movmode</span>         EQU     $02               ;D1 mask
                    <span id="SymWriteCmd">WriteCmd</span>        EQU     $02
-                   <span id="Symproform">proform</span>         EQU     $03               ;format command
                    <span id="Symbadpcnt">badpcnt</span>         EQU     $04               ;bad parameter count
                    <span id="SymBadPCnt">BadPCnt</span>         EQU     $04
                    <span id="Symbutmode">butmode</span>         EQU     $04               ;D2 mask
                    <span id="SymControlCmd">ControlCmd</span>      EQU     $04
                    <span id="Symibtrk">ibtrk</span>           EQU     $04               ;track number
-                   <span id="Symibsect">ibsect</span>          EQU     $05               ;sector number
                    <span id="SymInitCmd">InitCmd</span>         EQU     $05
                    <span id="SymRC2">RC2</span>             EQU     $05               ;Data Packs get tried only 5 times
                    <span id="SymBusErr">BusErr</span>          EQU     $06
@@ -141,7 +143,6 @@
                    <span id="Sympascat">pascat</span>          EQU     $78               ;$DB20-cattbl-1
                    <span id="Symcmdmark">cmdmark</span>         EQU     $80               ;Command packet identifier
                    <span id="SymCommReset">CommReset</span>       EQU     $80
-                   <span id="Symdoserr">doserr</span>          EQU     $80               ;DOS I/O error
                    <span id="Symdatamark">datamark</span>        EQU     $82               ;Data packet identifier
                    <span id="Symnameflag">nameflag</span>        EQU     $AA               ;value unused in any catalog
                    <span id="Sympacketbeg">packetbeg</span>       EQU     $C3               ;Mark at beginning of packet
@@ -149,7 +150,6 @@
                    <span id="Symsizeflg">sizeflg</span>         EQU     $FC               ;block size flag
                    <span id="Symzers">zers</span>            EQU     $FD               ;catalog skip flag
                    <span id="Symskpfe">skpfe</span>           EQU     $FE               ;skip FE bytes in catalog
-                   <span id="SymPBCValue">PBCValue</span>        EQU     $FF               ;Powerup Byte Complement Value
                    <span id="Syminbuf">inbuf</span>           EQU     $0200             ;Input buffer
                    <span id="Symastat">astat</span>           EQU     $0438             ;Acia status from int AF9 &amp; 4FA
                    <span id="SymProFLAG">ProFLAG</span>         EQU     $0473             ;scholes
@@ -219,6 +219,7 @@
                    <span id="Symscomd">scomd</span>           EQU     $BFFA             ;ACIA command register
                    <span id="Symdata">data</span>            EQU     $BFFB             ;data pointed to
                    <span id="SymCLR80COL">CLR80COL</span>        EQU     $C000             ;W use $C002-C005 for aux mem (80STOREOFF)
+                   <span id="Symioadr">ioadr</span>           EQU     $C000
                    <span id="SymKBD">KBD</span>             EQU     $C000             ;R last key pressed + 128
                    <span id="SymSET80COL">SET80COL</span>        EQU     $C001             ;W use PAGE2 for aux mem (80STOREON)
                    <span id="SymRDMAINRAM">RDMAINRAM</span>       EQU     $C002             ;W if 80STORE off: read main mem $0200-BFFF
@@ -234,13 +235,21 @@
                    <span id="Symmouyint">mouyint</span>         EQU     $C017             ;D7 = y interrupt
                    <span id="SymRD80COL">RD80COL</span>         EQU     $C018             ;R bit 7: 80STORE is on?
                    <span id="Symrdvblbar">rdvblbar</span>        EQU     $C019
+                   <span id="SymRDVBLBAR">RDVBLBAR</span>        EQU     $C019             ;R bit 7: not VBL (VBL signal is low)?
+                   <span id="SymSPKR">SPKR</span>            EQU     $C030             ;RW toggle speaker
                    <span id="Symmouclr">mouclr</span>          EQU     $C048             ;Clear mouse interrupt
                    <span id="SymTXTCLR">TXTCLR</span>          EQU     $C050             ;RW display graphics
+                   <span id="SymTXTSET">TXTSET</span>          EQU     $C051             ;RW display text
+                   <span id="SymTXTPAGE1">TXTPAGE1</span>        EQU     $C054             ;RW display page 1
                    <span id="Symiou">iou</span>             EQU     $C058             ;IOU interrupt switches
                    <span id="SymSETAN3">SETAN3</span>          EQU     $C05E             ;RW annunciator 3 off
+                   <span id="SymBUTN0">BUTN0</span>           EQU     $C061             ;R switch input 0 / open-apple
                    <span id="SymBUTN1">BUTN1</span>           EQU     $C062             ;R switch input 1 / closed-apple
                    <span id="Symioudsbl">ioudsbl</span>         EQU     $C078             ;Disable iou access
                    <span id="Symiouenbl">iouenbl</span>         EQU     $C079             ;Enable iou access
+                   <span id="SymROMIN">ROMIN</span>           EQU     $C081             ;RWx2 read ROM, write RAM bank 2
+                   <span id="SymLCBANK2">LCBANK2</span>         EQU     $C083             ;RWx2 read/write RAM bank 2
+                   <span id="SymLCBANK1">LCBANK1</span>         EQU     $C08B             ;RWx2 read/write RAM bank 1
                    <span id="Symcomslot">comslot</span>         EQU     $C200
                    <span id="Symswreset2">swreset2</span>        EQU     $C788             ;NMI and RESET
                    <span id="Symswirq2">swirq2</span>          EQU     $C78E             ;INT
@@ -760,9 +769,6 @@ C3C0: 8D 09 C0     <span id="SymXFERAZP">XFERAZP</span>         sta     <a href=
 C3C3: 4C EB C7     <span id="SymJMPDEST">JMPDEST</span>         jmp     <a href="#SymSWXFGO2">SWXFGO2</a>           ;Back we go
                                    ADREND  ↑ $C34E
 
-                   <span style="background-color: #89acb7">NOTE: pick-up</span>
-                   <span style="background-color: #89acb7">pickup</span>
-                   <span style="background-color: #89acb7">pdf 479 / 105</span>
                    ********************************************************************************
                    * banger                                                                       *
                    *                                                                              *
@@ -773,235 +779,237 @@ C3C3: 4C EB C7     <span id="SymJMPDEST">JMPDEST</span>         jmp     <a href=
                    ********************************************************************************
 C3C6:              banger_diags
                                    ORG     *+$0000
-C3C6: 86 01        <span id="SymTSTMEM">TSTMEM</span>          stx     <a href="#Symbadcmd">badcmd</a>
-C3C8: 86 02                        stx     <a href="#Symmovmode">movmode</a>
-C3CA: 86 03                        stx     <a href="#Symproform">proform</a>
-C3CC: A2 04                        ldx     #$04
-C3CE: 86 04                        stx     <a href="#Symbutmode">butmode</a>
-C3D0: 85 05        <span id="SymMEM1">MEM1</span>            sta     <a href="#Symibsect">ibsect</a>
-C3D2: A2 04                        ldx     #$04
-C3D4: 64 01                        stz     <a href="#Symbadcmd">badcmd</a>
-C3D6: E6 01                        inc     <a href="#Symbadcmd">badcmd</a>
-C3D8: A8           <span id="Symmem2">mem2</span>            tay
-C3D9: 8D 83 C0                     sta     <a href="#Symcalset">calset</a>
-C3DC: 8D 83 C0                     sta     <a href="#Symcalset">calset</a>
-C3DF: A5 01                        lda     <a href="#Symbadcmd">badcmd</a>
-C3E1: 29 F0                        and     #$F0
+C3C6: 86 01        <span id="SymTSTMEM">TSTMEM</span>          stx     $01
+C3C8: 86 02                        stx     $02
+C3CA: 86 03                        stx     $03
+C3CC: A2 04                        ldx     #4                ;do RAM $100-$FFFF five times
+C3CE: 86 04                        stx     $04
+C3D0: 85 05        <span id="SymMEM1">MEM1</span>            sta     $05               ;keep acc in a safe place
+C3D2: A2 04                        ldx     #4
+C3D4: 64 01                        stz     $01
+C3D6: E6 01                        inc     1                 ;point to page 1 first
+C3D8: A8           <span id="Symmem2">mem2</span>            tay                       ;save ACC in Y for now
+C3D9: 8D 83 C0                     sta     <a href="#SymLCBANK2">LCBANK2</a>           ;anticipate not $C000 range...
+C3DC: 8D 83 C0                     sta     <a href="#SymLCBANK2">LCBANK2</a>
+C3DF: A5 01                        lda     $01               ;get page address
+C3E1: 29 F0                        and     #$F0              ;test for $C0-$CF range
 C3E3: C9 C0                        cmp     #$C0
-C3E5: D0 0C                        bne     <a href="#Symmem3">mem3</a>
-C3E7: AD 8B C0                     lda     <a href="#Symenable2">enable2</a>
-C3EA: AD 8B C0                     lda     <a href="#Symenable2">enable2</a>
-C3ED: A5 01                        lda     <a href="#Symbadcmd">badcmd</a>
-C3EF: 69 0F                        adc     #$0F
-C3F1: D0 02                        bne     <a href="#Symmem4">mem4</a>
-C3F3: A5 01        <span id="Symmem3">mem3</span>            lda     <a href="#Symbadcmd">badcmd</a>
-C3F5: 85 03        <span id="Symmem4">mem4</span>            sta     <a href="#Symproform">proform</a>
-C3F7: 98                           tya
-C3F8: A0 00                        ldy     #$00
+C3E5: D0 0C                        bne     <a href="#Symmem3">mem3</a>              ;branch if not...
+C3E7: AD 8B C0                     lda     <a href="#SymLCBANK1">LCBANK1</a>
+C3EA: AD 8B C0                     lda     <a href="#SymLCBANK1">LCBANK1</a>           ;select primary $D000 space
+C3ED: A5 01                        lda     $01
+C3EF: 69 0F                        adc     #$0F              ;Plus carry =+$10
+C3F1: D0 02                        bne     <a href="#Symmem4">mem4</a>              ;branch always taken
+C3F3: A5 01        <span id="Symmem3">mem3</span>            lda     $01
+C3F5: 85 03        <span id="Symmem4">mem4</span>            sta     $03
+C3F7: 98                           tya                       ;restore pattern to ACC
+C3F8: A0 00                        ldy     #$00              ;fill this page with the pattern
 C3FA: 18           <span id="Symmem5">mem5</span>            clc
 C3FB: 7D 2A C8                     adc     <a href="#Symntbl">ntbl</a>,X
-C3FE: 91 02                        sta     (<a href="#Symmovmode">movmode</a>),Y
-C400: CA                           dex
-C401: 10 02                        bpl     <a href="#SymLC405">LC405</a>
-C403: A2 04                        ldx     #$04
-C405: C8           <span id="SymLC405">LC405</span>           iny
-C406: D0 F2                        bne     <a href="#Symmem5">mem5</a>
-C408: E6 01                        inc     <a href="#Symbadcmd">badcmd</a>
-C40A: D0 CC                        bne     <a href="#Symmem2">mem2</a>
-C40C: E6 01                        inc     <a href="#Symbadcmd">badcmd</a>
-C40E: A2 04                        ldx     #$04
-C410: A5 05                        lda     <a href="#Symibsect">ibsect</a>
-C412: A8           <span id="SymLC412">LC412</span>           tay
-C413: AD 83 C0                     lda     <a href="#Symcalset">calset</a>
-C416: AD 83 C0                     lda     <a href="#Symcalset">calset</a>
-C419: A5 01                        lda     <a href="#Symbadcmd">badcmd</a>
-C41B: 29 F0                        and     #$F0
+C3FE: 91 02                        sta     ($02),Y
+C400: CA                           dex                       ;keep x in the range 0-4
+C401: 10 02                        bpl     <a href="#Symmem6">mem6</a>
+C403: A2 04                        ldx     #4
+C405: C8           <span id="Symmem6">mem6</span>            iny                       ;all 256 filled yet?
+C406: D0 F2                        bne     <a href="#Symmem5">mem5</a>              ;branch if not
+C408: E6 01                        inc     1                 ;bump page #
+C40A: D0 CC                        bne     <a href="#Symmem2">mem2</a>              ;loop through $0100 to $FF00
+                   ; 
+C40C: E6 01                        inc     $01               ;point to page 1 again
+C40E: A2 04                        ldx     #4
+C410: A5 05                        lda     $05
+C412: A8           <span id="Symmem7">mem7</span>            tay                       ;save ACC in Y for now
+C413: AD 83 C0                     lda     <a href="#SymLCBANK2">LCBANK2</a>           ;anticipate not $C000 range...
+C416: AD 83 C0                     lda     <a href="#SymLCBANK2">LCBANK2</a>
+C419: A5 01                        lda     $01               ;get page address
+C41B: 29 F0                        and     #$F0              ;test for $C0-$CF range
 C41D: C9 C0                        cmp     #$C0
-C41F: D0 09                        bne     <a href="#SymLC42A">LC42A</a>
-C421: AD 8B C0                     lda     <a href="#Symenable2">enable2</a>
-C424: A5 01                        lda     <a href="#Symbadcmd">badcmd</a>
-C426: 69 0F                        adc     #$0F
-C428: D0 02                        bne     <a href="#SymLC42C">LC42C</a>
-C42A: A5 01        <span id="SymLC42A">LC42A</span>           lda     <a href="#Symbadcmd">badcmd</a>
-C42C: 85 03        <span id="SymLC42C">LC42C</span>           sta     <a href="#Symproform">proform</a>
-C42E: 98                           tya
-C42F: A0 00                        ldy     #$00
-C431: 18           <span id="SymLC431">LC431</span>           clc
+C41F: D0 09                        bne     <a href="#Symmem8">mem8</a>              ;branch if not...
+C421: AD 8B C0                     lda     <a href="#SymLCBANK1">LCBANK1</a>           ;select primary $D000 space
+C424: A5 01                        lda     $01
+C426: 69 0F                        adc     #$0F              ;Plus carry =+$10
+C428: D0 02                        bne     <a href="#Symmem9">mem9</a>              ;branch always taken
+C42A: A5 01        <span id="Symmem8">mem8</span>            lda     $01
+C42C: 85 03        <span id="Symmem9">mem9</span>            sta     $03
+C42E: 98                           tya                       ;restore pattern to ACC
+C42F: A0 00                        ldy     #$00              ;fill this page with the pattern
+C431: 18           <span id="SymmemA">memA</span>            clc
 C432: 7D 2A C8                     adc     <a href="#Symntbl">ntbl</a>,X
-C435: 51 02                        eor     (<a href="#Symmovmode">movmode</a>),Y
-C437: D0 39                        bne     <a href="#SymLC472">LC472</a>
-C439: B1 02                        lda     (<a href="#Symmovmode">movmode</a>),Y
-C43B: CA                           dex
-C43C: 10 02                        bpl     <a href="#SymLC440">LC440</a>
-C43E: A2 04                        ldx     #$04
-C440: C8           <span id="SymLC440">LC440</span>           iny
-C441: D0 EE                        bne     <a href="#SymLC431">LC431</a>
-C443: E6 01                        inc     <a href="#Symbadcmd">badcmd</a>
-C445: D0 CB                        bne     <a href="#SymLC412">LC412</a>
-C447: 6A                           ror     A
-C448: 2C 19 C0                     bit     <a href="#Symvblint">vblint</a>
-C44B: 10 02                        bpl     <a href="#SymLC44F">LC44F</a>
+C435: 51 02                        eor     ($02),Y
+C437: D0 39                        bne     <a href="#SymMEMERROR">MEMERROR</a>          ;if any bits are different, give up!!!
+C439: B1 02                        lda     ($02),Y           ;restore correct pattern
+C43B: CA                           dex                       ;keep x in range 0-4
+C43C: 10 02                        bpl     <a href="#SymmemB">memB</a>
+C43E: A2 04                        ldx     #4
+C440: C8           <span id="SymmemB">memB</span>            iny                       ;all 256 filled yet?
+C441: D0 EE                        bne     <a href="#SymmemA">memA</a>              ;branch if not
+C443: E6 01                        inc     1                 ;bump page #
+C445: D0 CB                        bne     <a href="#Symmem7">mem7</a>              ;loop through $0100 to $FF00
+C447: 6A                           ror     A                 ;change ACC for next pass
+C448: 2C 19 C0                     bit     <a href="#SymRDVBLBAR">RDVBLBAR</a>          ; use RDVBL for a little randomness...
+C44B: 10 02                        bpl     <a href="#SymmemC">memC</a>
 C44D: 49 A5                        eor     #$A5
-C44F: C6 04        <span id="SymLC44F">LC44F</span>           dec     <a href="#Symbutmode">butmode</a>
-C451: 30 03                        bmi     <a href="#SymLC456">LC456</a>
-C453: 4C D0 C3                     jmp     <a href="#SymMEM1">MEM1</a>
+C44F: C6 04        <span id="SymmemC">memC</span>            dec     $04               ;have 5 passes been done yet?
+C451: 30 03                        bmi     <a href="#SymmemD">memD</a>              ;skip if yes
+C453: 4C D0 C3                     jmp     <a href="#SymMEM1">MEM1</a>              ;start next pass
 
-C456: AA           <span id="SymLC456">LC456</span>           tax
-C457: 2C 13 C0                     bit     <a href="#SymLC000">LC000</a>+19
-C45A: 30 10                        bmi     <a href="#SymLC46C">LC46C</a>
+C456: AA           <span id="SymmemD">memD</span>            tax                       ;save acc
+C457: 2C 13 C0                     bit     <a href="#SymRDRAMRD">RDRAMRD</a>           ;main or aux ram ?
+C45A: 30 10                        bmi     <a href="#SymMEMF">MEMF</a>              ;skip if aux ram
 C45C: 8A                           txa
-C45D: 8D 05 C0                     sta     <a href="#SymLC000">LC000</a>+5
-C460: 8D 03 C0                     sta     <a href="#SymLC000">LC000</a>+3
-C463: 8D 09 C0                     sta     <a href="#SymLC000">LC000</a>+9
-C466: 8D 81 C0                     sta     <a href="#Symreqset">reqset</a>
-C469: 4C 97 D4                     jmp     <a href="#SymTSTZPG">TSTZPG</a>
+C45D: 8D 05 C0                     sta     <a href="#SymWRCARDRAM">WRCARDRAM</a>         ;enable aux mem write
+C460: 8D 03 C0                     sta     <a href="#SymRDCARDRAM">RDCARDRAM</a>         ;enable aux mem read
+C463: 8D 09 C0                     sta     <a href="#SymSETALTZP">SETALTZP</a>          ;swap in alt zero page
+C466: 8D 81 C0                     sta     <a href="#SymROMIN">ROMIN</a>             ;Force rom enable
+C469: 4C 97 D4                     jmp     <a href="#SymTSTZPG">TSTZPG</a>            ; and test it!
 
-C46C: 8D 08 C0     <span id="SymLC46C">LC46C</span>           sta     <a href="#SymLC000">LC000</a>+8
+C46C: 8D 08 C0     <span id="SymMEMF">MEMF</span>            sta     <a href="#SymSETSTDZP">SETSTDZP</a>          ;swap in main zero page
 C46F: 4C EF C4                     jmp     <a href="#SymSWCHTST">SWCHTST</a>
 
-C472: 38           <span id="SymLC472">LC472</span>           sec
-C473: AA           <span id="SymBADBITS">BADBITS</span>         tax
-C474: AD 13 C0                     lda     <a href="#SymLC000">LC000</a>+19
-C477: B8                           clv
-C478: 10 03                        bpl     <a href="#SymLC47D">LC47D</a>
-C47A: 2C 2A C8                     bit     <a href="#Symntbl">ntbl</a>
-C47D: A9 A0        <span id="SymLC47D">LC47D</span>           lda     #$A0
+C472: 38           <span id="SymMEMERROR">MEMERROR</span>        sec                       ;indicate main ram failure
+C473: AA           <span id="SymBADBITS">BADBITS</span>         tax                       ;save bit battern in x for now
+C474: AD 13 C0                     lda     <a href="#SymRDRAMRD">RDRAMRD</a>           ;main or aux mem?
+C477: B8                           clv                       ;with V-FLG
+C478: 10 03                        bpl     <a href="#Symbbits1">bbits1</a>            ;branch if primary bank
+C47A: 2C 2A C8                     bit     <a href="#Symsetv">setv</a>
+C47D: A9 A0        <span id="Symbbits1">bbits1</span>          lda     #$A0              ;try to clear video screen
 C47F: A0 06                        ldy     #$06
-C481: 99 FE BF     <span id="SymLC481">LC481</span>           sta     $BFFE,Y
-C484: 99 06 C0                     sta     <a href="#SymLC000">LC000</a>+6,Y
+C481: 99 FE BF     <span id="Symclrsts">clrsts</span>          sta     <a href="#Symioadr">ioadr</a>-2,Y
+C484: 99 06 C0                     sta     <a href="#Symioadr">ioadr</a>+6,Y
 C487: 88                           dey
 C488: 88                           dey
-C489: D0 F6                        bne     <a href="#SymLC481">LC481</a>
-C48B: 8D 51 C0                     sta     <a href="#Symvblint">vblint</a>+56
-C48E: 8D 54 C0                     sta     <a href="#Symvblint">vblint</a>+59
-C491: 99 00 04     <span id="SymLC491">LC491</span>           sta     $0400,Y
+C489: D0 F6                        bne     <a href="#Symclrsts">clrsts</a>
+C48B: 8D 51 C0                     sta     <a href="#SymTXTSET">TXTSET</a>
+C48E: 8D 54 C0                     sta     <a href="#SymTXTPAGE1">TXTPAGE1</a>
+C491: 99 00 04     <span id="Symclrs">clrs</span>            sta     $0400,Y
 C494: 99 00 05                     sta     $0500,Y
 C497: 99 00 06                     sta     $0600,Y
 C49A: 99 00 07                     sta     $0700,Y
 C49D: C8                           iny
-C49E: D0 F1                        bne     <a href="#SymLC491">LC491</a>
-C4A0: 8A                           txa
-C4A1: F0 27                        beq     <a href="#SymLC4CA">LC4CA</a>
-C4A3: A0 03                        ldy     #$03
-C4A5: B0 02                        bcs     <a href="#SymLC4A9">LC4A9</a>
-C4A7: A0 05                        ldy     #$05
-C4A9: A9 AA        <span id="SymLC4A9">LC4A9</span>           lda     #$AA
-C4AB: 50 03                        bvc     <a href="#SymLC4B0">LC4B0</a>
-C4AD: 8D B0 05                     sta     $05B0
-C4B0: B9 66 C8     <span id="SymLC4B0">LC4B0</span>           lda     <a href="#SymLC866">LC866</a>,Y
-C4B3: 99 B1 05                     sta     $05B1,Y
+C49E: D0 F1                        bne     <a href="#Symclrs">clrs</a>
+C4A0: 8A                           txa                       ;test for switch test failure
+C4A1: F0 27                        beq     <a href="#SymBADSWTCH">BADSWTCH</a>          ;branch if it was a switch
+C4A3: A0 03                        ldy     #3
+C4A5: B0 02                        bcs     <a href="#Symbadmain">badmain</a>           ;branch if ZP ok
+C4A7: A0 05                        ldy     #5
+C4A9: A9 AA        <span id="Symbadmain">badmain</span>         lda     #$AA              ;mark aux report with an asterisks
+C4AB: 50 03                        bvc     <a href="#Symbadprim">badprim</a>
+C4AD: 8D B0 05                     sta     <a href="#SymSCREEN">SCREEN</a>-8
+C4B0: B9 66 C8     <span id="Symbadprim">badprim</span>         lda     <a href="#Symrmess">rmess</a>,Y
+C4B3: 99 B1 05                     sta     <a href="#SymSCREEN">SCREEN</a>-7,Y
 C4B6: 88                           dey
-C4B7: 10 F7                        bpl     <a href="#SymLC4B0">LC4B0</a>
-C4B9: A0 10                        ldy     #$10
-C4BB: 8A           <span id="SymLC4BB">LC4BB</span>           txa
+C4B7: 10 F7                        bpl     <a href="#Symbadprim">badprim</a>           ;message is either "RAM" or "RAM ZP"
+C4B9: A0 10                        ldy     #$10              ;print bits
+C4BB: 8A           <span id="Symbbits2">bbits2</span>          txa
 C4BC: 4A                           lsr     A
 C4BD: AA                           tax
-C4BE: A9 58                        lda     #$58
+C4BE: A9 58                        lda     #$58              ;bits are printed as ascii 0 or 1
 C4C0: 2A                           rol     A
-C4C1: 99 B6 05                     sta     $05B6,Y
+C4C1: 99 B6 05                     sta     <a href="#SymSCREEN">SCREEN</a>-2,Y
 C4C4: 88                           dey
 C4C5: 88                           dey
-C4C6: D0 F3                        bne     <a href="#SymLC4BB">LC4BB</a>
-C4C8: F0 FE        <span id="SymLC4C8">LC4C8</span>           beq     <a href="#SymLC4C8">LC4C8</a>
+C4C6: D0 F3                        bne     <a href="#Symbbits2">bbits2</a>
+C4C8: F0 FE        <span id="Symhangx">hangx</span>           beq     <a href="#Symhangx">hangx</a>             ;hang forever and ever
 
-C4CA: A2 02        <span id="SymLC4CA">LC4CA</span>           ldx     #$02
+C4CA: A2 02        <span id="SymBADSWTCH">BADSWTCH</span>        ldx     #2
 C4CC: 7A                           ply
 C4CD: 08                           php
-C4CE: BD 6C C8     <span id="SymLC4CE">LC4CE</span>           lda     <a href="#SymLC86C">LC86C</a>,X
+C4CE: BD 6C C8     <span id="Symbswtch1">bswtch1</span>         lda     <a href="#Symsmess">smess</a>,X           ;anticipate MMU error
 C4D1: 28                           plp
 C4D2: 08                           php
-C4D3: 90 03                        bcc     <a href="#SymLC4D8">LC4D8</a>
-C4D5: BD 6F C8                     lda     <a href="#SymLC86F">LC86F</a>,X
-C4D8: C0 06        <span id="SymLC4D8">LC4D8</span>           cpy     #$06
-C4DA: 90 0B                        bcc     <a href="#SymLC4E7">LC4E7</a>
-C4DC: C0 08                        cpy     #$08
-C4DE: 90 04                        bcc     <a href="#SymLC4E4">LC4E4</a>
+C4D3: 90 03                        bcc     <a href="#Symbswtch2">bswtch2</a>           ;branch if not IOU error
+C4D5: BD 6F C8                     lda     <a href="#Symsmess">smess</a>+3,X         ;anticipate IOU error
+C4D8: C0 06        <span id="Symbswtch2">bswtch2</span>         cpy     #6                ;compare with where we left off
+C4DA: 90 0B                        bcc     <a href="#Symbswtch3">bswtch3</a>           ;skip if MMU
+C4DC: C0 08                        cpy     #8
+C4DE: 90 04                        bcc     <a href="#Symbswtch2a">bswtch2a</a>          ;skip if GLU (ioudis or dhires failure)
 C4E0: C0 11                        cpy     #$11
-C4E2: 90 03                        bcc     <a href="#SymLC4E7">LC4E7</a>
-C4E4: BD 72 C8     <span id="SymLC4E4">LC4E4</span>           lda     <a href="#SymLC872">LC872</a>,X
-C4E7: 9D B8 05     <span id="SymLC4E7">LC4E7</span>           sta     <a href="#SymSCREEN">SCREEN</a>,X
+C4E2: 90 03                        bcc     <a href="#Symbswtch3">bswtch3</a>           ;skip if IOU
+C4E4: BD 72 C8     <span id="Symbswtch2a">bswtch2a</span>        lda     <a href="#Symsmess">smess</a>+6,X         ;GLU error (ioudis failure)
+C4E7: 9D B8 05     <span id="Symbswtch3">bswtch3</span>         sta     <a href="#SymSCREEN">SCREEN</a>,X
 C4EA: CA                           dex
-C4EB: 10 E1                        bpl     <a href="#SymLC4CE">LC4CE</a>
+C4EB: 10 E1                        bpl     <a href="#Symbswtch1">bswtch1</a>           ;print "MMU","IOU" or "GLU"
 C4ED: 30 FE        <span id="Symhangy">hangy</span>           bmi     <a href="#Symhangy">hangy</a>             ;branch forever
 
-                   NOTE: pdf pg 480 (diags listing)
-C4EF: A0 01        <span id="SymSWCHTST">SWCHTST</span>         ldy     #$01              ;MMUIDX
+C4EF: A0 01        <span id="SymSWCHTST">SWCHTST</span>         ldy     #<a href="#SymMMUIDX">MMUIDX</a>           ;MMUIDX
 C4F1: A9 7F        <span id="Symswtst1">swtst1</span>          lda     #$7F
-C4F3: 6A           <span id="Symswtst2">swtst2</span>          ror     A
+C4F3: 6A           <span id="Symswtst2">swtst2</span>          ror     A                 ;set IOU/MMU switches to match A
 C4F4: BE 2F C8                     ldx     <a href="#SymSWTBL0">SWTBL0</a>,Y
-C4F7: F0 0F                        beq     <a href="#Symswtst4">swtst4</a>
-C4F9: 90 03                        bcc     <a href="#Symswtst3">swtst3</a>
-C4FB: BE 41 C8                     ldx     <a href="#SymSWTBL1">SWTBL1</a>,Y
-C4FE: 9D FF BF     <span id="Symswtst3">swtst3</span>          sta     <a href="#SymCLR80COL">CLR80COL</a>-1,X
+C4F7: F0 0F                        beq     <a href="#Symswtst4">swtst4</a>            ;branch if done setting switches
+C4F9: 90 03                        bcc     <a href="#Symswtst3">swtst3</a>            ;branch if setting switch to 0-state
+C4FB: BE 41 C8                     ldx     <a href="#SymSWTBL1">SWTBL1</a>,Y          ;else get index to set switch to 1
+C4FE: 9D FF BF     <span id="Symswtst3">swtst3</span>          sta     <a href="#Symioadr">ioadr</a>-1,X         ;set switch
 C501: C8                           iny
-C502: D0 EF                        bne     <a href="#Symswtst2">swtst2</a>
+C502: D0 EF                        bne     <a href="#Symswtst2">swtst2</a>            ;branch always taken...
                    ; 
-C504: AE 30 C0     <span id="Symclick">click</span>           ldx     <a href="#Symvblint">vblint</a>+23
+C504: AE 30 C0     <span id="Symclick">click</span>           ldx     <a href="#SymSPKR">SPKR</a>
 C507: 2A                           rol     A
 C508: 88           <span id="Symswtst4">swtst4</span>          dey
-C509: BE 53 C8                     ldx     <a href="#SymRSWTBL">RSWTBL</a>,Y
-C50C: F0 13                        beq     <a href="#Symswtst6">swtst6</a>
-C50E: 30 F4                        bmi     <a href="#Symclick">click</a>
+C509: BE 53 C8                     ldx     <a href="#SymRSWTBL">RSWTBL</a>,Y          ;now verify the settings just made
+C50C: F0 13                        beq     <a href="#Symswtst6">swtst6</a>            ;branch if done this pass
+C50E: 30 F4                        bmi     <a href="#Symclick">click</a>             ;branch if this switch no to be verified.
 C510: 2A                           rol     A
-C511: 90 07                        bcc     <a href="#SymLC51A">LC51A</a>
-C513: 1E 00 C0                     asl     <a href="#SymLC000">LC000</a>,X
+C511: 90 07                        bcc     <a href="#Symswtst5">swtst5</a>
+C513: 1E 00 C0                     asl     <a href="#Symioadr">ioadr</a>,X
 C516: 90 1F                        bcc     <a href="#Symswerr">swerr</a>
-C518: B0 EE                        bcs     <a href="#Symswtst4">swtst4</a>
+C518: B0 EE                        bcs     <a href="#Symswtst4">swtst4</a>            ;branch always
 
-C51A: 1E 00 C0     <span id="SymLC51A">LC51A</span>           asl     <a href="#SymLC000">LC000</a>,X
+C51A: 1E 00 C0     <span id="Symswtst5">swtst5</span>          asl     <a href="#Symioadr">ioadr</a>,X
 C51D: B0 18                        bcs     <a href="#Symswerr">swerr</a>
-C51F: 90 E7                        bcc     <a href="#Symswtst4">swtst4</a>
+C51F: 90 E7                        bcc     <a href="#Symswtst4">swtst4</a>            ;branch always
 
-C521: 2A           <span id="Symswtst6">swtst6</span>          rol     A
-C522: C8                           iny
-                   <span style="background-color: #89acb7">NOTE: jumps from c880 if not a boot</span>
-                   <span style="background-color: #89acb7">THIS IS NOT THE BOOTCODE WE ARE LOOKING FOR!</span>
+C521: 2A           <span id="Symswtst6">swtst6</span>          rol     A                 ;restore original value
+C522: C8                           iny                       ; and IOU/MMU index
 C523: 38           <span id="SymLC523">LC523</span>           sec
-C524: E9 01                        sbc     #$01
+C524: E9 01                        sbc     #1                ;try next pattern
 C526: B0 CB                        bcs     <a href="#Symswtst2">swtst2</a>
-C528: 88                           dey
-C529: F0 08                        beq     <a href="#Symswtst7">swtst7</a>
-C52B: C0 08                        cpy     #$08
-C52D: D0 10                        bne     <a href="#SymBIGLOOP">BIGLOOP</a>
-C52F: A0 11                        ldy     #$11
-C531: D0 BE                        bne     <a href="#Symswtst1">swtst1</a>
+C528: 88                           dey                       ;was MMU just tested?
+C529: F0 08                        beq     <a href="#Symswtst7">swtst7</a>            ;yes, go to IOU
+C52B: C0 08                        cpy     #<a href="#SymIOUIDX">IOUIDX</a>-1         ;was IOU just tested?
+C52D: D0 10                        bne     <a href="#SymBIGLOOP">BIGLOOP</a>           ;no, go loop again
+C52F: A0 11                        ldy     #<a href="#SymGLUIDX">GLUIDX</a>           ;yes, go test IOUDIS switch
+C531: D0 BE                        bne     <a href="#Symswtst1">swtst1</a>            ;branch always
 
-C533: A0 09        <span id="Symswtst7">swtst7</span>          ldy     #$09
-C535: D0 BA                        bne     <a href="#Symswtst1">swtst1</a>
+C533: A0 09        <span id="Symswtst7">swtst7</span>          ldy     #<a href="#SymIOUIDX">IOUIDX</a>
+C535: D0 BA                        bne     <a href="#Symswtst1">swtst1</a>            ;branch always
 
-C537: 5A           <span id="Symswerr">swerr</span>           phy
-C538: A2 00                        ldx     #$00
-C53A: C0 0A                        cpy     #$0A
-C53C: 4C 7D C4                     jmp     <a href="#SymLC47D">LC47D</a>
+C537: 5A           <span id="Symswerr">swerr</span>           phy                       ;save y to distinguish from MMU or GLU
+                   ;                                       ;failure
+C538: A2 00                        ldx     #0                ;indicate switch error
+C53A: C0 0A                        cpy     #<a href="#SymIOUIDX">IOUIDX</a>+1         ;set carry if IOU was cause
+C53C: 4C 7D C4                     jmp     <a href="#Symbbits1">bbits1</a>
 
-C53F: 46 80        <span id="SymBIGLOOP">BIGLOOP</span>         lsr     <a href="#Symdoserr">doserr</a>
+C53F: 46 80        <span id="SymBIGLOOP">BIGLOOP</span>         lsr     $80
 C541: D0 AC                        bne     <a href="#SymSWCHTST">SWCHTST</a>
-C543: A9 A0                        lda     #$A0
-C545: A0 00                        ldy     #$00
-C547: 99 00 04     <span id="SymLC547">LC547</span>           sta     $0400,Y
+C543: A9 A0        <span id="Symblp2">blp2</span>            lda     #$A0
+C545: A0 00                        ldy     #0
+C547: 99 00 04     <span id="Symblp3">blp3</span>            sta     $0400,Y           ;clear screen for susccess message
 C54A: 99 00 05                     sta     $0500,Y
 C54D: 99 00 06                     sta     $0600,Y
 C550: 99 00 07                     sta     $0700,Y
 C553: C8                           iny
-C554: D0 F1                        bne     <a href="#SymLC547">LC547</a>
-C556: AD 61 C0     <span id="SymLC556">LC556</span>           lda     <a href="#Symiou_p_2">iou_p_2</a>+7
-C559: 2D 62 C0                     and     <a href="#Symmoubut">moubut</a>-1
-C55C: 0A                           asl     A
-C55D: E6 FF                        inc     <a href="#SymPBCValue">PBCValue</a>
-C55F: A5 FF                        lda     <a href="#SymPBCValue">PBCValue</a>
-C561: 90 03                        bcc     <a href="#SymLC566">LC566</a>
+C554: D0 F1                        bne     <a href="#Symblp3">blp3</a>
+C556: AD 61 C0     <span id="Symblp4">blp4</span>            lda     <a href="#SymBUTN0">BUTN0</a>             ;test for both Open and Closed Apple
+C559: 2D 62 C0                     and     <a href="#SymBUTN1">BUTN1</a>             ; pressed
+C55C: 0A                           asl     A                 ;put result in carry
+C55D: E6 FF                        inc     $FF
+C55F: A5 FF                        lda     $FF
+C561: 90 03                        bcc     <a href="#Symdquit">dquit</a>
 C563: 4C 8E D4                     jmp     <a href="#Symdiags">diags</a>
 
-C566: AD 51 C0     <span id="SymLC566">LC566</span>           lda     <a href="#Symvblint">vblint</a>+56
-C569: A0 08                        ldy     #$08
-C56B: B9 75 C8     <span id="SymLC56B">LC56B</span>           lda     <a href="#SymLC875">LC875</a>,Y
+C566: AD 51 C0     <span id="Symdquit">dquit</span>           lda     <a href="#SymTXTSET">TXTSET</a>            ;put success message on the screen
+C569: A0 08                        ldy     #8
+C56B: B9 75 C8     <span id="Symsuc2">suc2</span>            lda     <a href="#Symsuccess">success</a>,Y
 C56E: 99 B8 05                     sta     <a href="#SymSCREEN">SCREEN</a>,Y
 C571: 88                           dey
-C572: 10 F7                        bpl     <a href="#SymLC56B">LC56B</a>
-C574: 30 E0                        bmi     <a href="#SymLC556">LC556</a>
+C572: 10 F7                        bpl     <a href="#Symsuc2">suc2</a>
+C574: 30 E0                        bmi     <a href="#Symblp4">blp4</a>              ;loop forever
 
 C576: 00 00 00 00+                 DS      10,$00
 
+                   NOTE: pickup here
+                   pick up
+                   rw.slinky
 C580: DA           <span id="Symsl_pread">sl_pread</span>        phx
 C581: AE 78 06                     ldx     <a href="#SymSCRNHOLE4">SCRNHOLE4</a>
 C584: FE 00 C0                     inc     <a href="#SymLC000">LC000</a>,X
@@ -1501,17 +1509,9 @@ C862: 1F                           DFB     $1F
 C863: 00                           DFB     $00
 C864: 7E                           DFB     $7E
 C865: 00                           DFB     $00
-C866: D2 C1 CD A0+ <span id="SymLC866">LC866</span>           ASC     “RAM ZP”
-C86C: CD           <span id="SymLC86C">LC86C</span>           DFB     $CD
-C86D: CD                           DFB     $CD
-C86E: D5                           DFB     $D5
-C86F: C9           <span id="SymLC86F">LC86F</span>           DFB     $C9
-C870: CF                           DFB     $CF
-C871: D5                           DFB     $D5
-C872: C7           <span id="SymLC872">LC872</span>           DFB     $C7
-C873: CC                           DFB     $CC
-C874: D5                           DFB     $D5
-C875: D3 F9 F3 F4+ <span id="SymLC875">LC875</span>           ASC     “System OK”
+C866: D2 C1 CD A0+ <span id="Symrmess">rmess</span>           ASC     “RAM ZP”
+C86C: CD CD D5 C9+ <span id="Symsmess">smess</span>           ASC     “MMUIOUGLU”
+C875: D3 F9 F3 F4+ <span id="Symsuccess">success</span>         ASC     “System OK”
 C87E: 00                           DFB     $00
 C87F: 00                           DFB     $00
 
@@ -4981,7 +4981,7 @@ FFFE: 8E C7                        DW      <a href="#Symswirq2">swirq2</a>      
 <div id="footer">
     <hr/>
     <p>HTML generated by <a href="https://6502bench.com/">6502bench SourceGen</a> v1.8.4
-    on 2023/03/13 <!--13:53:37 -05:00--></p>
+    on 2023/03/13 <!--16:36:09 -05:00--></p>
     <p>Expression style: Merlin</p>
     <!-- parameters: cols=16,8,18,100;extraCols=Address,Bytes;byteSpc=True;commaBulk=True;nonuPfx=':';varPfx=']';labelBrk=False;notes=True;gfx=True;opWrap=32 -->
 </div>
