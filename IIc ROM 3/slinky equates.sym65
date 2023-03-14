@@ -75,16 +75,16 @@ sl_devno	@ $778	;slot * 16 ($n0) + $88
 sl_mslot	@ $7F8	;$C0 + slot ($Cn)
 
 ; slot ram equates
-sl_scrn1	@ $478  ;-$C0 
-sl_scrn2	@ $4F8  ;-$C0
-sl_scrn3	@ $578  ;-$C0
-sl_scrn4	@ $5F8  ;-$C0
-sl_scrn5	@ $678  ;-$C0
-sl_scrn6	@ $6F8  ;-$C0
-sl_scrn7	@ $778  ;-$C0
-sl_scrn8	@ $7F8  ;-$C0
-numbanks	@ $478  ;-$C0  ;sl.scrn1 ;number of 64K banks on card
-powerup		@ $778  ;-$C0 	;sl.scrn7 ;powerup byte 	
+sl_scrn1	@ $3B8	;$478-$C0 
+sl_scrn2	@ $438	;$4F8-$C0
+sl_scrn3	@ $4B8	;$578-$C0
+sl_scrn4	@ $538	;$5F8-$C0
+sl_scrn5	@ $5B8	;$678-$C0
+sl_scrn6	@ $638	;$6F8-$C0
+sl_scrn7	@ $6B8	;$778-$C0
+sl_scrn8	@ $738	;$7F8-$C0
+numbanks	@ $3B8	;$478-$C0   ;sl.scrn1 ;number of 64K banks on card
+powerup		@ $6B8	;$778-$C0 	;sl.scrn7 ;powerup byte 	
 ;power2 @ sl_scrn8
 
 ; hardware equates, must be in $BF00 to avoid double access
