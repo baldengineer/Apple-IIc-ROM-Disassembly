@@ -636,7 +636,28 @@
 "Addr":51072,
 "Length":123,
 "PreLabel":"bank_swp_table",
-"IsRelative":true}],
+"IsRelative":true},
+
+{
+"Offset":7168,
+"Addr":56320,
+"Length":240,
+"PreLabel":"doscut_pascut",
+"IsRelative":true},
+
+{
+"Offset":7408,
+"Addr":56560,
+"Length":16,
+"PreLabel":"",
+"IsRelative":false},
+
+{
+"Offset":7424,
+"Addr":56576,
+"Length":256,
+"PreLabel":"",
+"IsRelative":false}],
 "TypeHints":[{
 "Low":0,
 "High":255,
@@ -1105,6 +1126,11 @@
 {
 "Low":7461,
 "High":7464,
+"Hint":"InlineData"},
+
+{
+"Low":7996,
+"High":16377,
 "Hint":"InlineData"}],
 "StatusFlagOverrides":{
 },
@@ -2616,7 +2642,7 @@
 "MaxWidth":80,
 "BackgroundColor":0},
 
-"7168":{
+"16378":{
 "Text":"VECTORS",
 "BoxMode":true,
 "MaxWidth":80,
@@ -4329,6 +4355,30 @@
 
 "7168":{
 "Text":"DC00: 23FA ds $FFFA-*,$60\r\nlol wut? Vectors at the end, maybe this is unit data from DC00 to FFFA?",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7408":{
+"Text":"\r\nFrom Technical Reference: diagnostics (orged at $DD00)",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7424":{
+"Text":"\r\nstattest; addresstest; rollovertest; addbustest; cleartest; fulltest",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7680":{
+"Text":"\r\ncontinue; computed; pass; fail; miscellaneous\r\n$DF00 is print; messages",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"8192":{
+"Text":"Empty",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -15099,6 +15149,18 @@
 "7748":{
 "Length":1,
 "Format":"NumericLE",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"7996":{
+"Length":196,
+"Format":"Uninit",
+"SubFormat":"None",
+"SymbolRef":null},
+
+"8192":{
+"Length":8186,
+"Format":"Uninit",
 "SubFormat":"None",
 "SymbolRef":null},
 
