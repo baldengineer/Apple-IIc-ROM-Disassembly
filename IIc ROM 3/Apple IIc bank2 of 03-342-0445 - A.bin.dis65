@@ -2496,6 +2496,91 @@
 "6962":"move the code",
 "6989":"get device number",
 "6992":"put start address on stack",
+"7306":"Test 3",
+"7312":"Make pointer to addrl",
+"7322":"How many bits used in high address?",
+"7324":"If 1M then test D3210",
+"7326":"If 768K then test D3210",
+"7332":"If 512K then test D210 if 256K then D10",
+"7333":" Save it for later",
+"7334":"Walk a one thru high med and low addresses",
+"7337":"Clear address in case of false carries",
+"7341":"Store pattern in address",
+"7344":"get value to store",
+"7349":"Each address gets a different value",
+"7351":" Get pattern back",
+"7352":"Move the 1 over. $80 -\u003e $40 etc.",
+"7353":"Until all bits tested",
+"7355":"Zero out current byte",
+"7357":"0 -\u003e $80",
+"7359":"Loop through all 3 address registers",
+"7361":"Now read em all back",
+"7365":" Get start value for high byte",
+"7369":"Clear address in case of false carry",
+"7373":"Set address",
+"7375":"Don\u0027t pha since we might abort",
+"7380":"Right data?",
+"7393":"0 -\u003e $80",
+"7402":"Set address and A to 0",
+"7405":"Test 4 = 00s.  Test 5 = FFs",
+"7407":"value to fill RAM with",
+"7411":"write data out",
+"7428":"are addrl \u0026 addrm both zero?",
+"7431":"no, keep going",
+"7433":"Z = 1 if done",
+"7436":"no, keep going",
+"7438":"Go to next line and clear address",
+"7441":"read data back",
+"7446":"Failed if ne",
+"7448":"do 2 per loop for speed",
+"7460":"are addrl \u0026 addrm both zero?",
+"7463":"no, keep going",
+"7465":"Z = 1 if done",
+"7468":"no, keep going",
+"7470":"Go to next line and clear address",
+"7475":"0 -\u003e FF",
+"7479":"Test 6",
+"7481":"Starting data pattern",
+"7483":"Address left at 0 from last test",
+"7485":"Value = addrm + addrh + $55. A = 0",
+"7496":"Save for next add",
+"7503":"Time to print a dot?",
+"7508":"Z = 1 if done",
+"7513":"Go to next line and clear address",
+"7516":"starting data pattern",
+"7520":"Now read em back",
+"7533":"Is it right?",
+"7542":"Time to print a dot?",
+"7547":"Z = 1 if done",
+"7554":"\"CARD OK\"",
+"7572":"loop until first failure",
+"7575":" save actual data",
+"7581":"\"CARD FAILED!\u003cCR\u003e\"",
+"7588":"not an addressing problem",
+"7590":" there is no failing data really",
+"7593":"\"ADDRESS ERROR\"",
+"7601":"\"DATA ERROR \"",
+"7608":"set back to actaul failing value",
+"7614":"propagate borrows (if any)",
+"7620":"mask off high 4 bits",
+"7624":"print as two hex digits",
+"7628":"print addrm as two hex digits",
+"7632":"print addrl as two hex digits",
+"7637":"\" - \"",
+"7640":" actual data",
+"7643":"print failing data as two hex digits",
+"7648":"\"\u003cCR\u003eSEE DEALER FOR SERVICE\u003cCR\u003e\"",
+"7657":"Is escaped pressed?",
+"7664":"Pop current return address",
+"7669":"Test if last dot",
+"7674":"Z = 1 if last dot",
+"7697":"Clears the address registers",
+"7699":"Must do in this order",
+"7702":"to avoid false carry",
+"7709":"print message to the screen",
+"7718":"all characters must have high bit set",
+"7723":"index to next character",
+"7725":"last character had high bit set",
 "7728":"M0-M0",
 "7729":"M1-M0",
 "7730":"M2-M0",
@@ -4406,8 +4491,8 @@
 "BackgroundColor":0},
 
 "7402":{
-"Text":"\r\n",
-"BoxMode":true,
+"Text":"****************************************************************\r\n* \r\n****************************************************************\r\n                                          ;see if all locations clear to zero",
+"BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0},
 
@@ -4419,6 +4504,66 @@
 
 "7192":{
 "Text":"\r\n\"MEMORY CARD TEST\u003cCR\u003eESC TO EXIT\u003cCR\u003eTEST WILL TAKE \r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7652":{
+"Text":"\r\n\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7669":{
+"Text":"\r\n",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7697":{
+"Text":"fall into clraddr",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7405":{
+"Text":"                           ;Loop \u0026 see if all locations fill to ones",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7479":{
+"Text":"                                          ;each byte gets computed value",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7552":{
+"Text":"\r\npased all the tests",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7575":{
+"Text":"display failure message",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7691":{
+"Text":"                      ;Go to next line and clear address",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7699":{
+"Text":"                                    ;Sets the address registers to A",
+"BoxMode":false,
+"MaxWidth":80,
+"BackgroundColor":0},
+
+"7728":{
+"Text":"table of pointers to actual messages",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":0}},
@@ -4526,8 +4671,8 @@
 "MaxWidth":80,
 "BackgroundColor":0},
 
-"7402":{
-"Text":"pickup here\r\npick-up\r\npdf page 533, page 8",
+"7550":{
+"Text":"pick-up here\r\npickup here",
 "BoxMode":false,
 "MaxWidth":80,
 "BackgroundColor":-5383962},
@@ -15670,6 +15815,34 @@
 "SubFormat":"None",
 "SymbolRef":null},
 
+"7561":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"7565":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"loopcount",
+"Part":"Low"}},
+
+"7567":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"7569":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"loopcount",
+"Part":"Low"}},
+
 "7572":{
 "Length":1,
 "Format":"NumericLE",
@@ -15695,15 +15868,23 @@
 "SymbolRef":null},
 
 "7576":{
-"Length":1,
+"Length":3,
 "Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"clreop",
+"Part":"Low"}},
 
 "7577":{
 "Length":1,
 "Format":"NumericLE",
 "SubFormat":"None",
+"SymbolRef":null},
+
+"7586":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
 "SymbolRef":null},
 
 "7605":{
@@ -15725,9 +15906,9 @@
 "SymbolRef":null},
 
 "7608":{
-"Length":1,
+"Length":2,
 "Format":"NumericLE",
-"SubFormat":"None",
+"SubFormat":"Decimal",
 "SymbolRef":null},
 
 "7611":{
@@ -15749,10 +15930,40 @@
 "SymbolRef":null},
 
 "7614":{
-"Length":1,
+"Length":2,
 "Format":"NumericLE",
-"SubFormat":"None",
+"SubFormat":"Decimal",
 "SymbolRef":null},
+
+"7622":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"7624":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"prbyte",
+"Part":"Low"}},
+
+"7628":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"prbyte",
+"Part":"Low"}},
+
+"7632":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"prbyte",
+"Part":"Low"}},
 
 "7639":{
 "Length":1,
@@ -15779,10 +15990,52 @@
 "SymbolRef":null},
 
 "7643":{
-"Length":1,
+"Length":3,
 "Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"prbyte",
+"Part":"Low"}},
+
+"7652":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"dot",
+"Part":"Low"}},
+
+"7654":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"cout",
+"Part":"Low"}},
+
+"7657":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"KBD",
+"Part":"Low"}},
+
+"7660":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"esc",
+"Part":"Low"}},
+
+"7666":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"KBDSTRB",
+"Part":"Low"}},
 
 "7668":{
 "Length":1,
@@ -15791,10 +16044,12 @@
 "SymbolRef":null},
 
 "7669":{
-"Length":1,
+"Length":3,
 "Format":"NumericLE",
-"SubFormat":"None",
-"SymbolRef":null},
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"addrh",
+"Part":"Low"}},
 
 "7670":{
 "Length":1,
@@ -15807,6 +16062,42 @@
 "Format":"NumericLE",
 "SubFormat":"None",
 "SymbolRef":null},
+
+"7688":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"7691":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"crout",
+"Part":"Low"}},
+
+"7694":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"clreol",
+"Part":"Low"}},
+
+"7697":{
+"Length":2,
+"Format":"NumericLE",
+"SubFormat":"Decimal",
+"SymbolRef":null},
+
+"7705":{
+"Length":3,
+"Format":"NumericLE",
+"SubFormat":"Symbol",
+"SymbolRef":{
+"Label":"addrh",
+"Part":"Low"}},
 
 "7720":{
 "Length":3,
