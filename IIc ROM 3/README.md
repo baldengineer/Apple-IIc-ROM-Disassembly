@@ -1,4 +1,9 @@
-## ROM 3 Bank 1 HTML Shortcut:
+## ROM 3
+I consider this done for now and also a work in progress. I decoded most major blocks of code in the Aux Bank. There are sections where the constants are messed up because the original sources re-used names (like temp and buffer). At some point I would like to clean those up, but for now, I need to put this aside.
+
+Feel free to submit PRs with updates.
+
+## Bank 1 HTML Shortcut:
 Use `htmlpreview.github.io` to view:
 ### Bank 1 (Main)
 + [Apple IIc ROM 3-Bank 1 as html](https://htmlpreview.github.io/?https://github.com/baldengineer/Apple-IIc-ROM-Disassembly/blob/main/IIc%20ROM%203/html/Apple%20IIc%20bank1%20of%2003-342-0445%20-%20A.bin.html).
